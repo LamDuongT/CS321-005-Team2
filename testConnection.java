@@ -23,14 +23,14 @@ public class testConnection {
         
         try {
             Statement stmt = connectdb.theConnection.createStatement();
-            ResultSet rs = stmt.execute("SELECT * FROM `tblstudent`");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `tblstudent`");
             
             System.out.println("studentID|studentName|studentEmail");
             
             while (rs.next()) {
                 studentID = rs.getInt("studentID");
                 studentName = rs.getString("studentName");
-                studentEmail = rs.getFloat("studentEmail");
+                studentEmail = rs.getString("studentEmail");
                 
                 System.out.print(studentID + "|" + studentName + "|" + studentEmail + "|");
                 
