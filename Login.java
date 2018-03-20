@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+public class Login
+{
+	private String username;
+	private String password;
+	
+	public int login
+	{
+		
+=======
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -222,3 +232,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField usernamef;
     // End of variables declaration//GEN-END:variables
 }
+>>>>>>> d1a65ee5c61a38cc9f6eff02317090b4bcf0daaa
