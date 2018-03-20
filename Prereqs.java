@@ -39,7 +39,7 @@ public class Prereqs {
        		queryString += "WHERE courseID = " + courseID + " ";
         	queryString += "ORDER BY prereqCourseID ASC";
         	
-        	 System.out.println(queryString);
+        	System.out.println(queryString);
         	
             Statement statement = connectdb.theConnection.createStatement();
             ResultSet recordSet = statement.executeQuery(queryString);
