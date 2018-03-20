@@ -55,10 +55,8 @@ public class Course {
     public void setCourseDesc(String courseDesc) {
     	this.courseDesc = courseDesc;
     }
-	public void setCreditHours(int creditHours)
-	{
-		if (creditHours <0) || (credit hours > 10)
-		{
+	public void setCreditHours(int creditHours) {
+		if (creditHours <0) || (credit hours > 10) {
 			throw new Exception("Invalid amount of credit hours!");
 		}
 		this.creditHours = creditHours;
