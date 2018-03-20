@@ -44,9 +44,9 @@ public class Course {
     	this.majorID = majorID;
     	this.minorID = minorID;
     }
-
+	
 	// Mutator methods
-    public void setCourseID(int courseID) {
+	public void setCourseID(int courseID) {
     	this.courseID = courseID;
     }
     public void setCourseName(String courseName) {
@@ -56,12 +56,11 @@ public class Course {
     	this.courseDesc = courseDesc;
     }
 	public void setCreditHours(int creditHours) {
-		if (creditHours <0) || (credit hours > 10) {
-			throw new Exception("Invalid amount of credit hours!");
+		if ((creditHours <=0) || (creditHours >10)) {
+			throw new Exception ("Amount of credit hours entered is invalid!");
 		}
 		this.creditHours = creditHours;
 	}
-	//Testing
     public void setCatalogID (int catalogID) {
     	this.catalogID = catalogID;
     }
