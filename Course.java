@@ -61,6 +61,7 @@ public class Course {
 		}
 		this.creditHours = creditHours;
 	}
+	//Testing
     public void setCatalogID (int catalogID) {
     	this.catalogID = catalogID;
     }
