@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-import java.sql.*;
-
-public class Course
-{
-	private int courseID;
-	private Prerequisites prereqs;
-	private String courseName;
-	private String description;
-	private int creditHour;
-	private int catalogID;
-	private int MajorID;
-	private int MinorID;
-	
-	public Course(
-	
-=======
 import java.util.List;
 
 /*
@@ -111,4 +94,3 @@ public class Course {
     	return this.minorID;
     }
 }
->>>>>>> d1a65ee5c61a38cc9f6eff02317090b4bcf0daaa
