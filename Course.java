@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  *
- * @author moo7md
+ * @author Mohammed Alsharf
  * @author Huan Nguyen
+ * @author Lam Duong
  */
 public class Course {
     private int courseID;
@@ -20,7 +21,7 @@ public class Course {
     private int catalogID;
     private int majorID;
     private int minorID;
-    private List<Prereqs> prereqList;
+    private Prereqs prereqList;
     
     public Course() {
         setValue(-1, "", "", -1, -1, -1, -1);
@@ -33,6 +34,7 @@ public class Course {
         this.prereqList = new Prereqs(courseID);
     }
     
+	// Fields population method for constructor method
     public void setValue(int courseID, String courseName, String courseDesc, int creditHours, int catalogID, int majorID, int minorID) {
     	this.courseID = courseID;
     	this.courseName = courseName;
@@ -42,56 +44,56 @@ public class Course {
     	this.majorID = majorID;
     	this.minorID = minorID;
     }
-    
-    public void setCourseID(int courseID) {
+	
+	// Mutator methods
+	public void setCourseID(int courseID) {
     	this.courseID = courseID;
     }
-    
     public void setCourseName(String courseName) {
     	this.courseName = courseName;
     }
-    
     public void setCourseDesc(String courseDesc) {
     	this.courseDesc = courseDesc;
     }
-    
+	public void setCreditHours(int creditHours) throws Exception {
+		if ((creditHours <=0) || (creditHours >10)) {
+			throw new Exception ("Amount of credit hours entered is invalid!");
+		}
+		this.creditHours = creditHours;
+	}
     public void setCatalogID (int catalogID) {
     	this.catalogID = catalogID;
     }
-    
     public void setMajorID (int majorID) {
-    	this.majorID = majorID;    	
+    	this.majorID = majorID;
     }
-    
     public void setMinorID (int minorID) {
-    	this.minorID = minorID;    	
+    	this.minorID = minorID;
     }
-    
+
+	// Accessor methods
     public int getCourseID() {
         return this.courseID;
     }
-    
     public String getCourseName() {
         return this.courseName;
     }
-    
     public String getCourseDesc() {
         return this.courseDesc;
     }
-    
     public int getCreditHours() {
         return this.creditHours;
     }
-    
     public int getCatalogID() {
     	return this.catalogID;
     }
-
     public int getMajorID() {
     	return this.majorID;
     }
-    
     public int getMinorID() {
     	return this.minorID;
+    }
+    public Prereqs getPrereqList () {
+    	return this.prereqList;
     }
 }
