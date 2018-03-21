@@ -10,6 +10,7 @@ public class Prereq {
 	private int prereqID;
 	private int courseID;
 	private int prereqCourseID;
+<<<<<<< HEAD
 	
 	
 	public Prereq() {
@@ -22,6 +23,22 @@ public class Prereq {
 	
 	
 	public void setValue(int prereqID, int courseID, int prereqCourseID) {
+=======
+	private String courseName;
+	private String prereqCourseName;
+	
+	
+	public Prereq() {
+		setValue(-1, -1, -1, "", "");		
+	}
+	
+	public Prereq(int prereqID, int courseID, int prereqCourseID, String courseName, String prereqCourseName) {
+		setValue(prereqID, courseID, prereqCourseID, courseName, prereqCourseName);		
+	}
+	
+	
+	public void setValue(int prereqID, int courseID, int prereqCourseID, String courseName, String prereqCourseName) {
+>>>>>>> e9d8f16be2bda217ff41e4cdb570141f154b535c
 		this.prereqID = prereqID;
 		this.courseID = courseID;
 		this.prereqCourseID = prereqCourseID;

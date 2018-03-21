@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package collegesp;
 
 import java.util.HashMap;
 
@@ -11,13 +10,13 @@ import java.util.HashMap;
  *
  * @author moo7md
  */
-public class Plan {
+public class FrmPlan {
     /*
         CS 
     */
     private final int MAX_CREDIT = 18;
     private int currentCredits;
-    private HashMap<String,Class> classes;
+    private HashMap<String,Course> classes;
     private int total;
     
 }
