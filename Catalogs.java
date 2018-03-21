@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class Catalogs {
 	private List<Catalog> catalogList = new LinkedList<Catalog>();
-	private List<Minor> minorList = new LinkedList<Minor>();
 	
 	private Catalog aCatalog;
 	
