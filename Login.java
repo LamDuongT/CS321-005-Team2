@@ -2,6 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 /**
  *
  * @author Huan Nguyen
@@ -14,7 +15,7 @@ public class Login {
 	// the attribute that capture whether user logged in the system
 	private boolean isLoggedIn = false;
 	// the connection to database
-	// this variable will be used for login as well as get profile 
+	// this variable will be used for login as well as get profile
 	private ConnectDB connectdb;
 
 	/**
@@ -51,7 +52,7 @@ public class Login {
 
 		try {
 			// the querry string
-			String queryString = "SELECT studentID, netID FROM `tblprofile` ";
+			String queryString = "SELECT studentID, netID FROM tblprofile ";
 			queryString += "WHERE username ='" + this.username + "' ";
 			queryString += "AND password = '" + this.passowrd + "' ";
 			queryString += "LIMIT 1";
@@ -110,7 +111,7 @@ public class Login {
 				connectdb.reconnect();
 
 				// the query string
-				String queryString = "SELECT studentID, netID, studentName, studentEmail, username, password, profileName FROM `tblprofile` ";
+				String queryString = "SELECT studentID, netID, studentName, studentEmail, username, password, profileName FROM tblprofile ";
 				queryString += "WHERE studentID = " + this.studentID + " ";
 				queryString += "LIMIT 1";
 
@@ -155,5 +156,76 @@ public class Login {
 		}
 		// then, return the profile
 		return aProfile;
+	}
+
+	/**
+	 * @param theProfile
+	 *            the profile to update
+	 * @param theAction
+	 *            the flag for insert new profile or update an existing profile
+	 *            action will have 3 values: 'i' for insert, 'u' for update and 'd'
+	 *            for delete
+	 * @return none
+	 */
+	public void updateProfile(Profile theProfile, char theAction) {
+		if (theProfile.equals(null))
+			throw new IllegalArgumentException("[ERROR] theProfile can not be null!");
+		// check whether user login or not. if not, print error message
+		if (this.isLoggedIn == false) {
+			System.out.println("[ERROR] You are not logged in yet!");
+			// otherwise, modify the profile based on the isInsertedOrUpdated flag
+		} else {
+			try {
+				// because after the login method executed, the connection is disconnected
+				// therefore, we need to reconnect to the database
+				connectdb.reconnect();
+				
+				// the query string
+				String queryString = "";
+
+				switch (theAction) {
+				
+				// for insert new profile
+				case 'i':
+					// form the query for insert
+					queryString = "INSERT INTO collegespdb.tblprofile (netID, studentName, studentEmail, username, password, profileName) ";
+					queryString += "VALUES (\"" + theProfile.getNetID() + "\", \"" + theProfile.getStudentName() + "\", \""
+							+ theProfile.getStudentEmail() + "\", \"" + theProfile.getUsername() + "\", \""
+							+ theProfile.getPassword() + "\", \"" + theProfile.getProfileName() + "\");";
+					break;
+					
+				// for update existing profile
+				case 'u':
+					// form the query string for update
+					queryString = "UPDATE collegespdb.tblprofile SET ";
+					queryString += "netID=\"" + theProfile.getNetID() + "\",";
+					queryString += "studentName=\"" + theProfile.getStudentName() + "\", ";
+					queryString += "studentEmail=\"" + theProfile.getStudentEmail() + "\", ";
+					queryString += "username=\"" + theProfile.getUsername() + "\", ";
+					queryString += "password=\"" + theProfile.getPassword() + "\", ";
+					queryString += "profileName=\"" + theProfile.getProfileName() + "\" ";
+					queryString += "WHERE studentID=\"" + theProfile.getStudentID() + "\";";
+					break;
+
+				// for delete existing profile
+				case 'd':
+					queryString = "DELETE FROM tblprofile WHERE studentID = " + theProfile.getStudentID();
+					break;
+				}
+
+				System.out.println(queryString);
+				// Initialize a sql statement
+				Statement statement = connectdb.theConnection.createStatement();
+				// execute the query
+				// for INSERT and UPDATE query, there will be no return result
+				// therefore, we do not need a ResultSet to hold the return value
+				statement.executeUpdate(queryString);
+
+			} catch (SQLException e) {
+				throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+			} finally {
+				connectdb.disconectDB();
+			}
+		}
 	}
 }

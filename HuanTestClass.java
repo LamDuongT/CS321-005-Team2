@@ -8,6 +8,11 @@ public class HuanTestClass {
       aStudent.doLogin();
       aStudent.getProfile(aStudent.getStudentID());
       
+      Profile aNewStudent = new Profile(-1, "andrew12", "Andrew Nguyen12", "andrew@andrew.com12", "andrew0812", "andrew0812", "Andrew's Profile12");
+      aStudent.updateProfile(aNewStudent, 'i');
+      
+      
+      /*
       Catalogs catalogs = new Catalogs();
       
       Catalog catalog2017 = catalogs.getCatalogByName("catalog 2017");      
@@ -18,6 +23,7 @@ public class HuanTestClass {
       
       Courses courseList = new Courses();
       System.out.println("***********List of Course***************\n" + courseList.toString());
+      */
 	}
 
 }
