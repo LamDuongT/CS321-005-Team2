@@ -12,7 +12,6 @@ public class Prereq {
 	private int courseID;
 	private int prereqCourseID;
 
-	
 	public Prereq() {
 		// Constructor method to create empty object
 		setValue(-1, -1, -1);		
@@ -22,10 +21,10 @@ public class Prereq {
 		setValue(prereqID, courseID, prereqCourseID);		
 	}
 	
+	// factory method for the overloading constructors
 	public void setValue(int prereqID, int courseID, int prereqCourseID) {
 	private String courseName;
 	private String prereqCourseName;
-	
 	
 	public Prereq() {
 		setValue(-1, -1, -1, "", "");		
@@ -34,7 +33,6 @@ public class Prereq {
 	public Prereq(int prereqID, int courseID, int prereqCourseID, String courseName, String prereqCourseName) {
 		setValue(prereqID, courseID, prereqCourseID, courseName, prereqCourseName);		
 	}
-	
 	
 	public void setValue(int prereqID, int courseID, int prereqCourseID, String courseName, String prereqCourseName) {
 		this.prereqID = prereqID;
