@@ -8,10 +8,11 @@ public class HuanTestClass {
       aStudent.doLogin();
       aStudent.getProfile(aStudent.getStudentID());
       
-      Profile aNewStudent = new Profile(-1, "andrew12", "Andrew Nguyen12", "andrew@andrew.com12", "andrew0812", "andrew0812", "Andrew's Profile12");
-      aStudent.updateProfile(aNewStudent, 'i');
+      //Profile aNewStudent = new Profile(-1, "andrew12", "Andrew Nguyen12", "andrew@andrew.com12", "andrew0812", "andrew0812", "Andrew's Profile12");
+      //aStudent.updateProfile(aNewStudent, 'i');
       
-      
+      Creditstakens creditstakenList = new Creditstakens(aStudent.getStudentID());
+      System.out.println("The list of Creditstaken \n" + creditstakenList.toString());
       /*
       Catalogs catalogs = new Catalogs();
       
