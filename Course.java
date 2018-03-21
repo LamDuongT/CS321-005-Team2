@@ -21,7 +21,7 @@ public class Course {
     private int catalogID;
     private int majorID;
     private int minorID;
-    private List<Prereqs> prereqList;
+    private Prereqs prereqList;
     
     public Course() {
         setValue(-1, "", "", -1, -1, -1, -1);
@@ -95,5 +95,18 @@ public class Course {
     }
     public Prereqs getPrereqList () {
     	return this.prereqList;
+    }
+    
+    public String toString() {
+    	String returnString = "courseID = " + this.courseID + "\n";
+    	returnString += "courseName = " + this.courseName + "\n";
+    	returnString += "courseDesc = " + this.courseDesc + "\n";
+    	returnString += "CreditHours = " + this.creditHours + "\n";
+    	returnString += "CatalogID = " + this.catalogID + "\n";
+    	returnString += "Major = " + this.majorID + "\n";
+    	returnString += "Minor = " + this.minorID + "\n";
+    	returnString += "Prereqs List::\n" + this.prereqList.toString() + "\n";
+    	
+    	return returnString;
     }
 }
