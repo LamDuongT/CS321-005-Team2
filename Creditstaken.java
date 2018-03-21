@@ -24,14 +24,16 @@ public class Creditstaken {
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public Creditstaken(int creditstakenID, int studentID, int courseID, String courseName, int semesterID, boolean isChangable) {
+	public Creditstaken(int creditstakenID, int studentID, int courseID, String courseName, int semesterID,
+			boolean isChangable) {
 		setValue(creditstakenID, studentID, courseID, courseName, semesterID, isChangable);
 	}
 
 	/**
 	 * Method setValue used for constructors methods
 	 */
-	private void setValue(int creditstakenID, int studentID, int courseID, String courseName, int semesterID, boolean isChangable) {
+	private void setValue(int creditstakenID, int studentID, int courseID, String courseName, int semesterID,
+			boolean isChangable) {
 		this.creditstakenID = creditstakenID;
 		this.studentID = studentID;
 		this.courseID = courseID;
@@ -89,17 +91,23 @@ public class Creditstaken {
 	public boolean getIsChangable() {
 		return this.isChangable;
 	}
-	
-	/**Override toString method for testing purpose
-	 * */
+
+	/**
+	 * Override toString method for testing purpose
+	 */
 	public String toString() {
-		String returnString = "creditstakenID = " + this.creditstakenID + "\n";
-		returnString += "studentID = " + this.studentID + "\n";
-		returnString += "courseID = " + this.courseID + "\n";
-		returnString += "courseName = " + this.courseName + "\n";
-		returnString += "semesterID = " + this.semesterID + "\n";
-		returnString += "isChangable = " + this.isChangable + "\n";
-		
+		String returnString = "\t";
+		/*
+		 * returnString += "creditstakenID = " + this.creditstakenID + "\n";
+		 * returnString += "studentID = " + this.studentID + "\n"; returnString +=
+		 * "courseID = " + this.courseID + "\n"; returnString += "courseName = " +
+		 * this.courseName + "\n"; returnString += "semesterID = " + this.semesterID +
+		 * "\n"; returnString += "isChangable = " + this.isChangable + "\n";
+		 */
+
+		returnString += this.creditstakenID + "\t| " + this.studentID + "\t| \t" + this.courseID + "\t| "
+				+ this.courseName + "\t| \t" + this.semesterID + "\t| \t" + this.isChangable;
+
 		return returnString;
 	}
 }

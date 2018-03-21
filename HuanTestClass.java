@@ -13,9 +13,12 @@ public class HuanTestClass {
       
       updateData.updateProfile(aNewStudent, 'u');
       
+      Creditstaken aCredittaken = new Creditstaken(-1, 1, 68, "CS321", 3, false);
+      updateData.updateCreditstaken(aCredittaken, 'u');
       
-//      Creditstakens creditstakenList = new Creditstakens(aStudent.getStudentID());
-//      System.out.println("The list of Creditstaken \n" + creditstakenList.toString());
+      
+      Creditstakens creditstakenList = new Creditstakens(aStudent.getStudentID());
+      System.out.println("The list of Creditstaken \n" + creditstakenList.toString());
       /*
       Catalogs catalogs = new Catalogs();
       
