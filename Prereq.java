@@ -11,8 +11,7 @@ public class Prereq {
 	private int prereqID;
 	private int courseID;
 	private int prereqCourseID;
-<<<<<<< HEAD
-	
+
 	
 	public Prereq() {
 		// Constructor method to create empty object
@@ -24,7 +23,6 @@ public class Prereq {
 	}
 	
 	public void setValue(int prereqID, int courseID, int prereqCourseID) {
-=======
 	private String courseName;
 	private String prereqCourseName;
 	
@@ -39,7 +37,6 @@ public class Prereq {
 	
 	
 	public void setValue(int prereqID, int courseID, int prereqCourseID, String courseName, String prereqCourseName) {
->>>>>>> e9d8f16be2bda217ff41e4cdb570141f154b535c
 		this.prereqID = prereqID;
 		this.courseID = courseID;
 		this.prereqCourseID = prereqCourseID;
