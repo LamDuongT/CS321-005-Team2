@@ -7,44 +7,60 @@ public class Catalog {
 	private int catalogID;
 	private String catalogName;
 	private String catalogDesc;
-	
+
+	/**
+	 * Initialize default values for all attributes
+	 */
 	public Catalog() {
 		this.catalogID = -1;
 		this.catalogName = "";
 		this.catalogDesc = "";
 	}
-	
+
+	/**
+	 * Initialize all attributes with given information
+	 */
 	public Catalog(int catalogID, String catalogName, String catalogDesc) {
 		this.catalogID = catalogID;
 		this.catalogName = catalogName;
 		this.catalogDesc = catalogDesc;
 	}
-	
-	public void setCatalogID (int catalogID) {
+
+	// setter for catalogID
+	public void setCatalogID(int catalogID) {
 		this.catalogID = catalogID;
 	}
-	
-	public void setCatalogName (String catalogName) {
+
+	// setter for catalogName
+	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
 	}
-	
-	public void setCatalogDesc (String catalogDesc) {
+
+	// setter for catalogDesc
+	public void setCatalogDesc(String catalogDesc) {
 		this.catalogDesc = catalogDesc;
 	}
-	
-	public int getCatalogID () {
+
+	// getter for catalogID
+	public int getCatalogID() {
 		return this.catalogID;
 	}
-	
-	public String getCatalogName () {
-		return this.catalogName;		
+
+	// getter for catalogName
+	public String getCatalogName() {
+		return this.catalogName;
 	}
-	
-	public String getCatalogDesc () {
-		return this.catalogDesc;		
+
+	// getter for catalogDesc
+	public String getCatalogDesc() {
+		return this.catalogDesc;
 	}
-	
-	public String toString () {
-		return "catalogID = " + this.catalogID + " | catalogName = " + this.catalogName + " | catalogDesc = " + this.catalogDesc;
+
+	/**
+	 * Override toString method for testing purposes
+	 */
+	public String toString() {
+		return "catalogID = " + this.catalogID + " | catalogName = " + this.catalogName + " | catalogDesc = "
+				+ this.catalogDesc;
 	}
 }

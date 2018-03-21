@@ -40,7 +40,7 @@ public class Prereqs {
 			String _courseName;
 			String _prereqCourseName;
 
-			String queryString = "SELECT c1.courseID, c1.courseName, p.prereqID, p.prereqCourseID, c2.courseName as prereqCourseName "; 
+			String queryString = "SELECT c1.courseID, c1.courseName, p.prereqID, p.prereqCourseID, c2.courseName as prereqCourseName ";
 			queryString += "FROM tblcourse c1 inner join tblprereq p ON c1.courseID = p.courseID inner join tblcourse c2 on c2.courseID = p.prereqCourseID ";
 			if (courseID != -1) {
 				queryString += "WHERE c1.courseID = " + courseID;
@@ -48,7 +48,11 @@ public class Prereqs {
 
 			System.out.println(queryString);
 
+			// Initialize a sql statement
 			Statement statement = connectdb.theConnection.createStatement();
+			// recordSet will hold a data table as sql object
+			// to see how the data table look like, copy the queryString contents and
+			// execute in mysql Workbench
 			ResultSet recordSet = statement.executeQuery(queryString);
 
 			while (recordSet.next()) {
@@ -69,14 +73,17 @@ public class Prereqs {
 			connectdb.disconectDB();
 		}
 	}
-	
-	public String toString () {
+
+	/**
+	 * Override toString method for testing purpose
+	 */
+	public String toString() {
 		String returnString = "";
-		for (int index = 0; index < this.prereqList.size(); index ++) {
+		for (int index = 0; index < this.prereqList.size(); index++) {
 			aPrereq = this.prereqList.get(index);
 			returnString += aPrereq.toString() + "\n";
 		}
-		
+
 		return returnString;
 	}
 
