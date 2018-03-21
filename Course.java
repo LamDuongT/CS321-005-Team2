@@ -21,11 +21,7 @@ public class Course {
     private int catalogID;
     private int majorID;
     private int minorID;
-<<<<<<< HEAD
     private List<Prereqs> prereqList;
-=======
-    private Prereqs prereqList;
->>>>>>> e9d8f16be2bda217ff41e4cdb570141f154b535c
     
     public Course() {
         setValue(-1, "", "", -1, -1, -1, -1);
@@ -59,11 +55,7 @@ public class Course {
     public void setCourseDesc(String courseDesc) {
     	this.courseDesc = courseDesc;
     }
-<<<<<<< HEAD
-	public void setCreditHours(int creditHours) {
-=======
 	public void setCreditHours(int creditHours) throws Exception {
->>>>>>> e9d8f16be2bda217ff41e4cdb570141f154b535c
 		if ((creditHours <=0) || (creditHours >10)) {
 			throw new Exception ("Amount of credit hours entered is invalid!");
 		}
@@ -101,10 +93,7 @@ public class Course {
     public int getMinorID() {
     	return this.minorID;
     }
-<<<<<<< HEAD
-=======
     public Prereqs getPrereqList () {
     	return this.prereqList;
     }
->>>>>>> e9d8f16be2bda217ff41e4cdb570141f154b535c
 }

@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class Login {
 	private int studentID;
 	private String netID;
-	private String username;
+	private String username;	
 	private String passowrd;
 	private boolean isLoggedIn = false;	
 	ConnectDB connectdb;	
