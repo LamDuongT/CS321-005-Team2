@@ -5,6 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema collegespdb
 -- -----------------------------------------------------
 
@@ -23,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcatalog` (
   `catalogDesc` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`catalogID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Catalog year';
 
@@ -44,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblmajor` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Major';
 
@@ -65,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblminor` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Minor	';
 
@@ -78,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcourse` (
   `courseDesc` MEDIUMTEXT NULL DEFAULT NULL,
   `creditHours` INT(11) NULL DEFAULT NULL,
   `catalogID` INT(11) NOT NULL,
-  `majorID` INT(11) NOT NULL,
-  `minorID` INT(11) NOT NULL,
+  `majorID` INT(11) NULL DEFAULT '-1',
+  `minorID` INT(11) NULL DEFAULT '-1',
   PRIMARY KEY (`courseID`),
   INDEX `course_catalog_idx` (`catalogID` ASC),
   INDEX `course_major_idx` (`majorID` ASC),
@@ -100,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcourse` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 88
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Courses	';
 
@@ -117,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblprofile` (
   `profileName` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`studentID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Profile';
 
@@ -131,9 +136,9 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblsemester` (
   `semesterDesc` MEDIUMTEXT NULL DEFAULT NULL,
   `creditMin` INT(11) NULL DEFAULT NULL,
   `creditMax` INT(11) NULL DEFAULT NULL,
-  `changible` TINYINT(4) NULL DEFAULT NULL,
   PRIMARY KEY (`semesterID`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Semester';
 
@@ -146,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcreditstaken` (
   `studentID` INT(11) NOT NULL,
   `courseID` INT(11) NOT NULL,
   `semesterID` INT(11) NULL DEFAULT NULL,
+  `isChangable` INT(1) NULL DEFAULT '0',
   PRIMARY KEY (`creditstakenID`),
   INDEX `credittaken_course_idx` (`courseID` ASC),
   INDEX `credittaken_profile_idx` (`studentID` ASC),
@@ -166,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcreditstaken` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'The credit taken for a student';
 
@@ -273,6 +280,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblprereq` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Prerequisite Courses		';
 
