@@ -16,7 +16,7 @@ public class Minors {
 	private List<Minor> minorList = new LinkedList<Minor>();
 	private Minor aMinor;
 	
-	/* Initialize the minorList with all Minor regardless catalogID
+	/** Initialize the minorList with all Minor regardless catalogID
 	 * */
 	public Minors() {
 		getMinorData(-1);
@@ -26,7 +26,7 @@ public class Minors {
 		getMinorData(catalogID);
 	}
 	
-	/* Get Minor by ID from the list of minors
+	/** Get Minor by ID from the list of minors
 	 * */
 	public Minor getMinorByID(int minorID) {
 		aMinor = null;
