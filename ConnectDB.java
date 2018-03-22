@@ -23,6 +23,8 @@ public class ConnectDB {
 	// Do not modify
 	Connection theConnection;
 	private String HOST_NAME = this.SERVER + this.DATABASE;
+	
+	private boolean isConnected = false;
 
 	/**
 	 * Constructor method this method will initialize a connection
@@ -39,7 +41,15 @@ public class ConnectDB {
 	public void reconnect() {
 		doConnection();
 	}
-
+	
+	/**
+	 * Get the connection status
+	 */
+	
+	public boolean isConnected() {
+		return this.isConnected;
+	}
+	
 	/**
 	 * Connect to database using above information
 	 */
@@ -49,16 +59,19 @@ public class ConnectDB {
 		try {
 			// Initialize a connection from the information above
 			theConnection = (Connection) DriverManager.getConnection(HOST_NAME, this.USERNAME, this.PASSWORD);
-
+			
+			// update the connection status
+			this.isConnected = true;
+			
 			// other way of connecting database using ODBC
 			// MysqlDataSource dataSource = new MysqlDataSource();
 			// dataSource.setUser(this.USERNAME);
 			// dataSource.setPassword(this.PASSWORD);
 			// dataSource.setServerName(URL);
 			// theConnection = (Connection)dataSource.getConnection();
-
-			System.out.println("==>Successful connected to database [" + this.DATABASE + "]");
-			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+			
+			//System.out.println("==>Successful connected to database [" + this.DATABASE + "]");
+			//System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		} catch (SQLException e) {
 			throw new IllegalStateException("Cannot connect the database!", e);
 		}
@@ -73,8 +86,8 @@ public class ConnectDB {
 			this.theConnection.close();
 			this.theConnection = null;
 
-			System.out.println("==>Successful disconnected to database [" + this.DATABASE + "]");
-			System.out.println("------------------------------------------------------------");
+			//System.out.println("==>Successful disconnected to database [" + this.DATABASE + "]");
+			//System.out.println("------------------------------------------------------------");
 
 		} catch (SQLException e) {
 			throw new IllegalStateException("Cannot connect the database!", e);
