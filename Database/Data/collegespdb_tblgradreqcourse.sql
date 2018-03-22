@@ -21,6 +21,7 @@
 
 LOCK TABLES `tblgradreqcourse` WRITE;
 /*!40000 ALTER TABLE `tblgradreqcourse` DISABLE KEYS */;
+INSERT INTO `tblgradreqcourse` VALUES (1,1,-1,1),(2,1,-1,2),(3,1,-1,3),(4,1,-1,4),(5,1,-1,5),(6,1,-1,6),(7,1,-1,7),(8,1,-1,8),(9,1,-1,9),(10,1,-1,10),(11,1,-1,11),(12,1,-1,12),(13,1,-1,13),(14,1,-1,14),(15,1,-1,15);
 /*!40000 ALTER TABLE `tblgradreqcourse` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -33,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-21 17:45:56
+-- Dump completed on 2018-03-22 12:40:13
