@@ -19,6 +19,13 @@ public class HuanTestClass {
       
       Creditstakens creditstakenList = new Creditstakens(aStudent.getStudentID());
       System.out.println("The list of Creditstaken \n" + creditstakenList.toString());
+      
+      Semesters semesterList = new Semesters();
+      System.out.println("The list of Semesters \n" + semesterList.toString());
+      
+      Courses coursesList = new Courses();
+      System.out.println("The list of Courses \n" + coursesList.toString());
+      
       /*
       Catalogs catalogs = new Catalogs();
       

@@ -88,7 +88,7 @@ public class Courses {
 	 * Override the toString method for testing purpose
 	 */
 	public String toString() {
-		String returnString = "";
+		String returnString = "courseID | courseName     | creditHours | catalogID  | majorID   | minorID   | Prereq List              | courseDesc\n";
 		// loop through the list and print out all elements
 		for (int index = 0; index < this.courseList.size(); index++) {
 			aCourse = this.courseList.get(index);

@@ -28,6 +28,8 @@ public class Prereq {
 		this.prereqID = prereqID;
 		this.courseID = courseID;
 		this.prereqCourseID = prereqCourseID;
+		this.courseName = courseName;
+		this.prereqCourseName = prereqCourseName;
 	}
 
 	public void setPrereqID(int prereqID) {
@@ -52,6 +54,16 @@ public class Prereq {
 
 	public int getPrereqCourseID() {
 		return this.prereqCourseID;
+	}
+	
+	// getter for courseName
+	public String getCourseName () {
+		return this.courseName;
+	}
+	
+	// getter for courseName
+	public String getPrereqCourseName () {
+		return this.prereqCourseName;
 	}
 	/**@param: none
 	 * Override the toString method for testing purpose

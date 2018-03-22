@@ -22,6 +22,24 @@ public class Prereqs {
 	public Prereqs(int courseID) {
 		getPrereqData(courseID);
 	}
+	
+	/**get the list of prereq course name
+	 * @param none
+	 * Note: this method does not have courseID parameter because the list prereqList holds all prereq course for the courseID already 
+	 * 
+	 */
+	public String getPrereqsCourseNames() {
+		String returnString = "";
+		for (int index = 0; index < this.prereqList.size(); index++) {
+			aPrereq = this.prereqList.get(index);			
+			returnString += aPrereq.getPrereqCourseName() + ", ";
+		}
+		
+		if (returnString.length() > 0) {
+			returnString = returnString.substring(0, returnString.length() - 2);
+		}
+		return returnString;
+	}
 
 	/**
 	 * fetch all data from the table Prereq and add to the list

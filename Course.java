@@ -133,16 +133,9 @@ public class Course {
 	/**
 	 * Override toString method for testing purposes
 	 */
-	public String toString() {
-		String returnString = "courseID = " + this.courseID + "\n";
-		returnString += "courseName = " + this.courseName + "\n";
-		returnString += "courseDesc = " + this.courseDesc + "\n";
-		returnString += "CreditHours = " + this.creditHours + "\n";
-		returnString += "CatalogID = " + this.catalogID + "\n";
-		returnString += "Major = " + this.majorID + "\n";
-		returnString += "Minor = " + this.minorID + "\n";
-		returnString += "Prereqs List::\n" + this.prereqList.toString() + "\n";
-
+	public String toString() {	
+		String returnString = "";		
+		returnString = String.format(" %-8d| %-15s| %-12d|  %-10d| %-10d| %-10d| %-25s| %-25s", this.courseID, this.courseName, this.creditHours, this.catalogID, this.majorID, this.minorID, this.prereqList.getPrereqsCourseNames(), this.courseDesc);	
 		return returnString;
 	}
 }
