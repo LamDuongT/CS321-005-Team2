@@ -96,17 +96,8 @@ public class Creditstaken {
 	 * Override toString method for testing purpose
 	 */
 	public String toString() {
-		String returnString = "\t";
-		/*
-		 * returnString += "creditstakenID = " + this.creditstakenID + "\n";
-		 * returnString += "studentID = " + this.studentID + "\n"; returnString +=
-		 * "courseID = " + this.courseID + "\n"; returnString += "courseName = " +
-		 * this.courseName + "\n"; returnString += "semesterID = " + this.semesterID +
-		 * "\n"; returnString += "isChangable = " + this.isChangable + "\n";
-		 */
-
-		returnString += this.creditstakenID + "\t| " + this.studentID + "\t| \t" + this.courseID + "\t| "
-				+ this.courseName + "\t| \t" + this.semesterID + "\t| \t" + this.isChangable;
+		String returnString = "";
+		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditstakenID, this.studentID, this.courseID, this.courseName, this.semesterID, this.isChangable);
 
 		return returnString;
 	}

@@ -94,7 +94,7 @@ public class Creditstakens {
 	 * Override toString method for testing purpose
 	 */
 	public String toString() {
-		String returnString = "creditstakenID| studentID | courseID	| courseName | semesterID | isChangable\n";
+		String returnString = "creditstakenID  | studentID | courseID	| courseName | semesterID | isChangable\n";
 		for (int index = 0; index < this.creditstakenList.size(); index++) {
 			aCreditstaken = this.creditstakenList.get(index);
 			returnString += aCreditstaken.toString() + "\n";
