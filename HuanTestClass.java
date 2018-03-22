@@ -26,6 +26,9 @@ public class HuanTestClass {
       Courses coursesList = new Courses();
       System.out.println("The list of Courses \n" + coursesList.toString());
       
+      GradreqCourses grareqcoursesList = new GradreqCourses();
+	  System.out.println("The list of Grareq Courses \n" + grareqcoursesList.toString());
+	  
       /*
       Catalogs catalogs = new Catalogs();
       
