@@ -63,7 +63,7 @@ public class Prereqs {
 			if (courseID != -1) {
 				queryString += "WHERE c1.courseID = " + courseID;
 			}
-
+			
 			System.out.println(queryString);
 
 			// Initialize a sql statement
