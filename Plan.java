@@ -4,20 +4,49 @@
  * and open the template in the editor.
  */
 package collegesp;
-
-import java.util.HashMap;
-
 /**
- *
- * @author moo7md
+ * @author Lam Duong
  */
 public class Plan {
-    /*
-        CS 
-    */
-    private final int MAX_CREDIT = 18;
-    private int currentCredits;
-    private HashMap<String,Class> classes;
-    private int total;
-    
+	private final int PLAN_ID;
+	private String planName;
+	private Majors majors;
+	private Minors minors; 
+	private Semesters semesters;
+	private catalogID;
+	
+	
+	/**
+	 * ACCESSOR METHODS:
+	 */
+	public int getPlanID() {
+		return this.PLAN_ID;
+	}
+	public String getPlanName() {
+		return this.planName;
+	}
+	public Majors getMajors() {
+		return this.majors;
+	}
+	public Minors getMinors() {
+		return this.minors;
+	}
+	public int getCatalogID() {
+		return this.catalogID;
+	}
+	
+	/**
+	 * MUTATOR METHODS:
+	 */
+	
+	public void setMajor()
+	public void setMinor()
+	public void setCatalog(int catalogID){
+	}
+	public void setPlanName() {
+	}
+	public void generateSmartPlan() {
+	}
+	public 
+	
 }

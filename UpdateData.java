@@ -2,10 +2,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * 
- */
-
-/**
  * @author Huan Nguyen This class will contain all methods to manipulate data
  *         including Insert new record Update existing record Delete existing
  *         record
