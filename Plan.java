@@ -47,6 +47,10 @@ public class Plan {
 	}
 	public void generateSmartPlan() {
 	}
-	public 
+	public void retrievePlan(int planID) {
+	}
+	public void updatePlan(int planID) {
+	}
+	}
 	
 }
