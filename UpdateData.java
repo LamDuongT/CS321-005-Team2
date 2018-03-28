@@ -163,10 +163,11 @@ public class UpdateData {
 	 * @return none
 	 */
 	public void updatePlan(Plan thePlan, char theAction) {
-		// throw exception when theProfile is null
-		if (theCreditstaken.equals(null))
-			throw new IllegalArgumentException("[ERROR] theProfile can not be null!");
-
+		// throw exception when thePlan is null
+		if (thePlan.equals(null)) {
+			throw new IllegalArgumentException("[ERROR] thePlan can not be null!");
+		}
+		
 		try {
 			// the connection is disconnected therefore, we need to reconnect to the database
 			connectdb.reconnect();
