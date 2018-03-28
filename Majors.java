@@ -10,10 +10,10 @@ import java.util.List;
 
 /**
  * @author Huan Nguyen
- *
+ * @author Lam Duong
  */
 public class Majors {
-	private List<Major> majorList = new LinkedList<Major>();
+	private List<Major> majorList = new LinkedList<Major>(); // list of majors within a plan
 	private Major aMajor;
 
 	/*
@@ -28,6 +28,14 @@ public class Majors {
 	 */
 	public Majors(int catalogID) {
 		getMajorData(catalogID);
+	}
+	
+	/**
+	 * @author Lam Duong
+	 *Retrieve a major object within majorList using position within list
+	 */
+	public Major getMajorByNum(int listPosition) {
+		return this.majorList.get(listPosition);
 	}
 
 	/**
