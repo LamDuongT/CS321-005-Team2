@@ -39,7 +39,20 @@ public class Plan {
 	 * MUTATOR METHODS:
 	 */
 	
-	public void setMajor()
+	// Changing major using the 
+	public void setMajor(majorPosition) {
+		Major m = this.majors.getMajorByNum(majorPosition);
+		// Make sure that there is at least one major in the Majors object
+		if (this.majors.getMajors.isEmpty()){
+			throw new Exception("ERROR: The plan has no major.");
+		}
+		// Major has to be either 1 or 2 to indicate primary or second major
+		if (majorsPosition != 1 || 2) {
+			throw new Exception("ERROR: Only two majors are allowed. Major position input needs to be 1 or 2.");
+		}
+		
+		
+	}
 	public void setMinor()
 	public void setCatalog(int catalogID){
 	}
@@ -50,7 +63,6 @@ public class Plan {
 	public void retrievePlan(int planID) {
 	}
 	public void updatePlan(int planID) {
-	}
 	}
 	
 }
