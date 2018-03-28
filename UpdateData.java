@@ -180,25 +180,24 @@ public class UpdateData {
 			// for insert new profile
 			case 'i':
 				// form the query for insert
-				queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
-				queryString += "VALUES (\"" + theCreditstaken.getStudentID() + "\", \"" + theCreditstaken.getCourseID() + "\", \""
-						+ theCreditstaken.getSemesterID() + "\", " + theCreditstaken.getIsChangable() + ");";
+				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID) ";
+				queryString += "VALUES (\"" + thePLan.getCatalogID() + "\", \"" + thePlan.getMajorID() + 
+						"\", " + thePlan.getMinorID()+ ");";
 				break;
 
 			// for update existing profile
 			case 'u':
 				// form the query string for update
-				queryString = "UPDATE collegespdb.tblcreditstaken SET  ";
-				queryString += "studentID =\"" + theCreditstaken.getStudentID() + "\",";
-				queryString += "courseID =\"" + theCreditstaken.getCourseID() + "\",";
-				queryString += "semesterID =\"" + theCreditstaken.getSemesterID() + "\", ";
-				queryString += "isChangable = " + theCreditstaken.getIsChangable() + " ";
-				queryString += "WHERE creditstakenID = " + theCreditstaken.getCreditstakenID();
+				queryString = "UPDATE collegespdb.tblplan SET  ";
+				queryString += "catalogID =\"" + thePlan.getCatalogID() + "\",";
+				queryString += "majorID =\"" + thePlan.getMajorID() + "\",";
+				queryString += "minorID =\"" + thePlan.getMinorID() + "\", ";
+				queryString += "WHERE planID = " + thePlan.getPlanID();
 				break;
 
 			// for delete existing profile
 			case 'd':
-				queryString = "DELETE FROM tblcreditstaken WHERE creditstakenID = " + theCreditstaken.getCreditstakenID();
+				queryString = "DELETE FROM tblPlan WHERE planID = " + thePlan.getPlanID();
 				break;
 			}
 
