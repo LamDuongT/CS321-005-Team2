@@ -47,7 +47,6 @@ public class Majors {
 	 */
 	public Major getMajorByID(int majorID) {
 		aMajor = null;
-		boolean isFound = false;
 
 		// Check the two Major objects in the array
 		if (majorlist[0].getMajorID() == majorID) {
@@ -72,18 +71,19 @@ public class Majors {
 	 */
 	public Major getMajorByName(String majorName) {
 		aMajor = null;
-		boolean isFound = false;
-
-		for (int index = 0; index < this.majorList.size(); index++) {
-			aMajor = this.majorList.get(index);
-			if (aMajor.getMajorName().toLowerCase().indexOf(majorName) != -1) {
-				isFound = true;
-				break;
-			}
+		
+		aMajor = new Major();
+		// Check the two Major objects in the array
+		if (majorlist[0].getMajorName().equals(majorName)) {
+			aMajor = majorList[0];
 		}
-		if (!isFound)
+		else if (majorlist[1].getMajorName().equals(majorName)) {
+			aMajor = majorList[1];
+		}
+		else {
 			aMajor = new Major();
-
+		}
+		
 		return aMajor;
 	}
 
@@ -120,6 +120,7 @@ public class Majors {
 			// execute in mysql Workbench
 			ResultSet recordSet = statement.executeQuery(queryString);
 			// loop through each record in the data table
+			int index = 0; // index of majorList
 			while (recordSet.next()) {
 				// assign value for local variable accordingly to the query field
 				_majorID = recordSet.getInt("majorID");
@@ -128,7 +129,13 @@ public class Majors {
 				_catalogID = recordSet.getInt("catalogID");
 				// instantiate a Major object
 				aMajor = new Major(_majorID, _majorName, _majorDesc, _catalogID);
-				this.majorList.add(aMajor);
+				this.majorList.[index] = aMajor;
+				if (index == 0) {	
+					index++;
+				}
+				else {
+					break;
+				}
 			}
 			statement.close();
 
@@ -147,8 +154,8 @@ public class Majors {
 	 */
 	public String toString() {
 		String returnString = "";
-		for (int index = 0; index < this.majorList.size(); index++) {
-			aMajor = this.majorList.get(index);
+		for (int index = 0; index < 2; index++) {
+			aMajor = this.majorList[index];
 			returnString += aMajor.toString() + "\n";
 		}
 
