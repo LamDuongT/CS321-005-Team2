@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /**
  * 
  */
@@ -16,19 +19,20 @@ public class Semester {
 	private String semesterDesc;
 	private int creditMin;
 	private int creditMax;
+        private ArrayList<Course> courses;
 
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public Semester() {
-		setValue(-1, "", "", 0, 0);
+		setValue(-1, "", "", 0, 0, new ArrayList<>());
 	}
 
 	/**
 	 * Initialize all attributes with given information
 	 */
 	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax) {
-		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax);
+		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, new ArrayList<>());
 	}
 
 	/**
@@ -37,7 +41,7 @@ public class Semester {
 	 * @exception IllegalArgumentException
 	 *                throw exception if creditMinx or creditMax out of bound
 	 */
-	private void setValue(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax) {
+	private void setValue(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax, ArrayList<Course> list) {
 		// check creditMin and creditMax range
 		if (creditMin < DEFAULT_CREDIT_MIN) {
 			throw new IllegalArgumentException("[ERROR] creditMin can not < 0");
@@ -47,6 +51,7 @@ public class Semester {
 			throw new IllegalArgumentException("[ERROR] creditMax can not > 18");
 		}
 
+                this.courses=list;
 		this.semesterID = semesterID;
 		this.semesterName = semesterName;
 		this.semesterDesc = semesterDesc;

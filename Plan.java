@@ -131,7 +131,16 @@ public class Plan {
 			minors[1] = null;
 		}
 	}
-
+        public void setSemester(Semester sm,char action){
+            switch(action){
+                case 'i'://insert
+                    break;
+                case 'u'://update
+                    break;
+                case 'd'://delete
+                    break;
+            }
+        }
 	public void setCatalog(int catalogID) {
 		this.catalogID = catalogID;
 	}

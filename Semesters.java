@@ -104,6 +104,9 @@ public class Semesters {
 			connectdb.disconectDB();
 		}
 	}
+        public void addSemester(Semester sm){
+            
+        }
 
 	/**
 	 * Override toString method for testing purpose
