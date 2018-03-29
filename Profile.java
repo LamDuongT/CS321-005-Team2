@@ -82,7 +82,9 @@ public class Profile {
 	public String getProfileName() {
 		return this.profileName;
 	}
-
+        public String getNetID(){
+            return this.netID;
+        }
 	/**
 	 * Override toString method for testing purpose
 	 */

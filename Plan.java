@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package collegesp;
 
 /**
  * @author Lam Duong
@@ -29,10 +28,10 @@ public class Plan {
 
 		// Instantiation of empty minors and majors
 		this.majors = new Major[] { new Major(), new Major() };
-		this.minors = new MMinor[] { new Minor(), new Minor() };
+		this.minors = new Minor[] { new Minor(), new Minor() };
 
 		// PLAN CANNOT BE INSTANTIATED WITHOUT AT LEAST ONE MAJOR
-		this.majors[0] = majorsData.getByID(majorID);
+		this.majors[0] = majorsData.getMajorByID(majorID);
 	}
 
 	/**
@@ -50,7 +49,7 @@ public class Plan {
 		return this.majors;
 	}
 
-	public Minors[] getMinors() {
+	public Minor[] getMinors() {
 		return this.minors;
 	}
 
@@ -68,6 +67,8 @@ public class Plan {
 
 	/**
 	 * MUTATOR METHODS:
+     * @param majorPosition
+     * @param majorID
 	 */
 	
 	// Changing major using the 
@@ -80,10 +81,10 @@ public class Plan {
 			if ((majors[0].getMajorID() != m.getMajorID()) && 
 			(majors[1].getMajorID() != m.getMajorID())){
 				// If major being added is not the same name as a current minor
-				if ((!m.getMajorName().equals(minor[0].getMinorName())) &&
-				(!m.getMajorName().equals(minor[1].getMinorName()))) {
+				if ((!m.getMajorName().equals(minors[0].getMinorName())) &&
+				(!m.getMajorName().equals(minors[1].getMinorName()))) {
 					majors[majorPosition] = m;
-					new UpdateData
+					new UpdateData();
 				}
 				else {
 					throw new RuntimeException("ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
@@ -99,7 +100,7 @@ public class Plan {
 				majors[1] = null;
 			}
 			else {
-				throw new RuntimeException("ERROR: Cannot remove the primary major.")
+				throw new RuntimeException("ERROR: Cannot remove the primary major.");
 			}
 		}
 	}
@@ -113,8 +114,8 @@ public class Plan {
 			if ((minors[0].getMinorID() != m.getMinorID()) && 
 			(minors[1].getMinorID() != m.getMinorID())){
 				// If minor being added is not the same name as a current minor
-				if ((!m.getMinorName().equals(major[0].getMajorName())) &&
-				(!m.getMinorName().equals(major[1].getMajorName()))) {
+				if ((!m.getMinorName().equals(majors[0].getMajorName())) &&
+				(!m.getMinorName().equals(majors[1].getMajorName()))) {
 					minors[minorPosition] = m;
 				}
 				else {

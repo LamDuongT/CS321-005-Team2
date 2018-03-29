@@ -25,7 +25,9 @@ public class Minors {
 	public Minors(int catalogID) {
 		getMinorData(catalogID);
 	}
-	
+	public Minor getMinorByNum(int num){
+            return minorList.get(num);
+        }
 	/** Get Minor by ID from the list of minors
 	 * */
 	public Minor getMinorByID(int minorID) {

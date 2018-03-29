@@ -2,7 +2,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 
@@ -13,7 +12,7 @@ import java.util.List;
  * @author Lam Duong
  */
 public class Majors {
-	private LinkedList<Major> = new LinkedList<Major>; // list of majors within a plan
+	private LinkedList<Major> majorList= new LinkedList<Major>(); // list of majors within a plan
 	private Major aMajor;
 
 	/*
@@ -35,7 +34,7 @@ public class Majors {
 	 *Retrieve a major object within majorList using position within list
 	 */
 	public Major getMajorByNum(int listPosition) {
-		return this.majorList[listPosition];
+		return this.majorList.get(listPosition);
 	}
 
 	/**
@@ -49,7 +48,7 @@ public class Majors {
 		aMajor = null;
 		boolean isFound = false;
 
-		for (int index = 0; index < this.majorList[index]; index++) {
+		for (int index = 0; index < this.majorList.size(); index++) {
 			aMajor = this.majorList.get(index);
 			if (aMajor.getMajorID() == majorID) {
 				isFound = true;
@@ -62,6 +61,7 @@ public class Majors {
 	/**
 	 * Get major by Name from the list of majors
 	 * 
+     * @param majorName
 	 * @param majorID
 	 *            the majorID
 	 * @return Major Object *
@@ -72,7 +72,7 @@ public class Majors {
 
 		for (int index = 0; index < this.majorList.size(); index++) {
 			aMajor = this.majorList.get(index);
-			if (aMajor.getMajorName().toLowerCase().indexOf(majorName) != -1) {
+			if (aMajor.getMajorName().toLowerCase().contains(majorName)) {
 				isFound = true;
 				break;
 			}

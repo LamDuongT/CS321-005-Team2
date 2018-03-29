@@ -184,8 +184,9 @@ public class UpdateData {
 			case 'i':
 				// form the query for insert
 				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID, major2ID, minor2ID) ";
-				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors().getMajorByNum(0).getMajorID()
-						+ "\", " + thepPlan.getMinors().getMinorByNum(0).getMinorID() + "\", " + thePlan.getMinorID() + ");";
+				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors()[0].getMajorID()
+						+ "\", " + thePlan.getMinors()[0].getMinorID() + "\", " + thePlan.getMajors()[1].getMajorID() + 
+                                                  "\", "+ "thePlan.getMinors()[1].getMinorID()";
 				break;
 
 			// for update existing profile
@@ -193,8 +194,10 @@ public class UpdateData {
 				// form the query string for update
 				queryString = "UPDATE collegespdb.tblplan SET  ";
 				queryString += "catalogID =\"" + thePlan.getCatalogID() + "\",";
-				queryString += "majorID =\"" + thePlan.getMajorID() + "\",";
-				queryString += "minorID =\"" + thePlan.getMinorID() + "\", ";
+				queryString += "majorID =\"" + thePlan.getMajors()[0].getMajorID() + "\",";
+				queryString += "minorID =\"" + thePlan.getMinors()[0].getMinorID() + "\", ";
+                                queryString += "majorID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
+				queryString += "minorID =\"" + thePlan.getMinors()[1].getMinorID() + "\", ";
 				queryString += "WHERE planID = " + thePlan.getPlanID();
 				break;
 
