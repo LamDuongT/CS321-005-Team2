@@ -180,9 +180,10 @@ public class UpdateData {
 			// for insert new profile
 			case 'i':
 				// form the query for insert
-				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID) ";
-				queryString += "VALUES (\"" + thePLan.getCatalogID() + "\", \"" + thePlan.getMajorID() + 
-						"\", " + thePlan.getMinorID()+ ");";
+				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID, major2ID, minor2ID) ";
+				queryString += "VALUES (\"" + thePLan.getCatalogID() + "\", \"" + thePlan.getMajors().getMajorByNum(1) +
+						"\", " + theplan.getMinor
+						+ "\", " + thePlan.getMinorID()+ ");";
 				break;
 
 			// for update existing profile

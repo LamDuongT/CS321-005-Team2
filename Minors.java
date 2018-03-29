@@ -1,4 +1,4 @@
-import java.sql.ResultSet;
+		import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
@@ -44,6 +44,12 @@ public class Minors {
 		
 		return aMinor;
 	}
+	
+	/**
+	 * Get Minor by the position within the Minors List
+	 * @param minorName
+	 * @return
+	 */
 	
 	/* Get Minor by Name from the list of minors
 	 * */

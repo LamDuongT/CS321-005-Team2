@@ -13,7 +13,7 @@ import java.util.List;
  * @author Lam Duong
  */
 public class Majors {
-	private List<Major> majorList = new LinkedList<Major>(); // list of majors within a plan
+	private Major[] majorList = new Major[2]; // list of majors within a plan represented by an array
 	private Major aMajor;
 
 	/*
@@ -35,12 +35,12 @@ public class Majors {
 	 *Retrieve a major object within majorList using position within list
 	 */
 	public Major getMajorByNum(int listPosition) {
-		return this.majorList.get(listPosition);
+		return this.majorList[listPosition];
 	}
 
 	/**
 	 * Get major by ID from the list of majors
-	 * 
+	 * Return 
 	 * @param majorID
 	 *            the majorID
 	 * @return Major Object *
@@ -49,15 +49,16 @@ public class Majors {
 		aMajor = null;
 		boolean isFound = false;
 
-		for (int index = 0; index < this.majorList.size(); index++) {
-			aMajor = this.majorList.get(index);
-			if (aMajor.getMajorID() == majorID) {
-				isFound = true;
-				break;
-			}
+		// Check the two Major objects in the array
+		if (majorlist[0].getMajorID() == majorID) {
+			aMajor = majorList[0];
 		}
-		if (!isFound)
+		else if (majorlist[1].getMajorID() == majorID) {
+			aMajor = majorList[1];
+		}
+		else {
 			aMajor = new Major();
+		}
 
 		return aMajor;
 	}
