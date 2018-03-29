@@ -196,8 +196,8 @@ public class UpdateData {
 				queryString += "catalogID =\"" + thePlan.getCatalogID() + "\",";
 				queryString += "majorID =\"" + thePlan.getMajors()[0].getMajorID() + "\",";
 				queryString += "minorID =\"" + thePlan.getMinors()[0].getMinorID() + "\", ";
-                                queryString += "majorID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
-				queryString += "minorID =\"" + thePlan.getMinors()[1].getMinorID() + "\", ";
+                                queryString += "major2ID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
+				queryString += "minor2ID =\"" + thePlan.getMinors()[1].getMinorID() + "\", ";
 				queryString += "WHERE planID = " + thePlan.getPlanID();
 				break;
 
