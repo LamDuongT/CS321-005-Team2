@@ -40,17 +40,14 @@ public class Plan {
 	 */
 	
 	// Changing major using the 
-	public void setMajor(majorPosition) {
-		Major m = this.majors.getMajorByNum(majorPosition);
-		// Make sure that there is at least one major in the Majors object
-		if (this.majors.getMajors.isEmpty()){
-			throw new Exception("ERROR: The plan has no major.");
+	public void setMajor(majorPosition, majorID) {
+		switch (majorPosition) {
+		case 0:
+			// You can only change first major but cannot delete or add
+			Major m = new Major(majorID);
+			this.majors.getMajorList[0] = 
+		case 1:
 		}
-		// Major has to be either 1 or 2 to indicate primary or second major
-		if (majorsPosition != 1 || 2) {
-			throw new Exception("ERROR: Only two majors are allowed. Major position input needs to be 1 or 2.");
-		}
-		
 		
 	}
 	public void setMinor()

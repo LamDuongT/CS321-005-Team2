@@ -9,7 +9,7 @@ import java.sql.Statement;
  */
 public class UpdateData {
 	private ConnectDB connectdb;
-	
+
 	// Initialize the connection
 	public UpdateData() {
 		this.connectdb = new ConnectDB();
@@ -33,7 +33,8 @@ public class UpdateData {
 			throw new IllegalArgumentException("[ERROR] theProfile can not be null!");
 
 		try {
-			// the connection is disconnected therefore, we need to reconnect to the database
+			// the connection is disconnected therefore, we need to reconnect to the
+			// database
 			connectdb.reconnect();
 
 			// the query string
@@ -83,7 +84,7 @@ public class UpdateData {
 			connectdb.disconectDB();
 		}
 	}
-	
+
 	/**
 	 * @param theCreditstaken
 	 *            the theCreditstaken to update
@@ -101,7 +102,8 @@ public class UpdateData {
 			throw new IllegalArgumentException("[ERROR] theCreditstaken can not be null!");
 
 		try {
-			// the connection is disconnected therefore, we need to reconnect to the database
+			// the connection is disconnected therefore, we need to reconnect to the
+			// database
 			connectdb.reconnect();
 
 			// the query string
@@ -113,8 +115,8 @@ public class UpdateData {
 			case 'i':
 				// form the query for insert
 				queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
-				queryString += "VALUES (\"" + theCreditstaken.getStudentID() + "\", \"" + theCreditstaken.getCourseID() + "\", \""
-						+ theCreditstaken.getSemesterID() + "\", " + theCreditstaken.getIsChangable() + ");";
+				queryString += "VALUES (\"" + theCreditstaken.getStudentID() + "\", \"" + theCreditstaken.getCourseID()
+						+ "\", \"" + theCreditstaken.getSemesterID() + "\", " + theCreditstaken.getIsChangable() + ");";
 				break;
 
 			// for update existing profile
@@ -130,7 +132,8 @@ public class UpdateData {
 
 			// for delete existing profile
 			case 'd':
-				queryString = "DELETE FROM tblcreditstaken WHERE creditstakenID = " + theCreditstaken.getCreditstakenID();
+				queryString = "DELETE FROM tblcreditstaken WHERE creditstakenID = "
+						+ theCreditstaken.getCreditstakenID();
 				break;
 			}
 
@@ -148,16 +151,15 @@ public class UpdateData {
 			connectdb.disconectDB();
 		}
 	}
-	
 
 	/**
 	 * @author Lam Duong
 	 * @param thePlan
 	 *            The Plan to be updated
 	 * @param theAction
-	 *            The flag for inserting new Plan or update an existing Plan
-	 *            action will have 3 values: 'i' for insert, 'u' for update, and 'd'
-	 *            for delete
+	 *            The flag for inserting new Plan or update an existing Plan action
+	 *            will have 3 values: 'i' for insert, 'u' for update, and 'd' for
+	 *            delete
 	 * @exception IllegalArgumentException
 	 *                when thePlan is null
 	 * @return none
@@ -167,9 +169,10 @@ public class UpdateData {
 		if (thePlan.equals(null)) {
 			throw new IllegalArgumentException("[ERROR] thePlan can not be null!");
 		}
-		
+
 		try {
-			// the connection is disconnected therefore, we need to reconnect to the database
+			// the connection is disconnected therefore, we need to reconnect to the
+			// database
 			connectdb.reconnect();
 
 			// the query string
@@ -181,9 +184,8 @@ public class UpdateData {
 			case 'i':
 				// form the query for insert
 				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID, major2ID, minor2ID) ";
-				queryString += "VALUES (\"" + thePLan.getCatalogID() + "\", \"" + thePlan.getMajors().getMajorByNum(1) +
-						"\", " + theplan.getMinor
-						+ "\", " + thePlan.getMinorID()+ ");";
+				queryString += "VALUES (\"" + thePLan.getCatalogID() + "\", \"" + thePlan.getMajors().getMajorByNum(1)
+						+ "\", " + theplan.getMinor + "\", " + thePlan.getMinorID() + ");";
 				break;
 
 			// for update existing profile

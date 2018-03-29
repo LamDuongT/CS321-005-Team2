@@ -13,7 +13,7 @@ import java.util.List;
  * @author Lam Duong
  */
 public class Majors {
-	private Major[] majorList = new Major[2]; // list of majors within a plan represented by an array
+	private LinkedList<Major> = new LinkedList<Major>; // list of majors within a plan
 	private Major aMajor;
 
 	/*
@@ -40,25 +40,22 @@ public class Majors {
 
 	/**
 	 * Get major by ID from the list of majors
-	 * Return 
+	 * 
 	 * @param majorID
 	 *            the majorID
 	 * @return Major Object *
 	 */
 	public Major getMajorByID(int majorID) {
 		aMajor = null;
+		boolean isFound = false;
 
-		// Check the two Major objects in the array
-		if (majorlist[0].getMajorID() == majorID) {
-			aMajor = majorList[0];
+		for (int index = 0; index < this.majorList[index]; index++) {
+			aMajor = this.majorList.get(index);
+			if (aMajor.getMajorID() == majorID) {
+				isFound = true;
+				break;
+			}
 		}
-		else if (majorlist[1].getMajorID() == majorID) {
-			aMajor = majorList[1];
-		}
-		else {
-			aMajor = new Major();
-		}
-
 		return aMajor;
 	}
 
@@ -71,19 +68,18 @@ public class Majors {
 	 */
 	public Major getMajorByName(String majorName) {
 		aMajor = null;
-		
-		aMajor = new Major();
-		// Check the two Major objects in the array
-		if (majorlist[0].getMajorName().equals(majorName)) {
-			aMajor = majorList[0];
+		boolean isFound = false;
+
+		for (int index = 0; index < this.majorList.size(); index++) {
+			aMajor = this.majorList.get(index);
+			if (aMajor.getMajorName().toLowerCase().indexOf(majorName) != -1) {
+				isFound = true;
+				break;
+			}
 		}
-		else if (majorlist[1].getMajorName().equals(majorName)) {
-			aMajor = majorList[1];
-		}
-		else {
+		if (!isFound)
 			aMajor = new Major();
-		}
-		
+
 		return aMajor;
 	}
 
@@ -120,7 +116,6 @@ public class Majors {
 			// execute in mysql Workbench
 			ResultSet recordSet = statement.executeQuery(queryString);
 			// loop through each record in the data table
-			int index = 0; // index of majorList
 			while (recordSet.next()) {
 				// assign value for local variable accordingly to the query field
 				_majorID = recordSet.getInt("majorID");
@@ -129,13 +124,7 @@ public class Majors {
 				_catalogID = recordSet.getInt("catalogID");
 				// instantiate a Major object
 				aMajor = new Major(_majorID, _majorName, _majorDesc, _catalogID);
-				this.majorList.[index] = aMajor;
-				if (index == 0) {	
-					index++;
-				}
-				else {
-					break;
-				}
+				this.majorList.add(aMajor);
 			}
 			statement.close();
 
@@ -154,8 +143,8 @@ public class Majors {
 	 */
 	public String toString() {
 		String returnString = "";
-		for (int index = 0; index < 2; index++) {
-			aMajor = this.majorList[index];
+		for (int index = 0; index < this.majorList.size(); index++) {
+			aMajor = this.majorList.get(index);
 			returnString += aMajor.toString() + "\n";
 		}
 
