@@ -184,8 +184,8 @@ public class UpdateData {
 			case 'i':
 				// form the query for insert
 				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID, major2ID, minor2ID) ";
-				queryString += "VALUES (\"" + thePLan.getCatalogID() + "\", \"" + thePlan.getMajors().getMajorByNum(1)
-						+ "\", " + theplan.getMinor + "\", " + thePlan.getMinorID() + ");";
+				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors().getMajorByNum(0).getMajorID()
+						+ "\", " + thepPlan.getMinors().getMinorByNum(0).getMinorID() + "\", " + thePlan.getMinorID() + ");";
 				break;
 
 			// for update existing profile
