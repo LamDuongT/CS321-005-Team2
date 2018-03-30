@@ -177,31 +177,30 @@ public class UpdateData {
 
 			// the query string
 			String queryString = "";
-
 			switch (theAction) {
 
-			// for insert new profile
+			// Case for inserting a new plan
 			case 'i':
-				// form the query for insert
+				// form the query for insertion
 				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID, major2ID, minor2ID) ";
 				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors()[0].getMajorID()
-						+ "\", " + thePlan.getMinors()[0].getMinorID() + "\", " + thePlan.getMajors()[1].getMajorID() + 
-                                                  "\", "+ "thePlan.getMinors()[1].getMinorID()";
+						+ "\", " + thePlan.getMinors()[0].getMinorID() + "\", " + thePlan.getMajors()[1].getMajorID()
+						+ "\", " + thePlan.getMinors()[1].getMinorID() + ");";
 				break;
 
-			// for update existing profile
+			// Case for updating an existing plan
 			case 'u':
 				// form the query string for update
 				queryString = "UPDATE collegespdb.tblplan SET  ";
 				queryString += "catalogID =\"" + thePlan.getCatalogID() + "\",";
 				queryString += "majorID =\"" + thePlan.getMajors()[0].getMajorID() + "\",";
 				queryString += "minorID =\"" + thePlan.getMinors()[0].getMinorID() + "\", ";
-                                queryString += "major2ID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
+                queryString += "major2ID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
 				queryString += "minor2ID =\"" + thePlan.getMinors()[1].getMinorID() + "\", ";
 				queryString += "WHERE planID = " + thePlan.getPlanID();
 				break;
 
-			// for delete existing profile
+			// Case for deleting an existing plan
 			case 'd':
 				queryString = "DELETE FROM tblPlan WHERE planID = " + thePlan.getPlanID();
 				break;

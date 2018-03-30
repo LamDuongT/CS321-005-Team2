@@ -6,6 +6,7 @@
 
 /**
  * @author Lam Duong
+ * @author Mohammed Alsharf
  */
 public class Plan {
 	private final int PLAN_ID;
@@ -70,8 +71,6 @@ public class Plan {
      * @param majorPosition
      * @param majorID
 	 */
-	
-	// Changing major using the 
 	public void setMajor(int majorPosition, int majorID) {
 		// Add and Change
 		// If not removing (majorID not being -1)
@@ -84,7 +83,7 @@ public class Plan {
 				if ((!m.getMajorName().equals(minors[0].getMinorName())) &&
 				(!m.getMajorName().equals(minors[1].getMinorName()))) {
 					majors[majorPosition] = m;
-					new UpdateData();
+					new UpdateData().updatePlan(this, 'u'); 
 				}
 				else {
 					throw new RuntimeException("ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
@@ -97,7 +96,8 @@ public class Plan {
 		// Remove
 		else {
 			if (majorPosition == 1) {
-				majors[1] = null;
+				majors[1] = new Major();
+				new UpdateData().updatePlan(this, 'u'); 
 			}
 			else {
 				throw new RuntimeException("ERROR: Cannot remove the primary major.");
@@ -110,28 +110,31 @@ public class Plan {
 		// If not removing (minorID not being -1)
 		if (minorID >= 0) {
 			Minor m = this.minorsData.getMinorByID(minorID);
-			// If primary minor is not the same as the minor being added
+			// If minor being added isn't already 
 			if ((minors[0].getMinorID() != m.getMinorID()) && 
 			(minors[1].getMinorID() != m.getMinorID())){
 				// If minor being added is not the same name as a current minor
 				if ((!m.getMinorName().equals(majors[0].getMajorName())) &&
 				(!m.getMinorName().equals(majors[1].getMajorName()))) {
 					minors[minorPosition] = m;
+					new UpdateData().updatePlan(this, 'u');
 				}
 				else {
-					throw new RuntimeException("ERROR: Minor-minor conflict: Cannot add a minor that is the same name as a minor!");
+					throw new RuntimeException("ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
 				}
 			}
 			else {
-				throw new RuntimeException("ERROR: Minor-major conflict: Cannot add the same minor again!");
+				throw new RuntimeException("ERROR: Minor-minor conflict: Cannot add the same minor again!");
 			}
 		}
 		// Remove
 		else {
-			minors[1] = null;
+			minors[1] = new Minor();
+			new UpdateData().updatePlan(this, 'u');
 		}
 	}
-        public void setSemester(Semester sm,char action){
+	
+    public void setSemester(Semester sm,char action){
             switch(action){
                 case 'i'://insert
                     break;
