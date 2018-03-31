@@ -166,7 +166,7 @@ public class UpdateData {
 	 */
 	public void updatePlan(Plan thePlan, char theAction) {
 		// throw exception when thePlan is null
-		if (thePlan.equals(null)) {
+		if (thePlan == null) {
 			throw new IllegalArgumentException("[ERROR] thePlan can not be null!");
 		}
 
@@ -220,4 +220,33 @@ public class UpdateData {
 			connectdb.disconectDB();
 		}
 	}
+        //updates the semesters in data base
+        //insert, update and delete
+        @SuppressWarnings("ResultOfMethodCallIgnored")
+        public void updateSemester(int PlanID, Semester sm, char action){
+            if(sm == null){
+                throw new IllegalArgumentException("[ERROR] Semester can not be null!");
+            }
+            connectdb.reconnect();
+            String query = "";
+            switch(action){
+                case 'i':
+                    query.concat("INSERT INOT collegespdb.tblsemester(semesterID,semesterName,semesterDesc,creditMin,creditMax)")
+                         .concat("VALUES(\"").concat(sm.getSemesterName()).concat("\",\"").concat(sm.getSemesterDesc())
+                         .concat("\",\"").concat(""+sm.getCreditMin()).concat("\",\"").concat(""+sm.getCreditMax())
+                         .concat("\")");
+                    break;
+                case 'u':
+                    query.concat("UPDATE  collegespdb.tblsemester SET")
+                         .concat("semesterName = \"").concat(sm.getSemesterName()).concat("\",")
+                         .concat("semesterDecs = \"").concat(sm.getSemesterDesc()).concat("\",")
+                         .concat("creditMin = \"").concat(""+sm.getCreditMin()).concat("\",")
+                         .concat("semesterID = \"").concat(""+sm.getCreditMax()).concat("\",")
+                         .concat("WHERE semesterID = ").concat(""+sm.getSemesterID());
+                    break;
+                case 'd':
+                    query.concat("DELETE FROM collegespdb.tblsemester WHERE semesterID = ").concat(""+sm.getSemesterID());
+                    break;
+            }
+        }
 }
