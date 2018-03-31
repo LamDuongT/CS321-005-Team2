@@ -27,7 +27,7 @@ public class Login {
 	 */
 	public Login(String username, String password) {
 		this.username = username;
-		this.passowrd = password;
+		this.password = password;
 	}
 
 	// getter for studentID
@@ -55,7 +55,7 @@ public class Login {
 			// the querry string
 			String queryString = "SELECT studentID, netID FROM tblprofile ";
 			queryString += "WHERE username ='" + this.username + "' ";
-			queryString += "AND password = '" + this.passowrd + "' ";
+			queryString += "AND password = '" + this.password + "' ";
 			queryString += "LIMIT 1";
 
 			System.out.println(queryString);

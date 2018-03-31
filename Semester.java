@@ -149,7 +149,7 @@ public class Semester {
 
 	// inverts lock status
 	public void toggleLock(){
-      this.lock==!this.lock;
+      this.lock = !this.lock;
    }
 
 	/**
