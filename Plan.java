@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -38,6 +38,7 @@ public class Plan {
 	/**
 	 * ACCESSOR METHODS:
 	 */
+
 	public int getPlanID() {
 		return this.PLAN_ID;
 	}
@@ -68,8 +69,13 @@ public class Plan {
 
 	/**
 	 * MUTATOR METHODS:
-     * @param majorPosition
-     * @param majorID
+	 */
+
+	/**
+	 * 
+	 * @param majorPosition
+	 * @param majorID
+	 * @return void
 	 */
 	public void setMajor(int majorPosition, int majorID) {
 		// Add and Change
@@ -77,19 +83,16 @@ public class Plan {
 		if (majorID >= 0) {
 			Major m = this.majorsData.getMajorByID(majorID);
 			// If primary major is not the same as the major being added
-			if ((majors[0].getMajorID() != m.getMajorID()) && 
-			(majors[1].getMajorID() != m.getMajorID())){
+			if ((majors[0].getMajorID() != m.getMajorID()) && (majors[1].getMajorID() != m.getMajorID())) {
 				// If major being added is not the same name as a current minor
-				if ((!m.getMajorName().equals(minors[0].getMinorName())) &&
-				(!m.getMajorName().equals(minors[1].getMinorName()))) {
+				if ((!m.getMajorName().equals(minors[0].getMinorName()))
+				&& (!m.getMajorName().equals(minors[1].getMinorName()))) {
 					majors[majorPosition] = m;
-					new UpdateData().updatePlan(this, 'u'); 
+				} else {
+					throw new RuntimeException(
+							"ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
 				}
-				else {
-					throw new RuntimeException("ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
-				}
-			}
-			else {
+			} else {
 				throw new RuntimeException("ERROR: Major-major conflict: Cannot add the same major again!");
 			}
 		}
@@ -97,53 +100,61 @@ public class Plan {
 		else {
 			if (majorPosition == 1) {
 				majors[1] = new Major();
-				new UpdateData().updatePlan(this, 'u'); 
-			}
-			else {
+
+			} else {
 				throw new RuntimeException("ERROR: Cannot remove the primary major.");
 			}
 		}
-	}
 
+		// Update to Databse once finished with modification in Java
+		new UpdateData().updatePlan(this, 'u');
+	}
+	
+	/**
+	 * 
+	 * @param minorPosition
+	 * @param minorID
+	 * @return void
+	 */
 	public void setMinor(int minorPosition, int minorID) {
 		// Add and Change
 		// If not removing (minorID not being -1)
 		if (minorID >= 0) {
 			Minor m = this.minorsData.getMinorByID(minorID);
-			// If minor being added isn't already 
-			if ((minors[0].getMinorID() != m.getMinorID()) && 
-			(minors[1].getMinorID() != m.getMinorID())){
+			// If minor being added isn't already
+			if ((minors[0].getMinorID() != m.getMinorID()) && (minors[1].getMinorID() != m.getMinorID())) {
 				// If minor being added is not the same name as a current minor
-				if ((!m.getMinorName().equals(majors[0].getMajorName())) &&
-				(!m.getMinorName().equals(majors[1].getMajorName()))) {
+				if ((!m.getMinorName().equals(majors[0].getMajorName()))
+				&& (!m.getMinorName().equals(majors[1].getMajorName()))) {
 					minors[minorPosition] = m;
-					new UpdateData().updatePlan(this, 'u');
+				} else {
+					throw new RuntimeException(
+							"ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
 				}
-				else {
-					throw new RuntimeException("ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
-				}
-			}
-			else {
+			} else {
 				throw new RuntimeException("ERROR: Minor-minor conflict: Cannot add the same minor again!");
 			}
 		}
 		// Remove
 		else {
 			minors[1] = new Minor();
-			new UpdateData().updatePlan(this, 'u');
+		}
+		
+		// Update to Databse once finished with modification in Java
+		new UpdateData().updatePlan(this, 'u');
+	}
+
+	public void setSemester(Semester sm, char action) {
+		switch (action) {
+		case 'i':// insert
+			break;
+		case 'u':// update
+			break;
+		case 'd':// delete
+			break;
 		}
 	}
-	
-    public void setSemester(Semester sm,char action){
-            switch(action){
-                case 'i'://insert
-                    break;
-                case 'u'://update
-                    break;
-                case 'd'://delete
-                    break;
-            }
-        }
+
 	public void setCatalog(int catalogID) {
 		this.catalogID = catalogID;
 	}
