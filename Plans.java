@@ -15,6 +15,7 @@ public class Plans {
 		getPlansData();
 	}
 	
+	
 	/**
 	 * Fetch all of the plans data from the table Plan and add to plansList
 	 */
