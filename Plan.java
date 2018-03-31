@@ -183,8 +183,4 @@ public class Plan {
 
 	public void retrievePlan(int planID) {
 	}
-
-	public void updatePlan(int planID) {
-	}
-
 }
