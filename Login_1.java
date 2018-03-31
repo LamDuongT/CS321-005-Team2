@@ -177,12 +177,12 @@ public class Login_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*
-            First the program checks if the two feilds are not empty
-            Then login is done, if faild show message
-         */
-        if (usernamef.getText().isEmpty() || passwordf.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Error: Wrong username or password.", "Login Error", JOptionPane.ERROR_MESSAGE);
+        Login login = new Login(this.usernamef.getText(),new String(this.passwordf.getPassword()));
+        try{
+            login.doLogin();
+        }catch(IllegalStateException e){
+            JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
+            JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -194,24 +194,7 @@ public class Login_1 extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // lunches the new profile window
-        Object[][] objs = new Object[][]{
-            {"CS110", "Essentials of Computer Science", false},
-            {"CS112", "Introduction to Computer Programming", false},
-            {"CS211", "Object-Oriented Programming", false},
-            {"CS262", "Introduction to Low-Level Programming", false},
-            {"CS306", "Synthesis of Ethics and Law for the Computing Professiona", false},
-            {"CS310", "Data Structures", false},
-            {"CS321", "Software Engineering", false},
-            {"CS330", "Formal Methods and Models", false},
-            {"CS367", "Computer Systems and Programming", false},
-            {"CS471", "Operating Systems", false},
-            {"CS483", "Analysis of Algorithms", false},
-            {"MATH113", "Analytic Geometry and Calculus I", false},
-            {"MATH114", "Analytic Geometry and Calculus II", false},
-            {"MATH125", "Decrete Math", false},
-            {"ENG302", "Advanced Composition", false}
-        };
-        new NewProfile(objs).setVisible(true);
+        new NewProfile().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void passwordfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfActionPerformed

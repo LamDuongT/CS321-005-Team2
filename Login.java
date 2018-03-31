@@ -24,6 +24,8 @@ public class Login {
 	 * after user logged in the system NOTE: the login class will not have empty
 	 * constructor. username and password are always required therefore, setter
 	 * method for username and password will not necessary
+     * @param username
+     * @param password
 	 */
 	public Login(String username, String password) {
 		this.username = username;

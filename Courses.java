@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Courses {
 	// the list of Course objects
-	private List<Course> courseList = new LinkedList<Course>();
+	private List<Course> courseList = new LinkedList<>();
 	private Course aCourse;
 
 	/**
@@ -22,7 +22,9 @@ public class Courses {
 
 	/**
 	 * fetch all data from the table course and add to the list
+     * @return 
 	 */
+        public List getCoursesList(){return this.courseList;}
 	private void getCourseData() {
 		ConnectDB connectdb = new ConnectDB();
 
