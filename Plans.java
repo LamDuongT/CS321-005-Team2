@@ -29,7 +29,7 @@ public class Plans {
 			int _minor2ID;
 			int _catalogID;
 			
-			String queryString = "SELECT "
+			String queryString = "SELECT planID, planName"
 		}
 	}
 }
