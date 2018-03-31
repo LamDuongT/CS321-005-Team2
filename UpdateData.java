@@ -25,11 +25,10 @@ public class UpdateData {
 	 *            for delete
 	 * @exception IllegalArgumentException
 	 *                when theProfile is null
-	 * @return none
 	 */
 	public void updateProfile(Profile theProfile, char theAction) {
 		// throw exception when theProfile is null
-		if (theProfile.equals(null))
+		if (theProfile == null)
 			throw new IllegalArgumentException("[ERROR] theProfile can not be null!");
 
 		try {
@@ -94,11 +93,10 @@ public class UpdateData {
 	 *            for delete
 	 * @exception IllegalArgumentException
 	 *                when theProfile is null
-	 * @return none
 	 */
 	public void updateCreditstaken(Creditstaken theCreditstaken, char theAction) {
 		// throw exception when theProfile is null
-		if (theCreditstaken.equals(null))
+		if (theCreditstaken == null)
 			throw new IllegalArgumentException("[ERROR] theCreditstaken can not be null!");
 
 		try {
@@ -162,7 +160,6 @@ public class UpdateData {
 	 *            delete
 	 * @exception IllegalArgumentException
 	 *                when thePlan is null
-	 * @return none
 	 */
 	public void updatePlan(Plan thePlan, char theAction) {
 		// throw exception when thePlan is null
@@ -182,7 +179,7 @@ public class UpdateData {
 			// Case for inserting a new plan
 			case 'i':
 				// form the query for insertion
-				queryString = "INSERT INTO collegespdb.tblplan (catalogID, majorID, minorID, major2ID, minor2ID) ";
+				queryString = "INSERT INTO collegespdb.tblplan (catalogID, major1ID, minor1ID, major2ID, minor2ID) ";
 				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors()[0].getMajorID()
 						+ "\", " + thePlan.getMinors()[0].getMinorID() + "\", " + thePlan.getMajors()[1].getMajorID()
 						+ "\", " + thePlan.getMinors()[1].getMinorID() + ");";
@@ -193,8 +190,8 @@ public class UpdateData {
 				// form the query string for update
 				queryString = "UPDATE collegespdb.tblplan SET  ";
 				queryString += "catalogID =\"" + thePlan.getCatalogID() + "\",";
-				queryString += "majorID =\"" + thePlan.getMajors()[0].getMajorID() + "\",";
-				queryString += "minorID =\"" + thePlan.getMinors()[0].getMinorID() + "\", ";
+				queryString += "major1ID =\"" + thePlan.getMajors()[0].getMajorID() + "\",";
+				queryString += "minor1ID =\"" + thePlan.getMinors()[0].getMinorID() + "\", ";
                 queryString += "major2ID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
 				queryString += "minor2ID =\"" + thePlan.getMinors()[1].getMinorID() + "\", ";
 				queryString += "WHERE planID = " + thePlan.getPlanID();
