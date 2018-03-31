@@ -28,6 +28,8 @@ public class Plans {
 			int _major2ID;
 			int _minor2ID;
 			int _catalogID;
+			
+			String queryString = "SELECT "
 		}
 	}
 }
