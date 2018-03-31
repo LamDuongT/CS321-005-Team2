@@ -15,6 +15,21 @@ public class Plans {
 		getPlansData();
 	}
 	
+	/**
+	 * Search through the plansList and return a plan matching a planID
+	 * Method may return "null" if no matches are found during the search
+	 * @param planID
+	 * @return Plan
+	 */
+	public Plan getPlanByID(int planID) {
+		aPlan = null;
+		for (int i = 0; i < plansList.size(); i++) {
+			aPlan = plansList.get(i);
+			if (planID == aPlan.getPlanID()) {
+				return aPlan;
+			}
+		}
+	}
 	
 	/**
 	 * Fetch all of the plans data from the table Plan and add to plansList

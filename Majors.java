@@ -31,20 +31,20 @@ public class Majors {
 
 	/**
 	 * Get major by ID from the list of majors
-	 * 
+	 * Method will return null if no matches are found
+	 * @author Huan Nguyen
+	 * @author Lam Duong
 	 * @param majorID
 	 *            the majorID
 	 * @return Major Object *
 	 */
 	public Major getMajorByID(int majorID) {
 		aMajor = null;
-		boolean isFound = false;
 
 		for (int index = 0; index < this.majorList.size(); index++) {
 			aMajor = this.majorList.get(index);
 			if (aMajor.getMajorID() == majorID) {
-				isFound = true;
-				break;
+				return aMajor;
 			}
 		}
 		return aMajor;
