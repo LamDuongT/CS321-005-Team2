@@ -180,7 +180,4 @@ public class Plan {
 	public void generateSmartPlan() {
 		// TODO: GENERATE SORTING ALGORITHM
 	}
-
-	public void retrievePlan(int planID) {
-	}
 }
