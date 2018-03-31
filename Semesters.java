@@ -110,7 +110,9 @@ public class Semesters {
 
 	/**
 	 * Override toString method for testing purpose
+     * @return 
 	 */
+        @Override
 	public String toString() {
 		String returnString = "semesterID | semesterName   | semesterDesc\t\t | credtiMin  | creditMax\n";
 		for (int index = 0; index < this.semesterList.size(); index++) {

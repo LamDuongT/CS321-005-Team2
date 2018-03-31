@@ -159,14 +159,7 @@ public class Plan {
 	 * @param action
 	 */
 	public void setSemester(Semester sm, char action) {
-		switch (action) {
-		case 'i':// insert
-			break;
-		case 'u':// update
-			break;
-		case 'd':// delete
-			break;
-		}
+		new UpdateData().updateSemester(PLAN_ID, sm, action);
 	}
 
 	public void setCatalog(int catalogID) {
