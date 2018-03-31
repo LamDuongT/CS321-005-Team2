@@ -6,12 +6,13 @@ import java.sql.Statement;
 /**
  *
  * @author Huan Nguyen
+ * @author Robert Tagliaferri
  */
 public class Login {
 	private int studentID;
 	private String netID;
 	private String username;
-	private String passowrd;
+	private String password;
 	// the attribute that capture whether user logged in the system
 	private boolean isLoggedIn = false;
 	// the connection to database
@@ -100,7 +101,7 @@ public class Login {
 	 */
 	public Profile getProfile(int studentID) {
 		Profile aProfile = new Profile();
-		// check whether user login or not. if not, print error message
+		// check whether user is logged in or not. if not, print error message
 		if (this.isLoggedIn == false) {
 			System.out.println("[ERROR] You are not logged in yet!");
 			// otherwise, get profile for the studentID
