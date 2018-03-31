@@ -81,13 +81,17 @@ public class Plan {
 		// Add and Change
 		// If not removing (majorID not being -1)
 		if (majorID >= 0) {
+			
 			Major m = this.majorsData.getMajorByID(majorID);
-			// If primary major is not the same as the major being added
+			
+			// If the major being added does not have the same ID as a major within majors array
 			if ((majors[0].getMajorID() != m.getMajorID()) && (majors[1].getMajorID() != m.getMajorID())) {
-				// If major being added is not the same name as a current minor
-				if ((!m.getMajorName().equals(minors[0].getMinorName()))
-				&& (!m.getMajorName().equals(minors[1].getMinorName()))) {
+				
+				// If major being added does not have the same name as a current minor within minors array
+				if ((!m.getMajorName().equals(minors[0].getMinorName())) && (!m.getMajorName().equals(minors[1].getMinorName()))) {
+					
 					majors[majorPosition] = m;
+					
 				} else {
 					throw new RuntimeException(
 							"ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
@@ -96,12 +100,13 @@ public class Plan {
 				throw new RuntimeException("ERROR: Major-major conflict: Cannot add the same major again!");
 			}
 		}
-		// Remove
+		// Removal processs
 		else {
+			// Removal is only possible with the secondary major
 			if (majorPosition == 1) {
 				majors[1] = new Major();
-
 			} else {
+				// and not the primary major
 				throw new RuntimeException("ERROR: Cannot remove the primary major.");
 			}
 		}
@@ -120,14 +125,19 @@ public class Plan {
 		// Add and Change
 		// If not removing (minorID not being -1)
 		if (minorID >= 0) {
+			
 			Minor m = this.minorsData.getMinorByID(minorID);
-			// If minor being added isn't already
+			
+			// If minor being added doesn't already exist within the minors array
 			if ((minors[0].getMinorID() != m.getMinorID()) && (minors[1].getMinorID() != m.getMinorID())) {
-				// If minor being added is not the same name as a current minor
-				if ((!m.getMinorName().equals(majors[0].getMajorName()))
-				&& (!m.getMinorName().equals(majors[1].getMajorName()))) {
+				
+				// If minor being added does not have the same name as a major within majors array
+				if ((!m.getMinorName().equals(majors[0].getMajorName())) && (!m.getMinorName().equals(majors[1].getMajorName()))) {
+					
 					minors[minorPosition] = m;
+					
 				} else {
+					
 					throw new RuntimeException(
 							"ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
 				}
@@ -135,15 +145,19 @@ public class Plan {
 				throw new RuntimeException("ERROR: Minor-minor conflict: Cannot add the same minor again!");
 			}
 		}
-		// Remove
+		// Removal of minors
 		else {
-			minors[1] = new Minor();
+			minors[minorPosition] = new Minor();
 		}
-		
 		// Update to Databse once finished with modification in Java
 		new UpdateData().updatePlan(this, 'u');
 	}
-
+	
+	/**
+	 * @author Mohammed Alsharf
+	 * @param sm
+	 * @param action
+	 */
 	public void setSemester(Semester sm, char action) {
 		switch (action) {
 		case 'i':// insert
