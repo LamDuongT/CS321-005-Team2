@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author Huan Nguyen
- *
+ * @author Lam Duong
  */
 public class Courses {
 	// the list of Course objects
