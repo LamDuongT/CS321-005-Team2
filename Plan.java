@@ -17,9 +17,19 @@ public class Plan {
 	private Minor[] minors;
 	private Semesters semesters;
 	private int catalogID;
-
-	public Plan(int planID, String planName, int catalogID, int majorID) {
+	
+	// Constructor for empty plan
+	public Plan() {
+		this.PLAN_ID = -1;
+		this.setValues(-1, "", -1, -1, -1, -1);
+	}
+	
+	public Plan(int planID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.PLAN_ID = planID;
+		this.setValues(catalogID, planName, majorID, minorID, major2ID, minor2ID);
+	}
+	
+	public void setValues(int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.planName = planName;
 		this.catalogID = catalogID;
 
@@ -31,10 +41,11 @@ public class Plan {
 		this.majors = new Major[] { new Major(), new Major() };
 		this.minors = new Minor[] { new Minor(), new Minor() };
 
-		// PLAN CANNOT BE INSTANTIATED WITHOUT AT LEAST ONE MAJOR
 		this.majors[0] = majorsData.getMajorByID(majorID);
+		this.majors[1] = majorsData.getMajorByID(major2ID);
+		this.minors[0] = minorsData.getMinorByID(minorID);
+		this.minors[1] = minorsData.getMinorByID(minor2ID);
 	}
-
 	/**
 	 * ACCESSOR METHODS:
 	 */
