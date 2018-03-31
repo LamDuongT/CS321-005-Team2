@@ -228,7 +228,7 @@ public class UpdateData {
             String query = "";
             switch(action){
                 case 'i':
-                    query.concat("INSERT INOT collegespdb.tblsemester(semesterID,semesterName,semesterDesc,creditMin,creditMax)")
+                    query.concat("INSERT INTO collegespdb.tblsemester(semesterID,semesterName,semesterDesc,creditMin,creditMax)")
                          .concat("VALUES(\"").concat(sm.getSemesterName()).concat("\",\"").concat(sm.getSemesterDesc())
                          .concat("\",\"").concat(""+sm.getCreditMin()).concat("\",\"").concat(""+sm.getCreditMax())
                          .concat("\")");
