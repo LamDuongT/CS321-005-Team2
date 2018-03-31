@@ -87,7 +87,9 @@ public class Profile {
         }
 	/**
 	 * Override toString method for testing purpose
+     * @return 
 	 */
+        @Override
 	public String toString() {
 		String returnString = "StudentID = " + this.studentID + "\n";
 		returnString += "netId = " + this.netID + "\n";
