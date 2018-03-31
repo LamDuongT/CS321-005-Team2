@@ -28,14 +28,6 @@ public class Majors {
 	public Majors(int catalogID) {
 		getMajorData(catalogID);
 	}
-	
-	/**
-	 * @author Lam Duong
-	 *Retrieve a major object within majorList using position within list
-	 */
-	public Major getMajorByNum(int listPosition) {
-		return this.majorList.get(listPosition);
-	}
 
 	/**
 	 * Get major by ID from the list of majors
