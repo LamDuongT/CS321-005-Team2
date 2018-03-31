@@ -94,7 +94,6 @@ public class Courses {
 			aCourse = this.courseList.get(index);
 			returnString += aCourse.toString() + "\n";
 		}
-
 		return returnString;
 	}
 }
