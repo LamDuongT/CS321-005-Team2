@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 public class Semesters {
-	private List<Semester> semesterList = new LinkedList<Semester>();
+	private List<Semester> semesterList = new LinkedList<>();
 
 	private Semester aSemester;
 	
@@ -23,6 +23,8 @@ public class Semesters {
 	
 	/**
 	 * Get Semester by ID from the list of Semesters
+     * @param semesterID
+     * @return 
 	 */
 	public Semester getSemesterByID(int semesterID) {
 		aSemester = null;
@@ -43,6 +45,8 @@ public class Semesters {
 
 	/**
 	 * Get Semester by Name from the list of Semesters
+     * @param catalogName
+     * @return 
 	 */
 	public Semester getCatalogByName(String catalogName) {
 		aSemester = null;
@@ -50,7 +54,7 @@ public class Semesters {
 
 		for (int index = 0; index < this.semesterList.size(); index++) {
 			aSemester = this.semesterList.get(index);
-			if (aSemester.getSemesterName().toLowerCase().indexOf(catalogName) != -1) {
+			if (aSemester.getSemesterName().toLowerCase().contains(catalogName)) {
 				isFound = true;
 				break;
 			}
@@ -79,24 +83,27 @@ public class Semesters {
 
 			System.out.println(queryString);
 
-			// Initialize a sql statement
-			Statement statement = connectdb.theConnection.createStatement();
-			// recordSet will hold a data table as sql object
-			// to see how the data table look like, copy the queryString contents and
-			// execute in mysql Workbench
-			ResultSet recordSet = statement.executeQuery(queryString);
-
-			while (recordSet.next()) {
-				semesterID = recordSet.getInt("semesterID");
-				catalogName = recordSet.getString("semesterName");
-				catalogDesc = recordSet.getString("semesterDesc");
-				creditMin = recordSet.getInt("creditMin");
-				creditMax = recordSet.getInt("creditMax");
-
-				aSemester = new Semester(semesterID, catalogName, catalogDesc, creditMin, creditMax);
-				this.semesterList.add(aSemester);
-			}
-			statement.close();
+                    // recordSet will hold a data table as sql object
+                    // to see how the data table look like, copy the queryString contents and
+                    // execute in mysql Workbench
+                    try ( // Initialize a sql statement
+                            Statement statement = connectdb.theConnection.createStatement()) {
+                        // recordSet will hold a data table as sql object
+                        // to see how the data table look like, copy the queryString contents and
+                        // execute in mysql Workbench
+                        ResultSet recordSet = statement.executeQuery(queryString);
+                        
+                        while (recordSet.next()) {
+                            semesterID = recordSet.getInt("semesterID");
+                            catalogName = recordSet.getString("semesterName");
+                            catalogDesc = recordSet.getString("semesterDesc");
+                            creditMin = recordSet.getInt("creditMin");
+                            creditMax = recordSet.getInt("creditMax");
+                            
+                            aSemester = new Semester(semesterID, catalogName, catalogDesc, creditMin, creditMax);
+                            this.semesterList.add(aSemester);
+                        }
+                    }
 
 		} catch (SQLException e) {
 			throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
