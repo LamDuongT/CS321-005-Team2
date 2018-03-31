@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class Semester {
 	// the range of credit taken for a semester
-	private final int DEFAULT_CREDIT_MIN = 0;
-	private final int DEFAULT_CREDIT_MAX = 18;
+	private final int DEFAULT_CREDIT_MIN = 12;
+	private final int DEFAULT_CREDIT_MAX = 16;
 	
 	private int semesterID;
 	private String semesterName;
@@ -20,12 +20,14 @@ public class Semester {
 	private int creditMin;
 	private int creditMax;
         private ArrayList<Course> courses;
+   private boolean lock;
 
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public Semester() {
 		setValue(-1, "", "", 0, 0, new ArrayList<>());
+      this.lock= false;
 	}
 
 	/**
@@ -33,6 +35,7 @@ public class Semester {
 	 */
 	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax) {
 		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, new ArrayList<>());
+      this.lock=false;
 	}
 
 	/**
@@ -122,7 +125,22 @@ public class Semester {
 	public int getCreditMax() {
 		return this.creditMax;
 	}
-	
+   //getter for lock status
+   public boolean getLock(){
+      return this.lock;
+   }
+   //change credit max
+   public void changeCreditMax(int m){
+      this.creditMax= m;
+   }
+   //change credit min
+   public void changeCreditMin(int m){
+      this.creditMin=m;
+   }
+   //inverts lock status
+   public void toggleLock(){
+      this.lock==!this.lock;
+   }
 	/**Override toString method for testing purpose
 	 * */
 	public String toString() {
