@@ -5,28 +5,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 
- */
-
-/**
  * @author Huan Nguyen
  *
  */
 public class Courses {
-	// the list of course
+	// the list of Course objects
 	private List<Course> courseList = new LinkedList<Course>();
-
 	private Course aCourse;
 
 	/**
-	 * Initialize the list of course from database
+	 * Initialize the list of Course objects from database
 	 */
 	public Courses() {
 		getCourseData();
 	}
 
 	/**
-	 * fetch all data from the table catalog and add to the list
+	 * fetch all data from the table course and add to the list
 	 */
 	private void getCourseData() {
 		ConnectDB connectdb = new ConnectDB();
