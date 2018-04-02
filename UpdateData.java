@@ -245,5 +245,14 @@ public class UpdateData {
                     query.concat("DELETE FROM collegespdb.tblsemester WHERE semesterID = ").concat(""+sm.getSemesterID());
                     break;
             }
+            System.out.println(query);
+            try {
+                Statement statement = connectdb.theConnection.createStatement();
+                statement.executeUpdate(query);
+            } catch (SQLException ex) {
+                throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+            }finally{
+                connectdb.disconectDB();
+            }
         }
 }
