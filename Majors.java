@@ -40,7 +40,6 @@ public class Majors {
 	 */
 	public Major getMajorByID(int majorID) {
 		aMajor = null;
-
 		for (int index = 0; index < this.majorList.size(); index++) {
 			aMajor = this.majorList.get(index);
 			if (aMajor.getMajorID() == majorID) {

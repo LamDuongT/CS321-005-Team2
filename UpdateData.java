@@ -155,11 +155,11 @@ public class UpdateData {
 	 * @param thePlan
 	 *            The Plan to be updated
 	 * @param theAction
-	 *            The flag for inserting new Plan or update an existing Plan action
+	 *            The flag for inserting new Plan or updating an existing Plan action
 	 *            will have 3 values: 'i' for insert, 'u' for update, and 'd' for
 	 *            delete
 	 * @exception IllegalArgumentException
-	 *                when thePlan is null
+	 *                when thePlan is null.
 	 */
 	public void updatePlan(Plan thePlan, char theAction) {
 		// throw exception when thePlan is null
