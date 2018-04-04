@@ -155,11 +155,11 @@ public class UpdateData {
 	 * @param thePlan
 	 *            The Plan to be updated
 	 * @param theAction
-	 *            The flag for inserting new Plan or updating an existing Plan action
+	 *            The flag for inserting new Plan or update an existing Plan action
 	 *            will have 3 values: 'i' for insert, 'u' for update, and 'd' for
 	 *            delete
 	 * @exception IllegalArgumentException
-	 *                when thePlan is null.
+	 *                when thePlan is null
 	 */
 	public void updatePlan(Plan thePlan, char theAction) {
 		// throw exception when thePlan is null
@@ -217,42 +217,50 @@ public class UpdateData {
 			connectdb.disconectDB();
 		}
 	}
-        //updates the semesters in data base
-        //insert, update and delete
-        @SuppressWarnings("ResultOfMethodCallIgnored")
-        public void updateSemester(int PlanID, Semester sm, char action){
-            if(sm == null){
-                throw new IllegalArgumentException("[ERROR] Semester can not be null!");
-            }
-            connectdb.reconnect();
-            String query = "";
-            switch(action){
-                case 'i':
-                    query.concat("INSERT INTO collegespdb.tblsemester(semesterID,semesterName,semesterDesc,creditMin,creditMax)")
-                         .concat("VALUES(\"").concat(sm.getSemesterName()).concat("\",\"").concat(sm.getSemesterDesc())
-                         .concat("\",\"").concat(""+sm.getCreditMin()).concat("\",\"").concat(""+sm.getCreditMax())
-                         .concat("\")");
-                    break;
-                case 'u':
-                    query.concat("UPDATE  collegespdb.tblsemester SET")
-                         .concat("semesterName = \"").concat(sm.getSemesterName()).concat("\",")
-                         .concat("semesterDecs = \"").concat(sm.getSemesterDesc()).concat("\",")
-                         .concat("creditMin = \"").concat(""+sm.getCreditMin()).concat("\",")
-                         .concat("semesterID = \"").concat(""+sm.getCreditMax()).concat("\",")
-                         .concat("WHERE semesterID = ").concat(""+sm.getSemesterID());
-                    break;
-                case 'd':
-                    query.concat("DELETE FROM collegespdb.tblsemester WHERE semesterID = ").concat(""+sm.getSemesterID());
-                    break;
-            }
-            System.out.println(query);
-            try {
-                Statement statement = connectdb.theConnection.createStatement();
-                statement.executeUpdate(query);
-            } catch (SQLException ex) {
-                throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
-            }finally{
-                connectdb.disconectDB();
-            }
+	
+
+
+	/**
+	 * Method for updating the semesters in database
+     * insert, update and delete
+	 * @param PlanID
+	 * @param sm
+	 * @param action
+	 */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void updateSemester(int PlanID, Semester sm, char action){
+        if(sm == null){
+            throw new IllegalArgumentException("[ERROR] Semester can not be null!");
         }
+        connectdb.reconnect();
+        String query = "";
+        switch(action){
+            case 'i':
+                query.concat("INSERT INTO collegespdb.tblsemester(semesterID,semesterName,semesterDesc,creditMin,creditMax)")
+                     .concat("VALUES(\"").concat(sm.getSemesterName()).concat("\",\"").concat(sm.getSemesterDesc())
+                     .concat("\",\"").concat(""+sm.getCreditMin()).concat("\",\"").concat(""+sm.getCreditMax())
+                     .concat("\")");
+                break;
+            case 'u':
+                query.concat("UPDATE  collegespdb.tblsemester SET")
+                     .concat("semesterName = \"").concat(sm.getSemesterName()).concat("\",")
+                     .concat("semesterDecs = \"").concat(sm.getSemesterDesc()).concat("\",")
+                     .concat("creditMin = \"").concat(""+sm.getCreditMin()).concat("\",")
+                     .concat("semesterID = \"").concat(""+sm.getCreditMax()).concat("\",")
+                     .concat("WHERE semesterID = ").concat(""+sm.getSemesterID());
+                break;
+            case 'd':
+                query.concat("DELETE FROM collegespdb.tblsemester WHERE semesterID = ").concat(""+sm.getSemesterID());
+                break;
+        }
+        System.out.println(query);
+        try {
+            Statement statement = connectdb.theConnection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+        }finally{
+            connectdb.disconectDB();
+        }
+    }
 }

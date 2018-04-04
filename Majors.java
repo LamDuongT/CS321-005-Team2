@@ -31,11 +31,11 @@ public class Majors {
 
 	/**
 	 * Get major by ID from the list of majors
-	 * Method will return null if no matches are found
+	 * Method will return an empty Major object if no matches are found
 	 * @author Huan Nguyen
 	 * @author Lam Duong
 	 * @param majorID
-	 *            the majorID
+	 *            the ID of the major within the database
 	 * @return Major Object *
 	 */
 	public Major getMajorByID(int majorID) {
@@ -46,7 +46,7 @@ public class Majors {
 				return aMajor;
 			}
 		}
-		return aMajor;
+		return new Major();
 	}
 
 	/**
@@ -138,7 +138,6 @@ public class Majors {
 			aMajor = this.majorList.get(index);
 			returnString += aMajor.toString() + "\n";
 		}
-
 		return returnString;
 	}
 

@@ -24,11 +24,13 @@ public class Plan {
 		this.setValues(-1, "", -1, -1, -1, -1);
 	}
 	
+	// Standard constructor
 	public Plan(int planID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.PLAN_ID = planID;
 		this.setValues(catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
 	
+	// Setting values for constructor
 	public void setValues(int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.planName = planName;
 		this.catalogID = catalogID;
