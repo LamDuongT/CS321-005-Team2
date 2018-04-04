@@ -26,9 +26,10 @@ public class Plans {
 		for (int i = 0; i < plansList.size(); i++) {
 			aPlan = plansList.get(i);
 			if (planID == aPlan.getPlanID()) {
-				return aPlan;
+				break;
 			}
 		}
+		return aPlan;
 	}
 	
 	/**
