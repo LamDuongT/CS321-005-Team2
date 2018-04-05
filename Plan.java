@@ -28,11 +28,11 @@ public class Plan {
 	// Standard constructor
 	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.PLAN_ID = planID;
-		this.setValues(int profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
+		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
 	
 	// Setting values for constructor
-	public void setValues(int profile, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
+	public void setValues(int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.planName = planName;
 		this.catalogID = catalogID;
 		this.profileID = profileID;

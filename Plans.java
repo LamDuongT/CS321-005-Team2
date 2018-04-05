@@ -45,6 +45,7 @@ public class Plans {
 			int _minor1ID;
 			int _major2ID;
 			int _minor2ID;
+			int _profileID;
 			
 			// Instantiate query strings with all fields for Plan
 			String queryString = "SELECT planID, catalogID, planName, majorID, minorID, major2ID, minor2ID FROM 'tablplan' ";
@@ -66,8 +67,9 @@ public class Plans {
 				_minor1ID = recordSet.getInt("minorID");
 				_major2ID = recordSet.getInt("major2ID");
 				_minor2ID = recordSet.getInt("minor2ID");
+				_profileID = recordSet.getInt("profileID");
 				
-				aPlan = new Plan(_planID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID, _minor2ID);
+				aPlan = new Plan(_profileID, _planID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID, _minor2ID);
 				plansList.add(aPlan);
 			}
 			statement.close();

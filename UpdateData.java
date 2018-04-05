@@ -181,8 +181,8 @@ public class UpdateData {
 				// form the query for insertion
 				queryString = "INSERT INTO collegespdb.tblplan (catalogID, major1ID, minor1ID, major2ID, minor2ID) ";
 				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors()[0].getMajorID()
-						+ "\", " + thePlan.getMinors()[0].getMinorID() + "\", " + thePlan.getMajors()[1].getMajorID()
-						+ "\", " + thePlan.getMinors()[1].getMinorID() + "\", " + thePlan.);";
+						+ "\", \"" + thePlan.getMinors()[0].getMinorID() + "\", \"" + thePlan.getMajors()[1].getMajorID()
+						+ "\", \"" + thePlan.getMinors()[1].getMinorID() + "\", \"" + thePlan.getProfileID() + ");";
 				break;
 
 			// Case for updating an existing plan
@@ -191,15 +191,16 @@ public class UpdateData {
 				queryString = "UPDATE collegespdb.tblplan SET  ";
 				queryString += "catalogID =\"" + thePlan.getCatalogID() + "\",";
 				queryString += "major1ID =\"" + thePlan.getMajors()[0].getMajorID() + "\",";
-				queryString += "minor1ID =\"" + thePlan.getMinors()[0].getMinorID() + "\", ";
+				queryString += "minor1ID =\"" + thePlan.getMinors()[0].getMinorID() + "\",";
                 queryString += "major2ID =\"" + thePlan.getMajors()[1].getMajorID() + "\",";
-				queryString += "minor2ID =\"" + thePlan.getMinors()[1].getMinorID() + "\", ";
+				queryString += "minor2ID =\"" + thePlan.getMinors()[1].getMinorID() + "\",";
+				// No need for query string to update profileID because profileID will always remain the same?
 				queryString += "WHERE planID = " + thePlan.getPlanID();
 				break;
 
 			// Case for deleting an existing plan
 			case 'd':
-				queryString = "DELETE FROM tblPlan WHERE planID = " + thePlan.getPlanID();
+				queryString = "DELETE FROM tblplan WHERE planID = " + thePlan.getPlanID();
 				break;
 			}
 
@@ -258,7 +259,7 @@ public class UpdateData {
             Statement statement = connectdb.theConnection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException ex) {
-            throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+            throw new IllegalStateException("[ERROR] there is an error with the sql querry!", ex);
         }finally{
             connectdb.disconectDB();
         }
