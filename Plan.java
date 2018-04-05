@@ -82,6 +82,10 @@ public class Plan {
 	public int getCatalogID() {
 		return this.catalogID;
 	}
+	
+	public int getProfileID() {
+		return this.profileID;
+	}
 
 	/**
 	 * MUTATOR METHODS:

@@ -182,7 +182,7 @@ public class UpdateData {
 				queryString = "INSERT INTO collegespdb.tblplan (catalogID, major1ID, minor1ID, major2ID, minor2ID) ";
 				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors()[0].getMajorID()
 						+ "\", " + thePlan.getMinors()[0].getMinorID() + "\", " + thePlan.getMajors()[1].getMajorID()
-						+ "\", " + thePlan.getMinors()[1].getMinorID() + ");";
+						+ "\", " + thePlan.getMinors()[1].getMinorID() + "\", " + thePlan.);";
 				break;
 
 			// Case for updating an existing plan
