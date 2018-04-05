@@ -32,7 +32,7 @@ public class Plan {
 	}
 	
 	// Setting values for constructor
-	public void setValues(int catalogID, int profileID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
+	public void setValues(int profile, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.planName = planName;
 		this.catalogID = catalogID;
 		this.profileID = profileID;
@@ -50,6 +50,7 @@ public class Plan {
 		this.minors[0] = minorsData.getMinorByID(minorID);
 		this.minors[1] = minorsData.getMinorByID(minor2ID);
 	}
+	
 	/**
 	 * ACCESSOR METHODS:
 	 */
