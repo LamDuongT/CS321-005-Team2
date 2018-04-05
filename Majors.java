@@ -39,14 +39,14 @@ public class Majors {
 	 * @return Major Object *
 	 */
 	public Major getMajorByID(int majorID) {
-		aMajor = null;
+		aMajor = new Major();
 		for (int index = 0; index < this.majorList.size(); index++) {
 			aMajor = this.majorList.get(index);
 			if (aMajor.getMajorID() == majorID) {
 				return aMajor;
 			}
 		}
-		return new Major();
+		return aMajor;
 	}
 
 	/**

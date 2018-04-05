@@ -17,23 +17,25 @@ public class Plan {
 	private Minor[] minors;
 	private Semesters semesters;
 	private int catalogID;
+	private int profileID;
 	
 	// Constructor for empty plan
 	public Plan() {
 		this.PLAN_ID = -1;
-		this.setValues(-1, "", -1, -1, -1, -1);
+		this.setValues(-1, -1, "", -1, -1, -1, -1);
 	}
 	
 	// Standard constructor
-	public Plan(int planID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
+	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.PLAN_ID = planID;
-		this.setValues(catalogID, planName, majorID, minorID, major2ID, minor2ID);
+		this.setValues(int profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
 	
 	// Setting values for constructor
-	public void setValues(int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
+	public void setValues(int catalogID, int profileID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
 		this.planName = planName;
 		this.catalogID = catalogID;
+		this.profileID = profileID;
 
 		this.semesters = new Semesters();
 		this.majorsData = new Majors(catalogID);
