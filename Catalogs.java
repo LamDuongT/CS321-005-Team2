@@ -96,7 +96,9 @@ public class Catalogs {
 			connectdb.disconectDB();
 		}
 	}
-
+        public List<Catalog> getCatalogs(){
+            return this.catalogList;
+        }
 	/**
 	 * Override toString method for testing purpose
 	 */

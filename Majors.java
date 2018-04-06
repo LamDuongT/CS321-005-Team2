@@ -2,6 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 
@@ -28,7 +29,9 @@ public class Majors {
 	public Majors(int catalogID) {
 		getMajorData(catalogID);
 	}
-
+        public List<Major>getMajorsList(){
+            return majorList;
+        }
 	/**
 	 * Get major by ID from the list of majors
 	 * Method will return an empty Major object if no matches are found
