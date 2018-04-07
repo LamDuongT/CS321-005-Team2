@@ -23,6 +23,10 @@ public class Prereqs {
 		getPrereqData(courseID);
 	}
 	
+	public List<Prereq> getPrereqList () {
+		return this.prereqList;
+	}
+	
 	/**get the list of prereq course name
 	 * @param none
 	 * Note: this method does not have courseID parameter because the list prereqList holds all prereq course for the courseID already 
