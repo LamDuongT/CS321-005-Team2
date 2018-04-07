@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class Semester {
 	// the range of credit taken for a semester
-	private final int DEFAULT_CREDIT_MIN = 12;
-	private final int DEFAULT_CREDIT_MAX = 16;
+	private final int DEFAULT_CREDIT_MIN = 0;
+	private final int DEFAULT_CREDIT_MAX = 18;
 
 	private int semesterID;
 	private String semesterName;
