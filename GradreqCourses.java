@@ -15,15 +15,27 @@ import java.util.List;
 public class GradreqCourses {
 	private List<GradreqCourse> gradreqCourseList = new LinkedList<GradreqCourse>();
 	private GradreqCourse aGradreqCourse;
-	
+
 	public GradreqCourses() {
-		getGradreqcourseData();
+		getGradreqcourseData(-1, -1);
+	}
+
+	public GradreqCourses(int majorID) {
+		getGradreqcourseData(majorID, -1);
+	}
+
+	public GradreqCourses(int majorID, int minorID) {
+		getGradreqcourseData(majorID, minorID);
 	}
 	
+	public List<GradreqCourse> getGradreqCourseList () {
+		return this.gradreqCourseList;
+	}
+
 	/**
 	 * fetch all data from the table gradreqcourse and add to the list
 	 */
-	private void getGradreqcourseData() {
+	private void getGradreqcourseData(int majorID, int minorID) {
 		ConnectDB connectdb = new ConnectDB();
 
 		try {
@@ -32,9 +44,19 @@ public class GradreqCourses {
 			int _minorID;
 			int _courseID;
 			String _courseName;
+			String whereCause = "";
 
-			String queryString = "SELECT tblgradreqcourse.*, tblcourse.courseName ";
+			if (majorID != -1 && minorID != -1) {
+				whereCause = "WHERE tblgradreqcourse.majorID = '" + majorID + "' OR tblgradreqcourse.minorID = '" + minorID + "' ";
+			} else if (majorID != -1) {
+				whereCause = "WHERE tblgradreqcourse.majorID = '" + majorID + "' ";
+			} else if (minorID != -1) {
+				whereCause = "WHERE tblgradreqcourse.minorID = '" + minorID + "' ";
+			}
+
+			String queryString = "SELECT tblgradreqcourse.gradreqcourseID, tblgradreqcourse.majorID, tblgradreqcourse.minorID, tblgradreqcourse.courseID, tblcourse.courseName ";
 			queryString += "FROM tblgradreqcourse INNER JOIN tblcourse ON tblgradreqcourse.courseID = tblcourse.courseID ";
+			queryString += whereCause;
 			queryString += "ORDER BY gradreqcourseID ASC";
 
 			System.out.println(queryString);
@@ -64,7 +86,7 @@ public class GradreqCourses {
 			connectdb.disconectDB();
 		}
 	}
-	
+
 	/**
 	 * Override toString method for testing purpose
 	 */
