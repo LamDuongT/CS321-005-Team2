@@ -13,28 +13,32 @@ import java.util.List;
  * @author Lam Duong
  */
 public class Course {
+	private final int MINIMAL_CREDIT_HOURS = 0;
+	private final int MAXIMUM_CREDIT_HOURS = 10;
+	
 	private int courseID;
 	private String courseName;
 	private String courseDesc;
 	private int creditHours;
 	private int catalogID;
-	private int majorID;
-	private int minorID;
+	private String majorID;
+	private String minorID;
 	private Prereqs prereqList;
+		
 
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public Course() {
-		setValue(-1, "", "", -1, -1, -1, -1);
+		setValue(-1, "", "", -1, -1, "-1", "-1");
 		this.prereqList = null;
 	}
 
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public Course(int courseID, String courseName, String courseDesc, int creditHours, int catalogID, int majorID,
-			int minorID) {
+	public Course(int courseID, String courseName, String courseDesc, int creditHours, int catalogID, String majorID,
+			String minorID) {
 		setValue(courseID, courseName, courseDesc, creditHours, catalogID, majorID, minorID);
 
 		this.prereqList = new Prereqs(courseID);
@@ -42,7 +46,7 @@ public class Course {
 
 	// Fields population method for constructor method
 	public void setValue(int courseID, String courseName, String courseDesc, int creditHours, int catalogID,
-			int majorID, int minorID) {
+			String majorID, String minorID) {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.courseDesc = courseDesc;
@@ -69,7 +73,7 @@ public class Course {
 
 	// setter for creditHours
 	public void setCreditHours(int creditHours) throws Exception {
-		if ((creditHours <= 0) || (creditHours > 10)) {
+		if ((creditHours <= MINIMAL_CREDIT_HOURS) || (creditHours > MAXIMUM_CREDIT_HOURS)) {
 			throw new Exception("Amount of credit hours entered is invalid!");
 		}
 		this.creditHours = creditHours;
@@ -81,12 +85,12 @@ public class Course {
 	}
 
 	// setter for majorID
-	public void setMajorID(int majorID) {
+	public void setMajorID(String majorID) {
 		this.majorID = majorID;
 	}
 
 	// setter for minorID
-	public void setMinorID(int minorID) {
+	public void setMinorID(String minorID) {
 		this.minorID = minorID;
 	}
 
@@ -116,12 +120,12 @@ public class Course {
 	}
 
 	// getter for majorID
-	public int getMajorID() {
+	public String getMajorID() {
 		return this.majorID;
 	}
 
 	// getter for minorID
-	public int getMinorID() {
+	public String getMinorID() {
 		return this.minorID;
 	}
 
@@ -135,7 +139,7 @@ public class Course {
 	 */
 	public String toString() {	
 		String returnString = "";		
-		returnString = String.format(" %-8d| %-15s| %-12d|  %-10d| %-10d| %-10d| %-25s| %-25s", this.courseID, this.courseName, this.creditHours, this.catalogID, this.majorID, this.minorID, this.prereqList.getPrereqsCourseNames(), this.courseDesc);	
+		returnString = String.format(" %-8d| %-15s| %-12d|  %-10d| %-10s| %-10s| %-25s| %-25s", this.courseID, this.courseName, this.creditHours, this.catalogID, this.majorID, this.minorID, this.prereqList.getPrereqsCourseNames(), this.courseDesc);	
 		return returnString;
 	}
 }

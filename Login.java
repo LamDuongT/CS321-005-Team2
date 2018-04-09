@@ -46,6 +46,11 @@ public class Login {
 	public boolean isLoggedIn() {
 		return this.isLoggedIn;
 	}
+	
+	// logout
+	public void loggedOut() {
+		this.isLoggedIn = false;
+	}
 
 	/**
 	 * Do the login using username and password

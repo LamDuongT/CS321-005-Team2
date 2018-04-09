@@ -42,8 +42,9 @@ public class GradreqCourses {
 			int _gradreqcourseID;
 			int _majorID;
 			int _minorID;
-			int _courseID;
 			String _courseName;
+			String _gradreqDesc;
+			
 			String whereCause = "";
 
 			if (majorID != -1 && minorID != -1) {
@@ -54,8 +55,8 @@ public class GradreqCourses {
 				whereCause = "WHERE tblgradreqcourse.minorID = '" + minorID + "' ";
 			}
 
-			String queryString = "SELECT tblgradreqcourse.gradreqcourseID, tblgradreqcourse.majorID, tblgradreqcourse.minorID, tblgradreqcourse.courseID, tblcourse.courseName ";
-			queryString += "FROM tblgradreqcourse INNER JOIN tblcourse ON tblgradreqcourse.courseID = tblcourse.courseID ";
+			String queryString = "SELECT gradreqcourseID, majorID, minorID, courseName, gradreqDesc ";
+			queryString += "FROM tblgradreqcourse ";
 			queryString += whereCause;
 			queryString += "ORDER BY gradreqcourseID ASC";
 
@@ -72,10 +73,10 @@ public class GradreqCourses {
 				_gradreqcourseID = recordSet.getInt("gradreqcourseID");
 				_majorID = recordSet.getInt("majorID");
 				_minorID = recordSet.getInt("minorID");
-				_courseID = recordSet.getInt("courseID");
 				_courseName = recordSet.getString("courseName");
-
-				aGradreqCourse = new GradreqCourse(_gradreqcourseID, _majorID, _minorID, _courseID, _courseName);
+				_gradreqDesc = recordSet.getString("gradreqDesc");
+				
+				aGradreqCourse = new GradreqCourse(_gradreqcourseID, _majorID, _minorID, _courseName, _gradreqDesc);
 				this.gradreqCourseList.add(aGradreqCourse);
 			}
 			statement.close();
@@ -91,7 +92,7 @@ public class GradreqCourses {
 	 * Override toString method for testing purpose
 	 */
 	public String toString() {
-		String returnString = "gradreqcourseID | majorID   | minorID    | courseID  | courseName\n";
+		String returnString = "gradreqcourseID | majorID   | minorID   | courseName     | Desc\n";
 		for (int index = 0; index < this.gradreqCourseList.size(); index++) {
 			aGradreqCourse = this.gradreqCourseList.get(index);
 			returnString += aGradreqCourse.toString() + "\n";

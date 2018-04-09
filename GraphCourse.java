@@ -52,12 +52,13 @@ public class GraphCourse {
 			graph = new SingleGraph(graphName);
 			graph.addAttribute("ui.antialias"); 
 			graph.addAttribute("ui.quality"); 
-			graph.setAttribute("ui.stylesheet", "url(graph.style.css);"); // get some style
-			
-			
+			graph.setAttribute("ui.stylesheet", "url(src/graph.style.css);"); // get some style
+
+
 			// get the list of graduation for majorID and/or minorID
 			int _majorID = -1;
 			int _minorID = -1;
+
 			if (majorID != -1 && minorID != -1) {
 				_majorID = majorID;
 				_minorID = minorID;
@@ -79,99 +80,145 @@ public class GraphCourse {
 			List<GradreqCourse> gradreqcoursesList = new GradreqCourses(_majorID, _minorID).getGradreqCourseList();
 			// the list of prereqs courses
 			List<Prereq> prereqsList;
-			
+
 			Node node;
 			int nodeIndex = 1;
-			
+
 			// if the major is not empty
 			if (majorID != -1) {
 				node = graph.addNode("major");
 				node.addAttribute("ui.label", majorName);
 			}
-			
+
 			// if the minor is not empty
 			if (minorID != -1) {
 				node = graph.addNode("minor");
 				node.addAttribute("ui.label", minorName);
 			}
-			
+
 			GradreqCourse aReqCourse;
 			String parentNodeName = "";
 			String parentNodeDisplay = "";
-			
+
 			String childNodeName = "";
 			String childNodeDisplay = "";
-			
+
+			int parentCourseID = -1;
+
 			// loop through all course in the grad list
-			for (int index = 0; index < gradreqcoursesList.size(); index ++ ) {
+			for (int index = 0; index<gradreqcoursesList.size(); index ++ ) {
 				aReqCourse = gradreqcoursesList.get(index);
 				System.out.println("\nGradreq Courses = " + aReqCourse.toString());
-				
-				// first, we create a node for the current course
-				parentNodeName = aReqCourse.getCourseName();
-				parentNodeDisplay = parentNodeName;
-				
-				// add the new node based on the course name
-				if (graph.getNode(parentNodeName) == null) {
-					node = graph.addNode(parentNodeName);
-					node.addAttribute("ui.label", parentNodeDisplay);
-					System.out.println("\nCreateD parentNodeName ==== " + parentNodeName);
-				}
-				
-				// then, we get the list of prereq courses for the current course
-				prereqsList= new Prereqs(aReqCourse.getCourseID()).getPrereqList();
-				//System.out.println(" ==> Prereq Courses = " + prereqsList.toString());
-				
-				// if the prereqsList for the current course is not empty
-				// meaning that this course will not be added directly to the major or minor
-				// but it will be added by the parents class
-				
-				// only add courses that are parents or do not have prereq course
-				if (prereqsList.size() == 0) {				
-					// add the course to the tree according to its major or minor
-					// if the course belongs to major, add it to the graph
-					if (aReqCourse.getMajorID() == majorID) {					
-						graph.addEdge("'" + nodeIndex + "'", "major", parentNodeName, true);
-						nodeIndex++;
-					}
-					// if the course belongs to minor, add it to the graph
-					if (aReqCourse.getMinorID() == minorID) {					
-						graph.addEdge("'" + nodeIndex + "'", "minor", parentNodeName, true);
-						nodeIndex++;
-					}
+
+				// if the courseName is not empty
+				if (!aReqCourse.getCourseName().equals("")) {
 					
-					// then, get the child course for the current course
-					childNodeName = getChilCourseName(aReqCourse.getCourseID());
-					childNodeDisplay = childNodeName;
+					// get the courseID for the current node
+					parentCourseID = getCourseID(aReqCourse.getCourseName());
 					
-					System.out.println("Node::::" + graph.getNode(childNodeName));
-					// if the current node does not have children
-					// we don't need to create the children node
-					if (!childNodeName.equals("")) {
+					// first, we create a node for the current course
+					parentNodeName = aReqCourse.getCourseName();
+					parentNodeDisplay = parentNodeName + "-" + parentCourseID;
+
+					// add the new node based on the course name
+					if (graph.getNode(parentNodeName) == null) {
+						node = graph.addNode(parentNodeName);
+						node.addAttribute("ui.label", parentNodeDisplay);
+					}
+
+					
+					// then, we get the list of prereq courses for the current course
+					prereqsList= new Prereqs(parentCourseID).getPrereqList();
+					System.out.println(" ==> Prereq parentCourseID = " + prereqsList.toString());
+
+					// if the prereqsList for the current course is not empty
+					// meaning that this course will not be added directly to the major or minor
+					// but it will be added by the parents class
+
+					// only add courses that are parents or do not have prereq course
+					if (prereqsList.size() == 0) {				
+						// add the course to the tree according to its major or minor
+						// if the course belongs to major, add it to the graph
+						if (aReqCourse.getMajorID() == majorID && majorID != -1) {					
+							graph.addEdge("'" + nodeIndex + "'", "major", parentNodeName, true);
+							nodeIndex++;
+						}
+						// if the course belongs to minor, add it to the graph
+						if (aReqCourse.getMinorID() == minorID && minorID != -1) {					
+							graph.addEdge("'" + nodeIndex + "'", "minor", parentNodeName, true);
+							nodeIndex++;
+						}
+
+						// then, get the child course for the current course
+						childNodeName = getChilCourseName(parentCourseID);
+						childNodeDisplay = childNodeName;
+
+						System.out.println("Node::::" + graph.getNode(childNodeName));
+
 						// if the child node is not created, then create it
 						// add the new node based on the course name
 						if (graph.getNode(childNodeName) == null) {
 							node = graph.addNode(childNodeName);
 							node.addAttribute("ui.label", childNodeDisplay);
-							System.out.println("\nCreateD childNodeName ==== " + childNodeName);
+
+							// link the child node to its parent
+							graph.addEdge("'" + nodeIndex + "'", parentNodeName, childNodeName, true);
+							nodeIndex++;
 						}
-	
-						// link the child node to its parent
-						graph.addEdge("'" + nodeIndex + "'", parentNodeName, childNodeName, true);
-						nodeIndex++;
+
 					}
-					
-				}
-				
+
+				} // end if courseName is not empty
+
 			}
-			
+
 		}
 		return graph;
 	}
-	
+
+	private int getCourseID(String courseName) {
+		int courseID = -1;
+
+		if (!courseName.equals("")) {
+			ConnectDB connectdb = new ConnectDB();
+
+			try {
+				// query string
+				String queryString = "";
+				queryString += "SELECT tblcourse.courseID ";
+				queryString += "FROM tblcourse ";
+				queryString += "WHERE tblcourse.courseName = '" + courseName + "' ";
+				queryString += "LIMIT 1";
+				System.out.println(queryString);
+
+				// Initialize a sql statement
+				Statement statement = connectdb.theConnection.createStatement();
+				// recordSet will hold a data table as sql object
+				// to see how the data table look like, copy the queryString contents and
+				// execute in mysql Workbench
+				ResultSet recordSet = statement.executeQuery(queryString);
+				// loop through each record in the data table
+				while (recordSet.next()) {
+					courseID = recordSet.getInt("courseID");
+
+				}
+				statement.close();
+
+			} catch (SQLException e) {
+				throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+			} finally {
+				// close the connection
+				// NOTE: the close connection method need to be called in finally block to
+				// ensure the connection is closed
+				connectdb.disconectDB();
+			}
+		}
+		return courseID;
+	}
+
 	private String getChilCourseName(int prereqCourseID) {
 		String courseChilName = "";
-		
+
 		if (prereqCourseID != -1) {
 			ConnectDB connectdb = new ConnectDB();
 

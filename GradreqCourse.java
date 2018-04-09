@@ -10,32 +10,32 @@ public class GradreqCourse {
 	private int gradreqcourseID;
 	private int majorID;
 	private int minorID;
-	private int courseID;
 	private String courseName;
-
+	private String gradreqDesc;
+	
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public GradreqCourse() {
-		setValue(-1, -1, -1, -1, "");
+		setValue(-1, -1, -1, "", "");
 	}
 
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public GradreqCourse(int gradreqcourseID, int majorID, int minorID, int courseID, String courseName) {
-		setValue(gradreqcourseID, majorID, minorID, courseID, courseName);
+	public GradreqCourse(int gradreqcourseID, int majorID, int minorID, String courseName, String gradreqDesc) {
+		setValue(gradreqcourseID, majorID, minorID, courseName, gradreqDesc);
 	}
 
 	/**
 	 * method setValue is used for constructors
 	 */
-	private void setValue(int gradreqcourseID, int majorID, int minorID, int courseID, String courseName) {
+	private void setValue(int gradreqcourseID, int majorID, int minorID, String courseName, String gradreqDesc) {
 		this.gradreqcourseID = gradreqcourseID;
 		this.majorID = majorID;
 		this.minorID = minorID;
-		this.courseID = courseID;
 		this.courseName = courseName;
+		this.gradreqDesc = gradreqDesc;
 	}
 
 	// setter for gradreqcourseID
@@ -53,14 +53,14 @@ public class GradreqCourse {
 		this.minorID = minorID;
 	}
 
-	// setter for courseID
-	public void setCourseID(int courseID) {
-		this.courseID = courseID;
-	}
-
 	// setter for courseName
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+	
+	// setter for description
+	public void setCourseID(String gradreqDesc) {
+		this.gradreqDesc = gradreqDesc;
 	}
 
 	// getter for gradreqcourseID
@@ -78,21 +78,21 @@ public class GradreqCourse {
 		return this.minorID;
 	}
 
-	// getter for courseID
-	public int getCourseID() {
-		return this.courseID;
-	}
-
 	// getter for courseName
 	public String getCourseName() {
 		return this.courseName;
+	}
+	
+	// getter for courseID
+	public String getDesc() {
+		return this.gradreqDesc;
 	}
 	
 	/**Override toString method for testing purpose
 	 * */
 	public String toString() {
 		String returnString = "";		
-		returnString = String.format("\t%-8d| %-10d| %-10d|  %-10d| %-15s", this.gradreqcourseID, this.majorID, this.minorID, this.courseID, this.courseName);	
+		returnString = String.format("\t%-8d| %-10d| %-10d| %-15s| %s ", this.gradreqcourseID, this.majorID, this.minorID, this.courseName, this.gradreqDesc);	
 		return returnString;
 	}
 }

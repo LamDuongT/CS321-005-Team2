@@ -17,15 +17,42 @@ public class Courses {
 	 * Initialize the list of Course objects from database
 	 */
 	public Courses() {
-		getCourseData();
+		getCourseData(-1, -1, ' ');
+	}
+
+	/**
+	 * Initialize the list of Course for a catalog year from database
+	 */
+	public Courses(int catalogID) {
+		getCourseData(catalogID, -1, ' ');
+	}
+
+	/**
+	 * Initialize the list of Course for a catalog year from database
+	 * 
+	 * @param catalogID
+	 *            the catalog year
+	 * @param majorOrMinorID
+	 *            the major or minor ID
+	 * @param majorOrMinor
+	 *            based on this parameter, the list of course will be fetched
+	 *            accordingly to majorOrMinorID
+	 *            value: 'm' for major and 'n' for minor
+	 */
+	public Courses(int catalogID, int majorOrMinorID, char majorOrMinor) {
+		getCourseData(catalogID, majorOrMinorID, majorOrMinor);
+	}
+
+	public List getCoursesList() {
+		return this.courseList;
 	}
 
 	/**
 	 * fetch all data from the table course and add to the list
-     * @return 
+	 * 
+	 * @return
 	 */
-        public List getCoursesList(){return this.courseList;}
-	private void getCourseData() {
+	private void getCourseData(int catalogID, int majorOrMinorID, char majorOrMinor) {
 		ConnectDB connectdb = new ConnectDB();
 
 		try {
@@ -34,15 +61,36 @@ public class Courses {
 			String courseName;
 			String courseDesc;
 			int creditHours;
-			int catalogID;
-			int majorID;
-			int minorID;
+			int _catalogID;
+			String _majorID;
+			String _minorID;
+			
+			String whereCondition = "";
 
+			// if the catalogID is different from 1, meaning that we need to fetch data for courses by the catalogID
+			// also, if majorOrMinorID != -1, meaning that we need to constrain the major or minor as well
+			if (catalogID != -1 && majorOrMinorID != -1 && majorOrMinor != ' ') {
+				if (majorOrMinor == 'm') {
+					whereCondition = "WHERE catalogID = '" + catalogID + "' AND majorID like '%" + majorOrMinorID + "%' ";
+				}
+				else if (majorOrMinor == 'n') {
+					whereCondition = "WHERE catalogID = '" + catalogID + "' AND minorID = '" + majorOrMinorID + "' ";
+				}
+			}
+			else if (catalogID == -1 && majorOrMinorID == -1 && majorOrMinor == ' ') {
+				whereCondition = "";
+			}
+			// otherwise, we will get courses list for the catalogID
+			else {
+				whereCondition = "WHERE catalogID = '" + catalogID + "'";
+			}
+			
 			// the query string
 			String queryString = "SELECT courseID, courseName, courseDesc, creditHours, catalogID, majorID, minorID FROM `tblcourse` ";
+			queryString += whereCondition;
 			queryString += "ORDER BY courseID ASC";
 
-			// System.out.println(queryString);
+			 System.out.println(queryString);
 
 			// Initialize a sql statement
 			Statement statement = connectdb.theConnection.createStatement();
@@ -58,13 +106,13 @@ public class Courses {
 				courseName = recordSet.getString("courseName");
 				courseDesc = recordSet.getString("courseDesc");
 				creditHours = recordSet.getInt("creditHours");
-				catalogID = recordSet.getInt("catalogID");
-				majorID = recordSet.getInt("majorID");
-				minorID = recordSet.getInt("minorID");
+				_catalogID = recordSet.getInt("catalogID");
+				_majorID = recordSet.getString("majorID");
+				_minorID = recordSet.getString("minorID");
 
 				// instantiate aCourse object with all local variable
 				// the prereqList will be instantiated in the constructor of Course class
-				aCourse = new Course(courseID, courseName, courseDesc, creditHours, catalogID, majorID, minorID);
+				aCourse = new Course(courseID, courseName, courseDesc, creditHours, _catalogID, _majorID, _minorID);
 				// add the aCourse to the courseList for later uses
 				this.courseList.add(aCourse);
 			}

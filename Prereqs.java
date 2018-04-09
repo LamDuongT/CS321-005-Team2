@@ -68,7 +68,7 @@ public class Prereqs {
 				queryString += "WHERE c1.courseID = " + courseID;
 			}
 			
-			System.out.println(queryString);
+//			System.out.println(queryString);
 
 			// Initialize a sql statement
 			Statement statement = connectdb.theConnection.createStatement();
