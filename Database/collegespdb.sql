@@ -32,48 +32,6 @@ COMMENT = 'Catalog year';
 
 
 -- -----------------------------------------------------
--- Table `collegespdb`.`tblmajor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `collegespdb`.`tblmajor` (
-  `majorID` INT(11) NOT NULL AUTO_INCREMENT,
-  `majorName` VARCHAR(45) NULL DEFAULT NULL,
-  `majorDesc` MEDIUMTEXT NULL DEFAULT NULL,
-  `catalogID` INT(11) NOT NULL,
-  PRIMARY KEY (`majorID`),
-  INDEX `major_catalog_idx` (`catalogID` ASC),
-  CONSTRAINT `major_catalog`
-    FOREIGN KEY (`catalogID`)
-    REFERENCES `collegespdb`.`tblcatalog` (`catalogID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8
-COMMENT = 'Major';
-
-
--- -----------------------------------------------------
--- Table `collegespdb`.`tblminor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `collegespdb`.`tblminor` (
-  `minorID` INT(11) NOT NULL AUTO_INCREMENT,
-  `minorName` VARCHAR(45) NULL DEFAULT NULL,
-  `minorDesc` MEDIUMTEXT NULL DEFAULT NULL,
-  `catalogID` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`minorID`),
-  INDEX `minor_catalog_idx` (`catalogID` ASC),
-  CONSTRAINT `minor_catalog`
-    FOREIGN KEY (`catalogID`)
-    REFERENCES `collegespdb`.`tblcatalog` (`catalogID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8
-COMMENT = 'Minor	';
-
-
--- -----------------------------------------------------
 -- Table `collegespdb`.`tblcourse`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcourse` (
@@ -82,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcourse` (
   `courseDesc` MEDIUMTEXT NULL DEFAULT NULL,
   `creditHours` INT(11) NULL DEFAULT NULL,
   `catalogID` INT(11) NOT NULL,
-  `majorID` INT(11) NULL DEFAULT '-1',
-  `minorID` INT(11) NULL DEFAULT '-1',
+  `majorID` VARCHAR(50) NULL DEFAULT NULL,
+  `minorID` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`courseID`),
   INDEX `course_catalog_idx` (`catalogID` ASC),
   INDEX `course_major_idx` (`majorID` ASC),
@@ -92,19 +50,9 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcourse` (
     FOREIGN KEY (`catalogID`)
     REFERENCES `collegespdb`.`tblcatalog` (`catalogID`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `course_major`
-    FOREIGN KEY (`majorID`)
-    REFERENCES `collegespdb`.`tblmajor` (`majorID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `course_minor`
-    FOREIGN KEY (`minorID`)
-    REFERENCES `collegespdb`.`tblminor` (`minorID`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 88
+AUTO_INCREMENT = 82
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Courses	';
 
@@ -172,9 +120,78 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblcreditstaken` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'The credit taken for a student';
+
+
+-- -----------------------------------------------------
+-- Table `collegespdb`.`tblmajor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `collegespdb`.`tblmajor` (
+  `majorID` INT(11) NOT NULL AUTO_INCREMENT,
+  `majorName` VARCHAR(45) NULL DEFAULT NULL,
+  `majorDesc` MEDIUMTEXT NULL DEFAULT NULL,
+  `catalogID` INT(11) NOT NULL,
+  PRIMARY KEY (`majorID`),
+  INDEX `major_catalog_idx` (`catalogID` ASC),
+  CONSTRAINT `major_catalog`
+    FOREIGN KEY (`catalogID`)
+    REFERENCES `collegespdb`.`tblcatalog` (`catalogID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'Major';
+
+
+-- -----------------------------------------------------
+-- Table `collegespdb`.`tblminor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `collegespdb`.`tblminor` (
+  `minorID` INT(11) NOT NULL AUTO_INCREMENT,
+  `minorName` VARCHAR(45) NULL DEFAULT NULL,
+  `minorDesc` MEDIUMTEXT NULL DEFAULT NULL,
+  `catalogID` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`minorID`),
+  INDEX `minor_catalog_idx` (`catalogID` ASC),
+  CONSTRAINT `minor_catalog`
+    FOREIGN KEY (`catalogID`)
+    REFERENCES `collegespdb`.`tblcatalog` (`catalogID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'Minor	';
+
+
+-- -----------------------------------------------------
+-- Table `collegespdb`.`tblgradreqcourse`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `collegespdb`.`tblgradreqcourse` (
+  `gradreqcourseID` INT(11) NOT NULL AUTO_INCREMENT,
+  `majorID` INT(11) NULL DEFAULT NULL,
+  `minorID` INT(11) NULL DEFAULT NULL,
+  `courseName` VARCHAR(20) NULL DEFAULT NULL,
+  `Desc` MEDIUMTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`gradreqcourseID`),
+  INDEX `gradreqcourse_major_idx` (`majorID` ASC),
+  INDEX `gradreqcourse_minor_idx` (`minorID` ASC),
+  CONSTRAINT `gradreqcourse_major`
+    FOREIGN KEY (`majorID`)
+    REFERENCES `collegespdb`.`tblmajor` (`majorID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `gradreqcourse_minor`
+    FOREIGN KEY (`minorID`)
+    REFERENCES `collegespdb`.`tblminor` (`minorID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 84
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'The courses that is required for certain major, minor to graduate	';
 
 
 -- -----------------------------------------------------
@@ -191,43 +208,6 @@ COMMENT = 'Graduate Requirement courses';
 
 
 -- -----------------------------------------------------
--- Table `collegespdb`.`tblgradreqcourse`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `collegespdb`.`tblgradreqcourse` (
-  `gradreqcourseID` INT(11) NOT NULL AUTO_INCREMENT,
-  `majorID` INT(11) NULL DEFAULT NULL,
-  `minorID` INT(11) NULL DEFAULT NULL,
-  `courseID` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`gradreqcourseID`),
-  INDEX `gradreqcourse_major_idx` (`majorID` ASC),
-  INDEX `gradreqcourse_minor_idx` (`minorID` ASC),
-  INDEX `gradreqcourse_course_idx` (`courseID` ASC),
-  CONSTRAINT `gradreqcourse_course`
-    FOREIGN KEY (`courseID`)
-    REFERENCES `collegespdb`.`tblcourse` (`courseID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `gradreqcourse_gradrequirement`
-    FOREIGN KEY (`gradreqcourseID`)
-    REFERENCES `collegespdb`.`tblgradrequirement` (`gradrequirementID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `gradreqcourse_major`
-    FOREIGN KEY (`majorID`)
-    REFERENCES `collegespdb`.`tblmajor` (`majorID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `gradreqcourse_minor`
-    FOREIGN KEY (`minorID`)
-    REFERENCES `collegespdb`.`tblminor` (`minorID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COMMENT = 'The courses that is required for certain major, minor to graduate	';
-
-
--- -----------------------------------------------------
 -- Table `collegespdb`.`tblplan`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `collegespdb`.`tblplan` (
@@ -235,10 +215,16 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblplan` (
   `catalogID` INT(11) NOT NULL,
   `majorID` INT(11) NOT NULL,
   `minorID` INT(11) NOT NULL,
+  `majorID2` INT(11) NULL DEFAULT NULL,
+  `minorID2` INT(11) NULL DEFAULT NULL,
+  `profileID` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`planID`),
   INDEX `plan_catalog_idx` (`catalogID` ASC),
   INDEX `plan_major_idx` (`majorID` ASC),
   INDEX `plan_minor_idx` (`minorID` ASC),
+  INDEX `plan_major2_idx` (`majorID2` ASC),
+  INDEX `plan_minor2_idx` (`minorID2` ASC),
+  INDEX `plan_profile_idx` (`profileID` ASC),
   CONSTRAINT `plan_catalog`
     FOREIGN KEY (`catalogID`)
     REFERENCES `collegespdb`.`tblcatalog` (`catalogID`)
@@ -249,9 +235,24 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblplan` (
     REFERENCES `collegespdb`.`tblmajor` (`majorID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `plan_major2`
+    FOREIGN KEY (`majorID2`)
+    REFERENCES `collegespdb`.`tblmajor` (`majorID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `plan_minor`
     FOREIGN KEY (`minorID`)
     REFERENCES `collegespdb`.`tblminor` (`minorID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `plan_minor2`
+    FOREIGN KEY (`minorID2`)
+    REFERENCES `collegespdb`.`tblminor` (`minorID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `plan_profile`
+    FOREIGN KEY (`profileID`)
+    REFERENCES `collegespdb`.`tblprofile` (`studentID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -280,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `collegespdb`.`tblprereq` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 25
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Prerequisite Courses		';
 
