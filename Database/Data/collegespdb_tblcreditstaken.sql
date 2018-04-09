@@ -21,7 +21,6 @@
 
 LOCK TABLES `tblcreditstaken` WRITE;
 /*!40000 ALTER TABLE `tblcreditstaken` DISABLE KEYS */;
-INSERT INTO `tblcreditstaken` VALUES (1,1,1,1,0),(2,1,2,1,0),(3,1,3,2,0),(4,1,4,2,0),(5,1,5,3,0),(7,1,6,4,0);
 /*!40000 ALTER TABLE `tblcreditstaken` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +33,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-21 20:43:45
+-- Dump completed on 2018-04-08 21:40:22
