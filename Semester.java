@@ -48,11 +48,11 @@ public class Semester {
 			ArrayList<Course> list) {
 		// check creditMin and creditMax range
 		if (creditMin < DEFAULT_CREDIT_MIN) {
-			throw new IllegalArgumentException("[ERROR] creditMin can not < 0");
+			throw new IllegalArgumentException("[ERROR] creditMin can not < " + DEFAULT_CREDIT_MIN);
 		}
 
 		if (creditMax > DEFAULT_CREDIT_MAX) {
-			throw new IllegalArgumentException("[ERROR] creditMax can not > 18");
+			throw new IllegalArgumentException("[ERROR] creditMax can not > " + DEFAULT_CREDIT_MAX);
 		}
 
 		this.courses = list;
