@@ -1,5 +1,5 @@
 node:clicked {
-    fill-color: purple;
+    fill-color: red;
     text-size:    16;
     text-style:   bold;
     text-color:   #FFF;
@@ -17,13 +17,29 @@ node {
     fill-color:   #8facb4;
     stroke-mode:  plain;
     stroke-color: black;
+    text-background-mode:rounded-box;
+    text-background-color: gray;
+    text-size: 15px;
+}
 
+/* style for major*/
+node#major {
+    size:         30px;
+    shape:        circle;
+	fill-color: red;
+}
+
+/* style for minor*/
+node#minor {
+    size:         30px;
+    shape:        circle;
+	fill-color: green;
 }
 
 edge {
     size:           2px;
     fill-mode:      plain;
-    /*changing edge layout here also doesn't work*/
+    fill-color: gray;
+    text-alignment: along;
 }
 
-/*edge:clicked isn't a thing... :( */
