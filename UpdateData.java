@@ -179,10 +179,10 @@ public class UpdateData {
 			// Case for inserting a new plan
 			case 'i':
 				// form the query for insertion
-				queryString = "INSERT INTO collegespdb.tblplan (catalogID, major1ID, minor1ID, major2ID, minor2ID) ";
-				queryString += "VALUES (\"" + thePlan.getCatalogID() + "\", \"" + thePlan.getMajors()[0].getMajorID()
-						+ "\", \"" + thePlan.getMinors()[0].getMinorID() + "\", \"" + thePlan.getMajors()[1].getMajorID()
-						+ "\", \"" + thePlan.getMinors()[1].getMinorID() + "\", \"" + thePlan.getProfileID() + ");";
+				queryString = "INSERT INTO `collegespdb`.`tblplan` (`planID`, `catalogID`, `majorID`, `minorID`, `majorID2`, `minorID2`, `profileID`) ";
+				queryString += "VALUES ("+thePlan.getPlanID()+"," + thePlan.getCatalogID() + ", " + thePlan.getMajors()[0].getMajorID()
+						+ ", " + thePlan.getMinors()[0].getMinorID() + ", " + thePlan.getMajors()[1].getMajorID()
+						+ ", " + thePlan.getMinors()[1].getMinorID() + ", " + thePlan.getProfileID() + ");";
 				break;
 
 			// Case for updating an existing plan
@@ -210,6 +210,7 @@ public class UpdateData {
 			// execute the query
 			// for INSERT and UPDATE query, there will be no return result
 			// therefore, we do not need a ResultSet to hold the return value
+                        statement.executeUpdate("SET FOREIGN_KEY_CHECKS=0;");
 			statement.executeUpdate(queryString);
 
 		} catch (SQLException e) {

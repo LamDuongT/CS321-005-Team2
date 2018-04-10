@@ -58,20 +58,15 @@ public class Minors {
 	/* Get Minor by Name from the list of minors
 	 * */
 	public Minor getMinorByName(String minorName) {
-		aMinor = null;
-		boolean isFound = false;
-		
+		aMinor = null;		
 		for (int index = 0; index < this.minorList.size(); index ++) {
 			aMinor = this.minorList.get(index);
-			if (aMinor.getMinorName().toLowerCase().indexOf(minorName) != -1) {
-				isFound = true;
-				break;
+			if (aMinor.getMinorName().toLowerCase().contains(minorName.toLowerCase())) {
+                            return aMinor;
 			}
 		}
-		if (!isFound)
-			aMinor = new Minor();
 		
-		return aMinor;
+		return new Minor();
 	}
 	
 	

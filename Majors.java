@@ -49,7 +49,7 @@ public class Majors {
 				return aMajor;
 			}
 		}
-		return aMajor;
+		return new Major();
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Majors {
 
 		for (int index = 0; index < this.majorList.size(); index++) {
 			aMajor = this.majorList.get(index);
-			if (aMajor.getMajorName().toLowerCase().contains(majorName)) {
+			if (aMajor.getMajorName().toLowerCase().contains(majorName.toLowerCase())) {
 				isFound = true;
 				break;
 			}
