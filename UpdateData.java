@@ -86,8 +86,8 @@ public class UpdateData {
 	}
 
 	/**
-	 * @param theCreditstaken
-	 *            the theCreditstaken to update
+	 * @param theCreditTaken
+	 *            the theCreditTaken to update
 	 * @param theAction
 	 *            the flag for insert new profile or update an existing profile
 	 *            action will have 3 values: 'i' for insert, 'u' for update and 'd'
@@ -95,9 +95,9 @@ public class UpdateData {
 	 * @exception IllegalArgumentException
 	 *                when theProfile is null
 	 */
-	public void updateCreditstaken(Creditstaken theCreditstaken, char theAction) {
+	public void updateCreditstaken(CreditTaken theCreditTaken, char theAction) {
 		// throw exception when theProfile is null
-		if (theCreditstaken == null)
+		if (theCreditTaken == null)
 			throw new IllegalArgumentException("[ERROR] theCreditstaken can not be null!");
 
 		try {
@@ -114,25 +114,25 @@ public class UpdateData {
 			case 'i':
 				// form the query for insert
 				queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
-				queryString += "VALUES (\"" + theCreditstaken.getStudentID() + "\", \"" + theCreditstaken.getCourseID()
-						+ "\", \"" + theCreditstaken.getSemesterID() + "\", " + theCreditstaken.getIsChangable() + ");";
+				queryString += "VALUES (\"" + theCreditTaken.getStudentID() + "\", \"" + theCreditTaken.getCourseID()
+						+ "\", \"" + theCreditTaken.getSemesterID() + "\", " + theCreditTaken.getIsChangable() + ");";
 				break;
 
 			// for update existing profile
 			case 'u':
 				// form the query string for update
 				queryString = "UPDATE collegespdb.tblcreditstaken SET  ";
-				queryString += "studentID =\"" + theCreditstaken.getStudentID() + "\",";
-				queryString += "courseID =\"" + theCreditstaken.getCourseID() + "\",";
-				queryString += "semesterID =\"" + theCreditstaken.getSemesterID() + "\", ";
-				queryString += "isChangable = " + theCreditstaken.getIsChangable() + " ";
-				queryString += "WHERE creditstakenID = " + theCreditstaken.getCreditstakenID();
+				queryString += "studentID =\"" + theCreditTaken.getStudentID() + "\",";
+				queryString += "courseID =\"" + theCreditTaken.getCourseID() + "\",";
+				queryString += "semesterID =\"" + theCreditTaken.getSemesterID() + "\", ";
+				queryString += "isChangable = " + theCreditTaken.getIsChangable() + " ";
+				queryString += "WHERE creditstakenID = " + theCreditTaken.getCreditTakenID();
 				break;
 
 			// for delete existing profile
 			case 'd':
 				queryString = "DELETE FROM tblcreditstaken WHERE creditstakenID = "
-						+ theCreditstaken.getCreditstakenID();
+						+ theCreditTaken.getCreditTakenID();
 				break;
 			}
 
