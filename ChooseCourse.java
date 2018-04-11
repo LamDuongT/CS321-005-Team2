@@ -3,24 +3,28 @@ import java.util.Scanner;
 
 /**
  * @author Lam Duong 
+ * FOREWARNING: ChooseCourse methods are tailored for Plan class.
+ *              Using ChooseCourse class OUTSIDE of Plan class is dangerous.
+ *              ALSO, do not feed in EMPTY coursesList into arguments
+ *              of this class.
  * This class allows for the user selection of "wild card"
- * classes. This class will be a part of GradRequirement class.
+ * courses. This class will be a part of GradRequirement class.
  * ChooseCourse class shall hold a list of courses to be chosen from
  * within a catalog year.
- * Choose course is also a child class of Plan.
+ * 
  */
 
-public class ChooseCourse extends Plan {
+public class ChooseCourse {
 	// Fields that will be instantiated by constructor parameters
 	private int chooseCourseID;
-	private int majoriD; // either majorID or minorID; Cannot have both; -1 for empty
-	private int minorID; // either minorID or majorID; Cannot have both; -1 for empty
+	private int majoriD; 
+	private int minorID;
 	private String chooseCourseName;
 	private String chooseCourseDescription;
 
 	// Fields that will be parsed by parseString() method
 	private Course[] coursesToBeChosen; // courses that user could choose from
-	private Course[] coursesChosen;
+	private Course[] coursesChosen; // courses that the user has already chosen from
 	private int amountOfChoices; // amount of classes that you'll need to pick
 	private int amountOfClasses; // amount of classes that are available for picking 
 
@@ -34,7 +38,8 @@ public class ChooseCourse extends Plan {
 	 * @param description
 	 * @param coursesList
 	 */
-	public ChooseCourse(int chooseCourseID, int majorID, int minorID, String name, String description, Courses coursesList) {
+	public ChooseCourse(int chooseCourseID, int majorID, int minorID, String name, String description,
+			Courses coursesList, Creditstakens creditsTaken) {
 		this.chooseCourseID = chooseCourseID;
 		this.majoriD = majorID;
 		if (majorID == minorID) {
@@ -43,11 +48,16 @@ public class ChooseCourse extends Plan {
 		} else {
 			this.minorID = minorID;
 		}
-				
 		this.chooseCourseName = name;
 		this.chooseCourseDescription = description;
 
+		// Create data out of String from database
 		this.parseString(this.chooseCourseDescription, coursesList);
+		
+		// Initially, the coursesChosen shall be empty
+		this.coursesChosen = new Course[this.amountOfChoices];
+		
+		this.checkForChosen(creditsTaken);
 	}
 
 	/**
@@ -80,42 +90,32 @@ public class ChooseCourse extends Plan {
 	public int getAmountOfClasses() {
 		return this.amountOfClasses;
 	}
-
-	/**
-	 * MUTATOR METHODS
-	 */
 	
-	/**
-	 * Choose a course from the list of choose courses
-	 * @param course
-	 */
-	public void chooseTheCourse(Course course) {
-		
+	public Course[] getCoursesChosen() {
+		return this.coursesChosen;
 	}
 	
-	/**
-	 * @param course
-	 */
-	public void removeChooseCourse(Course course)
-		 
+	public Course[] getCoursesToBeChosen() {
+		return this.coursesToBeChosen;
 	}
 	
 	/**
 	 * 
-	 * @param course
+	 * @param coursesList
 	 */
-	public void checkChosenInPlan(Course course) {
-		
+	public void checkForChosen(Creditstakens creditsTaken) {
+		for (int i = 0; i < creditsTaken.get
 	}
 
+	
 	/**
 	 * This method will take a String query from the database to parse into the
 	 * method. The query looks like something like this:
 	 * "%|3|20|CLASS101,CLASS102,CLASS200"
-	 * 
+	 * NOTE: THIS CLASS IS PART OF THE CONSTRUCTOR
 	 * @author Lam Duong
 	 * @param query
-	 * @return void
+	 * @param coursesList
 	 */
 	private void parseString(String query, Courses coursesList) {
 		
@@ -137,5 +137,6 @@ public class ChooseCourse extends Plan {
 			Course course = coursesList.getCourseByName(classes[i]);
 			coursesToBeChosen[i] = course;
 		}
+		
 	}
 }

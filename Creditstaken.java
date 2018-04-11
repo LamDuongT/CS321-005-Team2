@@ -41,6 +41,10 @@ public class Creditstaken {
 		this.planID = planID;
 	}
 
+	/**
+	 *  MUTATOR METHODS
+	 */
+	
 	// setter for creditstakenID
 	public void setCreditstakenID(int creditstakenID) {
 		this.creditstakenID = creditstakenID;
@@ -72,6 +76,11 @@ public class Creditstaken {
 		this.isChangable = isChangable;
 	}
 
+	/**
+	 *  ACCESSOR METHODS
+	 */
+	
+	
 	// getter for creditstakenID
 	public int getCreditstakenID() {
 		return this.creditstakenID;

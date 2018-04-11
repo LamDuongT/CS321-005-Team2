@@ -10,8 +10,8 @@ import java.util.List;
  *
  */
 public class Creditstakens {
-	List<Creditstaken> creditstakenList = new LinkedList<Creditstaken>();
-	private Creditstaken aCreditstaken;
+	List<Creditstaken> creditsTakenList = new LinkedList<Creditstaken>();
+	private Creditstaken aCreditTaken;
 	
 	/**
 	 * Initialize the list of creditstaken courses for the for studentID
@@ -28,10 +28,24 @@ public class Creditstakens {
 		getCreditstakenData(studentID, semesterID);
 	}
 	
-	public getCreditTaken() {
-		
+	/**
+	 * This is to retrieve a single Creditstaken class (singular)
+	 * within the list creditsTakenList. Will return an empty
+	 * Creditstaken Object if not found.
+	 * @param creditID
+	 * @return creditTaken
+	 */
+	public Creditstaken getCreditTakenByID(int creditID) {
+		for (int i = 0; i < creditsTakenList.size(); i++) {
+			aCreditTaken = creditsTakenList.get(i);
+			if (aCreditTaken.getCreditstakenID() == creditID) {
+				return aCreditTaken;
+			}
+		}
+		return new Creditstaken();
 	}
 	
+	/
 	public getCreditsTaken()
 
 	/**
@@ -83,8 +97,8 @@ public class Creditstakens {
 				_isChangable = recordSet.getBoolean("isChangable");
 				_planID = recordSet.getInt("planID");
 
-				aCreditstaken = new Creditstaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable, _planID);
-				this.creditstakenList.add(aCreditstaken);
+				aCreditTaken = new Creditstaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable, _planID);
+				this.creditsTakenList.add(aCreditTaken);
 			}
 			statement.close();
 
@@ -100,9 +114,9 @@ public class Creditstakens {
 	 */
 	public String toString() {
 		String returnString = "creditstakenID  | studentID | courseID	| courseName | semesterID | isChangable\n";
-		for (int index = 0; index < this.creditstakenList.size(); index++) {
-			aCreditstaken = this.creditstakenList.get(index);
-			returnString += aCreditstaken.toString() + "\n";
+		for (int index = 0; index < this.creditsTakenList.size(); index++) {
+			aCreditTaken = this.creditsTakenList.get(index);
+			returnString += aCreditTaken.toString() + "\n";
 		}
 
 		return returnString;
