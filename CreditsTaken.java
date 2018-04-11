@@ -30,15 +30,33 @@ public class CreditsTaken {
 	
 	/**
 	 * This is to retrieve a single CreditTaken class (singular)
-	 * within the list creditsTakenList. Will return an empty
+	 * within the list creditsTakenList by ID. Will return an empty
 	 * CreditTaken Object if not found.
 	 * @param creditID
-	 * @return creditTaken
+	 * @return aCreditTaken or new CreditTaken()
 	 */
 	public CreditTaken getCreditTakenByID(int creditID) {
 		for (int i = 0; i < creditsTakenList.size(); i++) {
 			aCreditTaken = creditsTakenList.get(i);
 			if (aCreditTaken.getCreditTakenID() == creditID) {
+				return aCreditTaken;
+			}
+		}
+		return new CreditTaken();
+	}
+
+	/**
+	 * This is to retrieve a single CreditTaken class (singular)
+	 * within the list creditsTakenList by name. Will return an empty
+	 * CreditTaken Object if not found.
+	 * @param creditName
+	 * @return aCreditTaken or new CreditTaken()
+	 */
+	public CreditTaken getCreditTakenByName(String creditName) {
+		CreditTaken aCreditTaken = new CreditTaken();
+		for (int index = 0; index < this.creditsTakenList.size(); index++) {
+			aCreditTaken = this.creditsTakenList.get(index);
+			if (aCreditTaken.getCreditTakenName().toLowerCase().contains(creditName.toLowerCase())) {
 				return aCreditTaken;
 			}
 		}
