@@ -1,8 +1,4 @@
 /**
- * 
- */
-
-/**
  * @author Huan Nguyen
  *
  */
@@ -12,34 +8,36 @@ public class Creditstaken {
 	private int courseID;
 	private String courseName;
 	private int semesterID;
+	private int planID;
 	private boolean isChangable;
 
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public Creditstaken() {
-		setValue(-1, -1, -1, "", -1, false);
+		setValue(-1, -1, -1, "", -1, false, -1);
 	}
 
 	/**
 	 * Initialize all attributes with given information
 	 */
 	public Creditstaken(int creditstakenID, int studentID, int courseID, String courseName, int semesterID,
-			boolean isChangable) {
-		setValue(creditstakenID, studentID, courseID, courseName, semesterID, isChangable);
+			boolean isChangable, int planID) {
+		setValue(creditstakenID, studentID, courseID, courseName, semesterID, isChangable, planID);
 	}
 
 	/**
 	 * Method setValue used for constructors methods
 	 */
 	private void setValue(int creditstakenID, int studentID, int courseID, String courseName, int semesterID,
-			boolean isChangable) {
+			boolean isChangable, int planID) {
 		this.creditstakenID = creditstakenID;
 		this.studentID = studentID;
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.semesterID = semesterID;
 		this.isChangable = isChangable;
+		this.planID = planID;
 	}
 
 	// setter for creditstakenID
@@ -60,6 +58,12 @@ public class Creditstaken {
 	// setter for semesterID
 	public void setSemesterID(int semesterID) {
 		this.semesterID = semesterID;
+	}
+	
+	// setter for planID
+	// If plan ID is -1, that means that it's a credit that was taken previously
+	public void setPlanID(int planID) {
+		this.planID = planID;
 	}
 
 	// setter for isChangable
