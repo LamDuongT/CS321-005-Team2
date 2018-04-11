@@ -54,7 +54,42 @@ public class Courses {
 	public Courses(int catalogID, int majorID, int minorID) {
 		getCourseData(catalogID, majorID, minorID);
 	}
-
+	
+	/**
+	 * This method will return a course by ID within list of Courses.
+	 * However, if there is no match, it shall return an empty Course Object
+	 * @author Lam Duong
+	 * @param courseID
+	 * @return Course Object
+	 */
+	public Course getCourseByID(int courseID) {
+		Course aCourse = new Course();
+		for (int index = 0; index < this.courseList.size(); index++) {
+			aCourse = this.courseList.get(index);
+			if (aCourse.getCourseID() == courseID) {
+				return aCourse;
+			}
+		}
+		return new Course();
+	}
+	
+	/**
+	 * This method will return a course by name within list of Courses.
+	 * However, if there is no match, it shall return an empty Course Object
+	 * @author Lam Duong
+	 * @param courseName
+	 * @return Course Object
+	 */
+	public Course getCourseByName(String courseName) {
+		Course aCourse = new Course();
+		for (int index = 0; index < this.courseList.size(); index++) {
+			aCourse = this.courseList.get(index);
+			if (aCourse.getCourseName().toLowerCase().contains(courseName.toLowerCase())) {
+				return aCourse;
+			}
+		}
+		return new Course();
+	}
 	public List<Course> getCoursesList() {
 		return this.courseList;
 	}
@@ -106,11 +141,11 @@ public class Courses {
 
 			 System.out.println(queryString);
 
-			// Initialize a sql statement
+			// Initialize a SQL statement
 			Statement statement = connectdb.theConnection.createStatement();
 			// recordSet will hold a data table as sql object
 			// to see how the data table look like, copy the queryString contents and
-			// execute in mysql Workbench
+			// execute in mySQL Workbench
 			ResultSet recordSet = statement.executeQuery(queryString);
 
 			// loop through each record in the data table
