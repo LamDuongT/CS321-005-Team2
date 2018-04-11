@@ -34,7 +34,9 @@ public class Minor {
 		this.catalogID = catalogID;
 	}
 
-	// setter for minorID
+	// NO NEED FOR SETTER METHODS IN MINOR CLASS
+	// ANY CHANGES TO MINOR IS MADE IN THE DATABASE, NOT JAVA
+	/*// setter for minorID
 	public void setMinorID(int minorID) {
 		this.minorID = minorID;
 	}
@@ -52,7 +54,7 @@ public class Minor {
 	// setter for catalogID
 	public void setCatalogID(int catalogID) {
 		this.catalogID = catalogID;
-	}
+	}*/
 
 	// getter for minorID
 	public int getMinorID() {

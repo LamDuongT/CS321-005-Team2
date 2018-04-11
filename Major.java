@@ -34,7 +34,9 @@ public class Major {
 		this.catalogID = catalogID;
 	}
 
-	// setter for majorID
+	// MAJOR DOES NOT NEED TO BE CHANGED
+	// ANY CHANGES MADE TO MAJOR IS MADE IN DATABASE, NOT JAVA
+/*	// setter for majorID
 	public void setMajorID(int majorID) {
 		this.majorID = majorID;
 	}
@@ -52,7 +54,7 @@ public class Major {
 	// setter for catalogID
 	public void setCatalogID(int catalogID) {
 		this.catalogID = catalogID;
-	}
+	}*/
 
 	// getter for majorID
 	public int getMajorID() {

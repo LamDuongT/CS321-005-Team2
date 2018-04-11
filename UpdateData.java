@@ -86,6 +86,8 @@ public class UpdateData {
 	}
 
 	/**
+	 * @author Huan Nguyen
+	 * @author Lam Duong
 	 * @param theCreditTaken
 	 *            the theCreditTaken to update
 	 * @param theAction

@@ -39,7 +39,7 @@ public class ChooseCourse {
 	 * @param coursesList
 	 */
 	public ChooseCourse(int chooseCourseID, int majorID, int minorID, String name, String description,
-			Courses coursesList, CreditTaken creditsTaken) {
+			Courses coursesList, CreditsTaken creditsTaken) {
 		this.chooseCourseID = chooseCourseID;
 		this.majoriD = majorID;
 		if (majorID == minorID) {
@@ -103,8 +103,10 @@ public class ChooseCourse {
 	 * 
 	 * @param coursesList
 	 */
-	public void checkForChosen(CreditTaken creditsTaken) {
-		for (int i = 0; i < creditsTaken.get
+	public void checkForChosen(CreditsTaken creditsTaken) {
+		for (int i = 0; i < creditsTaken.getCreditsTakenList().size(); i++) {
+			
+		}
 	}
 
 	

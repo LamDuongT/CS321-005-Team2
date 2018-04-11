@@ -21,7 +21,7 @@ public class CreditsTaken {
 	}
 
 	/**
-	 * Initialize the list of creditstaken courses for the for studentID for
+	 * Initialize the list of CreditTaken courses for the for studentID for
 	 * semesterID
 	 */
 	public CreditsTaken(int studentID, int semesterID) {
@@ -32,6 +32,7 @@ public class CreditsTaken {
 	 * This is to retrieve a single CreditTaken class (singular)
 	 * within the list creditsTakenList by ID. Will return an empty
 	 * CreditTaken Object if not found.
+	 * @author Lam Duong
 	 * @param creditID
 	 * @return aCreditTaken or new CreditTaken()
 	 */
@@ -49,6 +50,7 @@ public class CreditsTaken {
 	 * This is to retrieve a single CreditTaken class (singular)
 	 * within the list creditsTakenList by name. Will return an empty
 	 * CreditTaken Object if not found.
+	 * @author Lam Duong
 	 * @param creditName
 	 * @return aCreditTaken or new CreditTaken()
 	 */
@@ -61,6 +63,10 @@ public class CreditsTaken {
 			}
 		}
 		return new CreditTaken();
+	}
+	
+	public List<CreditTaken> getCreditsTakenList() {
+		return this.creditsTakenList;
 	}
 	
 	

@@ -1,4 +1,4 @@
-import java.io.IOException;
+/*import java.io.IOException;
 
 public class HuanTestClass {
 
@@ -12,7 +12,7 @@ public class HuanTestClass {
 //		 Login aStudent = new Login("hnguye80", "hnguye80"); aStudent.doLogin();
 //		 aStudent.getProfile(aStudent.getStudentID());
 		 
-		 /*
+		 
 		 Profile aNewStudent = new Profile(-1, "andrew", "Andrew Nguyen",
 		 "andrew@andrew.com", "andrew123", "andrew123", "Andrew's Profile123");
 		 UpdateData updateData = new UpdateData();
@@ -21,7 +21,7 @@ public class HuanTestClass {
 		 
 		 Creditstaken aCredittaken = new Creditstaken(-1, 1, 68, "CS321", 3, false);
 		 updateData.updateCreditstaken(aCredittaken, 'u');
-		 */
+		 
 		 
 //		 Creditstakens creditstakenList = new Creditstakens(aStudent.getStudentID());
 //		 System.out.println("The list of Creditstaken \n" +
@@ -71,3 +71,4 @@ public class HuanTestClass {
 	}
 
 }
+*/
