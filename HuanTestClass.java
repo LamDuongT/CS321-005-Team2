@@ -28,14 +28,14 @@ public class HuanTestClass {
 //		 Semesters semesterList = new Semesters();
 //		 System.out.println("The list of Semesters \n" + semesterList.toString());
 //		 
-//		 Courses coursesList = new Courses();
-//		 System.out.println("The list of Courses \n" + coursesList.toString());
-//		 
-//		 Courses coursesListForCatalog = new Courses(3, -1, ' ');
+		 Courses coursesList = new Courses();
+		 System.out.println("The list of Courses \n" + coursesList.toString());
+//
+//		 Courses coursesListForCatalog = new Courses(3, -1, -1);
 //		 System.out.println("The list of Courses for catalog \n" +
 //		 coursesListForCatalog.toString());
 //		 
-//		 Courses coursesListForCatalogAndMajor = new Courses(3, 2, 'm');
+//		 Courses coursesListForCatalogAndMajor = new Courses(3, 2, -1);
 //		 System.out.println("The list of Courses for catalog and Major \n" +
 //		 coursesListForCatalogAndMajor.toString());
 		 
@@ -45,7 +45,7 @@ public class HuanTestClass {
 //		 
 		GraphCourse aGraph = null;
 		try {
-			aGraph = new GraphCourse(1, -1);
+			aGraph = new GraphCourse(3, 1, -1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
