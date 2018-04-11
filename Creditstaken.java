@@ -1,5 +1,6 @@
 /**
  * @author Huan Nguyen
+ * @author Lam Duong
  *
  */
 public class Creditstaken {

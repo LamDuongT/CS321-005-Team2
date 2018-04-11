@@ -5,11 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 
- */
-
-/**
  * @author Huan Nguyen
+ * @author Lam Duong
  *
  */
 public class Creditstakens {
@@ -30,6 +27,12 @@ public class Creditstakens {
 	public Creditstakens(int studentID, int semesterID) {
 		getCreditstakenData(studentID, semesterID);
 	}
+	
+	public getCreditTaken() {
+		
+	}
+	
+	public getCreditsTaken()
 
 	/**
 	 * get creditstaken for studentID
@@ -52,6 +55,7 @@ public class Creditstakens {
 			String _courseName;
 			int _semesterID;
 			boolean _isChangable;
+			int _planID;
 
 			String queryString = "SELECT tblcreditstaken.*, tblcourse.courseName "; 
 			queryString += "FROM tblcreditstaken INNER JOIN tblcourse on tblcreditstaken.courseID = tblcourse.courseID ";
@@ -63,11 +67,11 @@ public class Creditstakens {
 
 			System.out.println(queryString);
 
-			// Initialize a sql statement
+			// Initialize an SQL statement
 			Statement statement = connectdb.theConnection.createStatement();
 			// recordSet will hold a data table as sql object
 			// to see how the data table look like, copy the queryString contents and
-			// execute in mysql Workbench
+			// execute in mySQL Workbench
 			ResultSet recordSet = statement.executeQuery(queryString);
 
 			while (recordSet.next()) {
@@ -77,8 +81,9 @@ public class Creditstakens {
 				_courseName = recordSet.getString("courseName");
 				_semesterID = recordSet.getInt("semesterID");
 				_isChangable = recordSet.getBoolean("isChangable");
+				_planID = recordSet.getInt("planID");
 
-				aCreditstaken = new Creditstaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable);
+				aCreditstaken = new Creditstaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable, _planID);
 				this.creditstakenList.add(aCreditstaken);
 			}
 			statement.close();
