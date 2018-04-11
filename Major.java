@@ -1,8 +1,4 @@
 /**
- * 
- */
-
-/**
  * @author Huan Nguyen
  *
  */
