@@ -101,11 +101,16 @@ public class ChooseCourse {
 	
 	/**
 	 * 
-	 * @param coursesList
+	 * @param creditsTaken
 	 */
 	public void checkForChosen(CreditsTaken creditsTaken) {
+		// Double for loop to compare the two lists, CreditsTaken and coursesToBeChosen
 		for (int i = 0; i < creditsTaken.getCreditsTakenList().size(); i++) {
-			
+			for (int j = 0; j < coursesToBeChosen.length; j++) {
+				if (coursesToBeChosen[j].getCourseID() == creditsTaken.getCreditsTakenList().get(i).getCourseID()){
+					
+				}
+			}
 		}
 	}
 
