@@ -75,6 +75,10 @@ public class CreditTaken {
 	public void setIsChangable(boolean isChangable) {
 		this.isChangable = isChangable;
 	}
+	
+	public void setCreditTakenName(String creditName) {
+		this.courseName = creditName;
+	}
 
 	/**
 	 *  ACCESSOR METHODS
@@ -104,6 +108,10 @@ public class CreditTaken {
 	// getter for isChangable
 	public boolean getIsChangable() {
 		return this.isChangable;
+	}
+	
+	public String getCreditTakenName() {
+		return this.courseName;
 	}
 	
 	//getter for planID
