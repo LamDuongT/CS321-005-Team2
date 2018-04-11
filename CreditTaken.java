@@ -3,8 +3,8 @@
  * @author Lam Duong
  *
  */
-public class Creditstaken {
-	private int creditstakenID;
+public class CreditTaken {
+	private int creditTakenID;
 	private int studentID;
 	private int courseID;
 	private String courseName;
@@ -15,24 +15,24 @@ public class Creditstaken {
 	/**
 	 * Initialize default values for all attributes
 	 */
-	public Creditstaken() {
+	public CreditTaken() {
 		setValue(-1, -1, -1, "", -1, false, -1);
 	}
 
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public Creditstaken(int creditstakenID, int studentID, int courseID, String courseName, int semesterID,
+	public CreditTaken(int creditTakenID, int studentID, int courseID, String courseName, int semesterID,
 			boolean isChangable, int planID) {
-		setValue(creditstakenID, studentID, courseID, courseName, semesterID, isChangable, planID);
+		setValue(creditTakenID, studentID, courseID, courseName, semesterID, isChangable, planID);
 	}
 
 	/**
 	 * Method setValue used for constructors methods
 	 */
-	private void setValue(int creditstakenID, int studentID, int courseID, String courseName, int semesterID,
+	private void setValue(int creditTakenID, int studentID, int courseID, String courseName, int semesterID,
 			boolean isChangable, int planID) {
-		this.creditstakenID = creditstakenID;
+		this.creditTakenID = creditTakenID;
 		this.studentID = studentID;
 		this.courseID = courseID;
 		this.courseName = courseName;
@@ -46,8 +46,8 @@ public class Creditstaken {
 	 */
 	
 	// setter for creditstakenID
-	public void setCreditstakenID(int creditstakenID) {
-		this.creditstakenID = creditstakenID;
+	public void setCreditTakenID(int creditTakenID) {
+		this.creditTakenID = creditTakenID;
 	}
 
 	// setter for studentID
@@ -81,9 +81,9 @@ public class Creditstaken {
 	 */
 	
 	
-	// getter for creditstakenID
-	public int getCreditstakenID() {
-		return this.creditstakenID;
+	// getter for creditTakenID
+	public int getCreditTakenID() {
+		return this.creditTakenID;
 	}
 
 	// getter for studentID
@@ -105,13 +105,18 @@ public class Creditstaken {
 	public boolean getIsChangable() {
 		return this.isChangable;
 	}
+	
+	//getter for planID
+	public int getPlanID() {
+		return this.planID;
+	}
 
 	/**
 	 * Override toString method for testing purpose
 	 */
 	public String toString() {
 		String returnString = "";
-		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditstakenID, this.studentID, this.courseID, this.courseName, this.semesterID, this.isChangable);
+		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditTakenID, this.studentID, this.courseID, this.courseName, this.semesterID, this.isChangable);
 
 		return returnString;
 	}
