@@ -16,30 +16,35 @@ public class Plan {
 	private Major[] majors;
 	private Minor[] minors;
 	private Semesters semesters;
+	private Courses courses;
 	private int catalogID;
 	private int profileID;
-	
+
 	// Constructor for empty plan
 	public Plan() {
 		this.PLAN_ID = -1;
 		this.setValues(-1, -1, "", -1, -1, -1, -1);
 	}
-	
+
 	// Standard constructor
-	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
+	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
+			int minor2ID) {
 		this.PLAN_ID = planID;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
-	
+
 	// Setting values for constructor
-	public void setValues(int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID) {
+	public void setValues(int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
+			int minor2ID) {
 		this.planName = planName;
 		this.catalogID = catalogID;
 		this.profileID = profileID;
 
+		// Instantiation of new objects based on catalogID
 		this.semesters = new Semesters();
 		this.majorsData = new Majors(catalogID);
 		this.minorsData = new Minors(catalogID);
+		this.courses = new Courses(catalogID);
 
 		// Instantiation of empty minors and majors
 		this.majors = new Major[] { new Major(), new Major() };
@@ -50,7 +55,7 @@ public class Plan {
 		this.minors[0] = minorsData.getMinorByID(minorID);
 		this.minors[1] = minorsData.getMinorByID(minor2ID);
 	}
-	
+
 	/**
 	 * ACCESSOR METHODS:
 	 */
@@ -82,9 +87,17 @@ public class Plan {
 	public int getCatalogID() {
 		return this.catalogID;
 	}
-	
+
 	public int getProfileID() {
 		return this.profileID;
+	}
+
+	public Courses getCoursesList() {
+		return this.courses;
+	}
+
+	public Semesters getSemesters() {
+		return this.semesters;
 	}
 
 	/**
@@ -101,17 +114,20 @@ public class Plan {
 		// Add and Change
 		// If not removing (majorID not being -1)
 		if (majorID >= 0) {
-			
+
 			Major m = this.majorsData.getMajorByID(majorID);
-			
-			// If the major being added does not have the same ID as a major within majors array
+
+			// If the major being added does not have the same ID as a major within majors
+			// array
 			if ((majors[0].getMajorID() != m.getMajorID()) && (majors[1].getMajorID() != m.getMajorID())) {
-				
-				// If major being added does not have the same name as a current minor within minors array
-				if ((!m.getMajorName().equals(minors[0].getMinorName())) && (!m.getMajorName().equals(minors[1].getMinorName()))) {
-					
+
+				// If major being added does not have the same name as a current minor within
+				// minors array
+				if ((!m.getMajorName().equals(minors[0].getMinorName()))
+						&& (!m.getMajorName().equals(minors[1].getMinorName()))) {
+
 					majors[majorPosition] = m;
-					
+
 				} else {
 					throw new RuntimeException(
 							"ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
@@ -131,10 +147,10 @@ public class Plan {
 			}
 		}
 
-		// Update to Databse once finished with modification in Java
+		// Update to Database once finished with modification in Java
 		new UpdateData().updatePlan(this, 'u');
 	}
-	
+
 	/**
 	 * 
 	 * @param minorPosition
@@ -145,19 +161,21 @@ public class Plan {
 		// Add and Change
 		// If not removing (minorID not being -1)
 		if (minorID >= 0) {
-			
+
 			Minor m = this.minorsData.getMinorByID(minorID);
-			
+
 			// If minor being added doesn't already exist within the minors array
 			if ((minors[0].getMinorID() != m.getMinorID()) && (minors[1].getMinorID() != m.getMinorID())) {
-				
-				// If minor being added does not have the same name as a major within majors array
-				if ((!m.getMinorName().equals(majors[0].getMajorName())) && (!m.getMinorName().equals(majors[1].getMajorName()))) {
-					
+
+				// If minor being added does not have the same name as a major within majors
+				// array
+				if ((!m.getMinorName().equals(majors[0].getMajorName()))
+						&& (!m.getMinorName().equals(majors[1].getMajorName()))) {
+
 					minors[minorPosition] = m;
-					
+
 				} else {
-					
+
 					throw new RuntimeException(
 							"ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
 				}
@@ -169,10 +187,10 @@ public class Plan {
 		else {
 			minors[minorPosition] = new Minor();
 		}
-		// Update to Databse once finished with modification in Java
+		// Update to Database once finished with modification in Java
 		new UpdateData().updatePlan(this, 'u');
 	}
-	
+
 	/**
 	 * @author Mohammed Alsharf
 	 * @param sm
@@ -192,5 +210,10 @@ public class Plan {
 
 	public void generateSmartPlan() {
 		// TODO: GENERATE SORTING ALGORITHM
+	}
+	
+	public String toString() {
+		return new String();
+		// TODO: IMPLEMENT TOSTRING METHOD
 	}
 }

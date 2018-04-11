@@ -2,10 +2,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * @author Huan Nguyen This class will contain all methods to manipulate data
- *         including Insert new record Update existing record Delete existing
- *         record
- *
+ * This class will contain all methods that will be manipulating data such as
+ * inserting, updating, and deleting of Profile, Plan, and Semester
+ * @author Huan Nguyen 
+ * @author Lam Duong
+ * @author Mohammed Alsharf
  */
 public class UpdateData {
 	private ConnectDB connectdb;
