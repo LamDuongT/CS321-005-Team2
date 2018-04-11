@@ -24,6 +24,7 @@ public class Course {
 	private String majorID;
 	private String minorID;
 	private Prereqs prereqList;
+	private boolean isEmpty;
 		
 
 	/**
@@ -32,6 +33,7 @@ public class Course {
 	public Course() {
 		setValue(-1, "", "", -1, -1, "-1", "-1");
 		this.prereqList = null;
+		this.isEmpty = true;
 	}
 
 	/**
@@ -39,9 +41,10 @@ public class Course {
 	 */
 	public Course(int courseID, String courseName, String courseDesc, int creditHours, int catalogID, String majorID,
 			String minorID) {
+		
 		setValue(courseID, courseName, courseDesc, creditHours, catalogID, majorID, minorID);
-
 		this.prereqList = new Prereqs(courseID);
+		this.isEmpty = false;
 	}
 
 	// Fields population method for constructor method
@@ -55,7 +58,12 @@ public class Course {
 		this.majorID = majorID;
 		this.minorID = minorID;
 	}
-
+	
+	
+	// NOTE: WE DO NOT NEED SETTER METHODS FOR THE COURSE CLASS
+	// THE USER DOES NOT HAVE THE POWER TO CHANGE COURSES ATTRIBUTES ANYWAY
+	// IF WE NEEDED TO CHANGE A COURSE, WE DO IT IN THE DATABASE
+	/**
 	// setter for courseID
 	public void setCourseID(int courseID) {
 		this.courseID = courseID;
@@ -93,6 +101,7 @@ public class Course {
 	public void setMinorID(String minorID) {
 		this.minorID = minorID;
 	}
+	*/
 
 	// getter for courseID
 	public int getCourseID() {
@@ -132,6 +141,10 @@ public class Course {
 	// getter for prereqList
 	public Prereqs getPrereqList() {
 		return this.prereqList;
+	}
+	
+	public boolean isEmpty() {
+		return this.isEmpty;
 	}
 
 	/**
