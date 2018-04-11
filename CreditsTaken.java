@@ -9,57 +9,55 @@ import java.util.List;
  * @author Lam Duong
  *
  */
-public class Creditstakens {
-	List<Creditstaken> creditsTakenList = new LinkedList<Creditstaken>();
-	private Creditstaken aCreditTaken;
+public class CreditsTaken {
+	List<CreditTaken> creditsTakenList = new LinkedList<CreditTaken>();
+	private CreditTaken aCreditTaken;
 	
 	/**
-	 * Initialize the list of creditstaken courses for the for studentID
+	 * Initialize the list of CreditTaken courses for the for studentID
 	 */
-	public Creditstakens(int studentID) {
-		getCreditstakenData(studentID, -1);
+	public CreditsTaken(int studentID) {
+		getCreditsTakenData(studentID, -1);
 	}
 
 	/**
 	 * Initialize the list of creditstaken courses for the for studentID for
 	 * semesterID
 	 */
-	public Creditstakens(int studentID, int semesterID) {
-		getCreditstakenData(studentID, semesterID);
+	public CreditsTaken(int studentID, int semesterID) {
+		getCreditsTakenData(studentID, semesterID);
 	}
 	
 	/**
-	 * This is to retrieve a single Creditstaken class (singular)
+	 * This is to retrieve a single CreditTaken class (singular)
 	 * within the list creditsTakenList. Will return an empty
-	 * Creditstaken Object if not found.
+	 * CreditTaken Object if not found.
 	 * @param creditID
 	 * @return creditTaken
 	 */
-	public Creditstaken getCreditTakenByID(int creditID) {
+	public CreditTaken getCreditTakenByID(int creditID) {
 		for (int i = 0; i < creditsTakenList.size(); i++) {
 			aCreditTaken = creditsTakenList.get(i);
-			if (aCreditTaken.getCreditstakenID() == creditID) {
+			if (aCreditTaken.getCreditTakenID() == creditID) {
 				return aCreditTaken;
 			}
 		}
-		return new Creditstaken();
+		return new CreditTaken();
 	}
 	
-	/
-	public getCreditsTaken()
-
+	
 	/**
-	 * get creditstaken for studentID
+	 * get CreditsTaken for studentID
 	 * 
 	 * @param studentID
 	 *            the student ID
 	 * @param semesterID
-	 *            if given the list will hold creditstaken for studentID for
+	 *            if given the list will hold CreditsTaken for studentID for
 	 *            semesterID
-	 *            otherwise, the list will hold creditstaken for studentID
+	 *            otherwise, the list will hold CreditsTaken for studentID
 	 * 
 	 */
-	private void getCreditstakenData(int studentID, int semesterID) {
+	private void getCreditsTakenData(int studentID, int semesterID) {
 		ConnectDB connectdb = new ConnectDB();
 
 		try {
@@ -97,7 +95,7 @@ public class Creditstakens {
 				_isChangable = recordSet.getBoolean("isChangable");
 				_planID = recordSet.getInt("planID");
 
-				aCreditTaken = new Creditstaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable, _planID);
+				aCreditTaken = new CreditTaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable, _planID);
 				this.creditsTakenList.add(aCreditTaken);
 			}
 			statement.close();
