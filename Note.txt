@@ -1,0 +1,38 @@
++) the code is working fine but change it
+	public Major getMajorByID(int majorID) {
+		for (int index = 0; index < this.majorList.size(); index++) {
+			aMajor = this.majorList.get(index);
+			if (aMajor.getMajorID() == majorID) {
+				return aMajor;
+			}
+		}
+		return new Major();
+}
+==> this logic always return a major
+==> this violate the standard since the method has multiple return statatement.
+
+
+	public Minor getMinorByID(int minorID) {
+		aMinor = null;
+		boolean isFound = false;
+		
+		for (int index = 0; index < this.minorList.size(); index ++) {
+			aMinor = this.minorList.get(index);
+			if (aMinor.getMinorID() == minorID) {
+				isFound = true;
+				break;
+			}
+		}
+		if (!isFound)
+			aMinor = new Minor();
+		
+		return aMinor;
+}
+
+==> this logic return a null minor and also follow a code standard
+
++) Remove setter of class will decrease the flexibility in term of maintainability of a software.
+Even though for the purpose of the demo, we input data directly to database, this should not be done so for numbers of reasons:
+   +) security
+   +)cost of data migration from different sources
+. The acctual way to input data is to build an administration system that can handle all changes from database.
