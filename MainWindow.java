@@ -7,7 +7,7 @@
 
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -73,6 +73,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTree1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -202,7 +207,15 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        // delets the highlited plan 
+        DefaultMutableTreeNode selectedChild = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
+        Plan p = (Plan) selectedChild.getUserObject();
+        new UpdateData().updatePlan(p, 'd');
+        selectedChild.removeFromParent();
+        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        root.remove(new DefaultMutableTreeNode(p));
+        model.reload(root);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -212,10 +225,19 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // edits higlited plan
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) jTree1.getModel().getRoot();
-        Plan p = (Plan) root.getUserObject();
-        
+        DefaultMutableTreeNode selectedChild = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
+        Plan p = (Plan) selectedChild.getUserObject();
+        new NewPlans(profile,p,'U').setVisible(true);
+        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        root.remove(new DefaultMutableTreeNode(p));
+        root.add(new DefaultMutableTreeNode(p));
+        model.reload(root);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTree1MouseClicked
 
     /**
      * @param args the command line arguments
