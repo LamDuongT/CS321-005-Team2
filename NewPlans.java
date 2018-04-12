@@ -1,5 +1,4 @@
 
-import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +13,8 @@ public class NewPlans extends javax.swing.JFrame {
     private String planName;
     private Major major1, major2;
     private Minor minor1, minor2;
-
+    private char action;
+    private Plan plan;
     /**
      * Creates new form NewPlans
      * @param profile
@@ -22,11 +22,20 @@ public class NewPlans extends javax.swing.JFrame {
     public NewPlans(Profile profile) {
         initComponents();
         initList();
+        catalog = new Catalog();
         this.profile = profile;
         major1 = new Major();
         major2 = new Major();
         minor1 = new Minor();
         minor2 = new Minor();
+    }
+    public NewPlans(Profile pro, Plan plan, char action){
+        initComponents();
+        this.plan = plan; 
+        this.profile = pro;
+        catalog = new Catalogs().getCatalogByID(plan.getCatalogID());
+        initList();
+        setLists();
     }
 
     /**
@@ -454,9 +463,19 @@ public class NewPlans extends javax.swing.JFrame {
      * information
      */
     private void initList() {
-        catalogList.addItem("");
+        catalogList.addItem("");    
         new Catalogs().getCatalogs().forEach((cat) -> {
             catalogList.addItem(cat.getCatalogName());
         });
+        if(catalog.getCatalogID()!=-1){
+            catalogList.setSelectedItem(catalog.getCatalogName());
+        }
+    }
+
+    private void setLists() {
+        major1List.setSelectedItem(plan.getMajors()[0]);
+        major2List.setSelectedItem(plan.getMajors()[1]);
+        minor1List.setSelectedItem(plan.getMinors()[0]);
+        minor2List.setSelectedItem(plan.getMinors()[1]);
     }
 }

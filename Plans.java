@@ -2,6 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Lam Duong
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 public class Plans {
 	private LinkedList<Plan> plansList = new LinkedList<Plan>();
 	private Plan aPlan;
-	
+        private Profile profile;
 	public Plans() {
 		getPlansData();
 	}
@@ -31,7 +32,9 @@ public class Plans {
 		}
 		return aPlan;
 	}
-	
+	public List<Plan> getPlans(){
+            return this.plansList;
+        }
 	/**
 	 * Fetch all of the plans data from the table Plan and add to plansList
 	 */
@@ -48,7 +51,7 @@ public class Plans {
 			int _profileID;
 			
 			// Instantiate query strings with all fields for Plan
-			String queryString = "SELECT planID, catalogID, planName, majorID, minorID, major2ID, minor2ID FROM 'tablplan' ";
+			String queryString = "SELECT planID, catalogID, planName, majorID, minorID, majorID2, minorID2 FROM 'tablplan' ";
 			queryString += "ORDER BY planID ASC";
 			System.out.println(queryString);
 			

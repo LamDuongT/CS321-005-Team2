@@ -31,21 +31,18 @@ public class Minors {
             return minorList;
         }
 	/** Get Minor by ID from the list of minors
-	 * */
+	 *
+     * @param minorID
+     * @return  */
 	public Minor getMinorByID(int minorID) {
-		aMinor = null;
-		boolean isFound = false;
-		
+		aMinor = new Minor();//empty minor		
 		for (int index = 0; index < this.minorList.size(); index ++) {
-			aMinor = this.minorList.get(index);
-			if (aMinor.getMinorID() == minorID) {
-				isFound = true;
-				break;
+			Minor temp = this.minorList.get(index);
+			if (temp.getMinorID() == minorID) {
+                            aMinor = temp;
+                            break;
 			}
-		}
-		if (!isFound)
-			aMinor = new Minor();
-		
+		}		
 		return aMinor;
 	}
 	

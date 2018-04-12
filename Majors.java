@@ -42,13 +42,15 @@ public class Majors {
 	 * @return Major Object *
 	 */
 	public Major getMajorByID(int majorID) {
+            aMajor = new Major();
 		for (int index = 0; index < this.majorList.size(); index++) {
-			aMajor = this.majorList.get(index);
-			if (aMajor.getMajorID() == majorID) {
-				return aMajor;
+			Major temp = this.majorList.get(index);
+			if (temp.getMajorID() == majorID) {
+				aMajor = temp;
+                                break;
 			}
 		}
-		return new Major();
+		return aMajor;
 	}
 
 	/**
