@@ -172,7 +172,6 @@ public class ChooseCourse {
 				}
 			}
 		}
-		
 		// Remove any courseChosen if they are not in coursesFulfilled
 		for (int i = 0; i < coursesChosen.size(); i++) {
 			if (!coursesFulfilled.contains(coursesChosen.get(i))) {
@@ -200,7 +199,7 @@ public class ChooseCourse {
 	/**
 	 * This method will take a String query from the database to parse into the
 	 * method. The query looks like something like this:
-	 * "%|3|20|CLASS101,CLASS102,CLASS200" NOTE: THIS CLASS IS PART OF THE
+	 * "%|3|20|CLASS101,CLASS102,CLASS200" NOTE: THIS METHOD IS PART OF THE
 	 * CONSTRUCTOR
 	 * 
 	 * @author Lam Duong
@@ -211,14 +210,14 @@ public class ChooseCourse {
 	private void parseString(String query, Courses coursesList) {
 
 		// split string to start deciphering
-		String[] parts = query.split("|");
+		String[] parts = query.split("\\|");
 
 		// We start at parts[1] because parts[0] is just "%"
 		this.amountOfChoices = Integer.parseInt(parts[1]);
 		this.amountOfCourses = Integer.parseInt(parts[2]);
 		this.coursesToBeChosen = new LinkedList<Course>();
 
-		String[] classes = parts[3].split(",");
+		String[] classes = parts[3].split("\\,");
 
 		// NOTE: classes.length in loop below should be equal to amountOfCourses
 		// POTENTIAL BUG if they do not equate!! They should be equal though!

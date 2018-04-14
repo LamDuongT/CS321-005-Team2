@@ -1,14 +1,23 @@
-/*import java.io.IOException;
+import java.io.IOException;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-public class HuanTestClass {
+public class LamTestClass {
 
 	public static void main(String[] args) {
-		// ******************************************TEST
+		/*(int chooseCourseID, int majorID, int minorID, String name, String description,
+			Courses coursesList, CreditsTaken creditsTaken)*/
+		CreditsTaken ct = new CreditsTaken();
+		ChooseCourse c = new ChooseCourse()
+		
+/*		// ******************************************TEST
 		// LOGIN******************************************
 		connectdb.reconnect();
 		
-		Majors m = new Majors(
-		
+		Majors m = new Majors(*/
+		/*
 //		 Login aStudent = new Login("hnguye80", "hnguye80"); aStudent.doLogin();
 //		 aStudent.getProfile(aStudent.getStudentID());
 		 
@@ -67,8 +76,7 @@ public class HuanTestClass {
 //		 Courses courseList = new Courses();
 //		 System.out.println("***********List of Course***************\n" +
 //		 courseList.toString());
-		
+		*/
 	}
 
 }
-*/

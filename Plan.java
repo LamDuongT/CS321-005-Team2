@@ -19,6 +19,7 @@ public class Plan {
 	private Courses courses;
 	private int catalogID;
 	private int profileID;
+	private CreditsTaken coursesToTaken;
 
 	// Constructor for empty plan
 	public Plan() {
