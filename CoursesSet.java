@@ -201,8 +201,10 @@ public class CoursesSet {
 	/**
 	 * This method will take a String query from the database to parse into the
 	 * method. The query looks like something like this:
-	 * "%|3|20|CLASS101,CLASS102,CLASS200" NOTE: THIS METHOD IS PART OF THE
-	 * CONSTRUCTOR
+	 * "%|3|20|CLASS101,CLASS102,CLASS200" 
+	 * *CLASSx = all classes within x-hundred levels
+	 * !CLASSxxx = except for this course
+	 * NOTE: THIS METHOD IS PART OF THE CONSTRUCTOR
 	 * 
 	 * @author Lam Duong
 	 * @author Mohammed Alsharf
@@ -225,18 +227,33 @@ public class CoursesSet {
 		// POTENTIAL BUG if they do not equate!! They should be equal though!
 		// IF THERES A BUG: It might also be because coursesList is empty
 		// MAKE SURE coursesList is not empty!!!
+		Course course = null;
 		for (int i = 0; i < classes.length; i++) {
-			if (classes[i] == )
-			Course course = coursesList.getCourseByName(classes[i]);
-			coursesToBeChosen.add(course);
-		}
-		
-		for (int i = 0; i < coursesToBeChosen.size(); i++) {
-			String courseName = coursesToBeChosen.get(i).getCourseName();
-			for (int j = 0; j < courseName.length(); j++) {
-				if (courseName.charAt(j) == '*') {
-					
+			String courseName = classes[i];
+			String coursePrefix = "";
+			if (courseName.charAt(0) == '*') {
+				// Iterating through the name of the course to get its prefix
+				for (int j = 1; j < courseName.length(); j++) {
+					coursePrefix += courseName.charAt(j);
 				}
+				// Iterate through all courses within coursesList to add the right courses
+				for (int k = 0; k < coursesList.getCoursesList().size(); k++) {
+					// If the class matches with the course prefix, add it to coursesToBeChosen
+					if (coursesList.getCoursesList().get(k).getCourseName().startsWith(coursePrefix)) {
+						course = coursesList.getCoursesList().get(k);
+						coursesToBeChosen.add(course);
+					}
+				}
+			} else if (courseName.charAt(0) == '!') {
+				// NOTE: '!' is for removal. Make sure this is the last item on string in DB
+				for (int j = 1; j < courseName.length(); j++) {
+					coursePrefix += courseName.charAt(j);
+				}
+				course = coursesList.getCourseByName(coursePrefix);
+				coursesToBeChosen.remove(course);
+			} else {
+				course = coursesList.getCourseByName(classes[i]);
+				coursesToBeChosen.add(course);
 			}
 		}
 	}
