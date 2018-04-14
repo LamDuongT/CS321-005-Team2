@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author Lam Duong 
@@ -34,7 +35,7 @@ public class CoursesSet {
 	 * empty is being fed to the arguments.
 	 * @author Lam Duong
 	 * @author Mohammed Alsharf
-	 * @param chooseCourseID
+	 * @param coursesSetID
 	 * @param majorID
 	 * @param minorID
 	 * @param name
@@ -42,9 +43,9 @@ public class CoursesSet {
 	 * @param coursesList
 	 * @param creditsTaken
 	 */
-	public CoursesSet(int chooseCourseID, int majorID, int minorID, String name, String description,
+	public CoursesSet(int coursesSetID, int majorID, int minorID, String name, String description,
 			Courses coursesList, CreditsTaken creditsTaken) {
-		this.coursesSetID = chooseCourseID;
+		this.coursesSetID = coursesSetID;
 		this.majorID = majorID;
 		// minorID can only be added if it does not equal to majorID
 		if (majorID == minorID) {
@@ -132,7 +133,7 @@ public class CoursesSet {
 	public boolean stillWorking() {
 		boolean working = true;
 		if (coursesChosen.size() != amountOfChosen) {
-			if (coursesToBeChosen.size() != amountOfCourses) {
+			if (coursesToBeChosen.size() < amountOfCourses) {
 				if (amountOfChoices > amountOfChosen) {
 					working = false;
 				}
@@ -144,8 +145,8 @@ public class CoursesSet {
 
 	/**
 	 * Checking coursesChosen, coursesToBeChosen, and coursesTaken to
-	 * update chooseCourse when there are changes made to the Plan
-	 * or if the chooseCourse has just been instantiated.
+	 * update CoursesSet when there are changes made to the Plan
+	 * or if the CoursesSet has just been instantiated.
 	 * NOTE: Make sure to run this at the end of CRG
 	 * WARNING: Excessive commenting ahead
 	 * @author Lam Duong
@@ -172,6 +173,7 @@ public class CoursesSet {
 				}
 			}
 		}
+		
 		// Remove any courseChosen if they are not in coursesFulfilled
 		for (int i = 0; i < coursesChosen.size(); i++) {
 			if (!coursesFulfilled.contains(coursesChosen.get(i))) {
@@ -224,10 +226,19 @@ public class CoursesSet {
 		// IF THERES A BUG: It might also be because coursesList is empty
 		// MAKE SURE coursesList is not empty!!!
 		for (int i = 0; i < classes.length; i++) {
+			if (classes[i] == )
 			Course course = coursesList.getCourseByName(classes[i]);
 			coursesToBeChosen.add(course);
 		}
-
+		
+		for (int i = 0; i < coursesToBeChosen.size(); i++) {
+			String courseName = coursesToBeChosen.get(i).getCourseName();
+			for (int j = 0; j < courseName.length(); j++) {
+				if (courseName.charAt(j) == '*') {
+					
+				}
+			}
+		}
 	}
 	
 	public String toString() {

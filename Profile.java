@@ -14,6 +14,7 @@ public class Profile {
 	private String username;
 	private String password;
 	private String profileName;
+	private CreditsTaken coursesTaken;
 
 	public Profile() {
 		setValue(-1, "", "", "", "", "", "");
@@ -22,6 +23,7 @@ public class Profile {
 	public Profile(int studentID, String netID, String studentName, String studentEmail, String username,
 			String password, String profileName) {
 		setValue(studentID, netID, studentName, studentEmail, username, password, profileName);
+		this.getCoursesSet();
 	}
 
 	public void setValue(int studentID, String netID, String studentName, String studentEmail, String username,
@@ -82,14 +84,21 @@ public class Profile {
 	public String getProfileName() {
 		return this.profileName;
 	}
-        public String getNetID(){
-            return this.netID;
-        }
+
+	public String getNetID() {
+		return this.netID;
+	}
+	
+	public void getCoursesSet() {
+		
+	}
+
 	/**
 	 * Override toString method for testing purpose
-     * @return 
+	 * 
+	 * @return
 	 */
-        @Override
+	@Override
 	public String toString() {
 		String returnString = "StudentID = " + this.studentID + "\n";
 		returnString += "netId = " + this.netID + "\n";

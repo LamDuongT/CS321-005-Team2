@@ -19,7 +19,7 @@ public class Plan {
 	private Courses courses;
 	private int catalogID;
 	private int profileID;
-	private CreditsTaken coursesToTaken;
+	private CreditsTaken coursesToTake;
 
 	// Constructor for empty plan
 	public Plan() {
@@ -137,7 +137,7 @@ public class Plan {
 				throw new RuntimeException("ERROR: Major-major conflict: Cannot add the same major again!");
 			}
 		}
-		// Removal processs
+		// Removal process
 		else {
 			// Removal is only possible with the secondary major
 			if (majorPosition == 1) {
