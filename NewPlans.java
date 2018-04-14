@@ -72,8 +72,6 @@ public class NewPlans extends javax.swing.JFrame {
         major2List = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         minor1List = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        minor2List = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -112,15 +110,6 @@ public class NewPlans extends javax.swing.JFrame {
         minor1List.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 minor1ListItemStateChanged(evt);
-            }
-        });
-
-        jLabel6.setText("Minor 2");
-
-        minor2List.setEnabled(false);
-        minor2List.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                minor2ListItemStateChanged(evt);
             }
         });
 
@@ -184,15 +173,9 @@ public class NewPlans extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(major1List, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(major2List, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(minor2List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(major2List, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel8))
                         .addGap(0, 9, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -217,9 +200,7 @@ public class NewPlans extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(minor1List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(minor2List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minor1List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -331,7 +312,6 @@ public class NewPlans extends javax.swing.JFrame {
         // if a first minor was selected enbale second minor's list
         if (minor1List.getSelectedIndex() > 0) {
             //removes all items
-            minor2List.removeAllItems();
             minor1 = new Minors(catalog.getCatalogID()).getMinorByName((String) minor1List.getSelectedItem());
             if (minor1.getMinorName().equals(major1.getMajorName())) {
                 JOptionPane.showMessageDialog(this, "You can't have the same  major", "Major conflict", JOptionPane.ERROR_MESSAGE);
@@ -351,37 +331,12 @@ public class NewPlans extends javax.swing.JFrame {
                 minor1List.addItem("");
                 //add list
                 new Minors(catalog.getCatalogID()).getMinorList().forEach((mj) -> {
-                    minor2List.addItem(mj.getMinorName());
                 });
             }
         } else if (minor1List.getSelectedIndex() == 0) {
             minor1 = new Minor();
-            minor2List.removeAllItems();
-            minor2List.setEnabled(false);
         }
     }//GEN-LAST:event_minor1ListItemStateChanged
-
-    private void minor2ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_minor2ListItemStateChanged
-        // if second minor was selected the set it up
-        if (minor2List.getSelectedIndex() > 0) {
-            minor2 = new Minors(catalog.getCatalogID()).getMinorByName((String) minor2List.getSelectedItem());
-            if (minor1.getMinorName().equals(major1.getMajorName())) {
-                JOptionPane.showMessageDialog(this, "You can't have the same  major", "Major conflict", JOptionPane.ERROR_MESSAGE);
-                minor2 = new Minor();
-                minor2List.setSelectedIndex(0);
-            } else if (minor1.getMinorName().equals(major2.getMajorName())) {
-                JOptionPane.showMessageDialog(this, "You can't have the same  major", "Major conflict", JOptionPane.ERROR_MESSAGE);
-                minor2 = new Minor();
-                minor2List.setSelectedIndex(0);
-            } else if (minor1.getMinorName().equals(minor2.getMinorName())) {
-                JOptionPane.showMessageDialog(this, "You can't have the same  major", "Major conflict", JOptionPane.ERROR_MESSAGE);
-                minor2 = new Minor();
-                minor2List.setSelectedIndex(0);
-            }
-        } else {
-            minor2 = new Minor();
-        }
-    }//GEN-LAST:event_minor2ListItemStateChanged
 
     private void catalogListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_catalogListItemStateChanged
         // if a catalog year was selected then enable major one
@@ -447,14 +402,12 @@ public class NewPlans extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> major1List;
     private javax.swing.JComboBox<String> major2List;
     private javax.swing.JComboBox<String> minor1List;
-    private javax.swing.JComboBox<String> minor2List;
     private javax.swing.JTextField planeNametxt;
     // End of variables declaration//GEN-END:variables
 
@@ -476,6 +429,5 @@ public class NewPlans extends javax.swing.JFrame {
         major1List.setSelectedItem(plan.getMajors()[0]);
         major2List.setSelectedItem(plan.getMajors()[1]);
         minor1List.setSelectedItem(plan.getMinors()[0]);
-        minor2List.setSelectedItem(plan.getMinors()[1]);
     }
 }
