@@ -29,11 +29,11 @@ public class GradRequirement {
 		int _gradreqcourseID;
 		int _majorID;
 		int _minorID;
-		int _courseName;
-		int _gradreqDesc;
+		String _courseName;
+		String _gradreqDesc;
 		try {
 			String queryString;
-			queryString = "SELECT gradreqcourseID, majorID, minorID, courseName, Desc";
+			queryString = "SELECT courseName, Desc";
 			queryString += "FROM tblreqcourse ";
 			queryString +="WHERE majorID = " + major1;
 			System.out.println(queryString);
@@ -45,17 +45,14 @@ public class GradRequirement {
 			ResultSet recordSet = statement.executeQuery(queryString);
 			
 			while (recordSet.next()){
-				_gradreqcourseID = recordSet.getInt("gradreqcourseID");
-				_majorID = recordSet.getInt("majorID");
-				_minorID = recordSet.getInt("minorID");
 				_courseName = recordSet.getString("courseName");
-				_gradreqDesc = recordSet.getString("gradreqDesc");
+				_gradreqDesc = recordSet.getSString("gradreqDesc");
 				
-				aGradreqCourse = new GradreqCourse(_gradreqcourseID, _majorID, _minorID, _courseName, _gradreqDesc);
-				this.gradreqCourseList.add(aGradreqCourse);
+				aReqcontainer = new GradreqCourse();
+				this.major1Req.add(aGradreqCourse);
 			}
 			statement.close();
-				
+			
 			
 			
 		}catch (SQLException e) {
