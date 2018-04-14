@@ -116,17 +116,17 @@ public class UpdateData {
 			case 'i':
 				// form the query for insert
 				queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
-				queryString += "VALUES (\"" + theCreditTaken.getStudentID() + "\", \"" + theCreditTaken.getCourseID()
-						+ "\", \"" + theCreditTaken.getSemesterID() + "\", " + theCreditTaken.getIsChangable() + ");";
+				queryString += "VALUES (" + theCreditTaken.getStudentID() + ", " + theCreditTaken.getCourseID()
+						+ ", " + theCreditTaken.getSemesterID() + ", " + theCreditTaken.getIsChangable() + ");";
 				break;
 
 			// for update existing profile
 			case 'u':
 				// form the query string for update
 				queryString = "UPDATE collegespdb.tblcreditstaken SET  ";
-				queryString += "studentID =\"" + theCreditTaken.getStudentID() + "\",";
-				queryString += "courseID =\"" + theCreditTaken.getCourseID() + "\",";
-				queryString += "semesterID =\"" + theCreditTaken.getSemesterID() + "\", ";
+				queryString += "studentID =" + theCreditTaken.getStudentID() + ",";
+				queryString += "courseID =" + theCreditTaken.getCourseID() + ",";
+				queryString += "semesterID =" + theCreditTaken.getSemesterID() + ", ";
 				queryString += "isChangable = " + theCreditTaken.getIsChangable() + " ";
 				queryString += "WHERE creditstakenID = " + theCreditTaken.getCreditTakenID();
 				break;
