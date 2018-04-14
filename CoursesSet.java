@@ -12,13 +12,13 @@ import java.util.List;
  * shall hold a list of courses to be chosen from within a catalog year.
  */
 
-public class ChooseCourse {
+public class CoursesSet {
 	// Fields that will be instantiated by constructor parameters
-	private int chooseCourseID;
+	private int coursesSetID;
 	private int majorID;
 	private int minorID;
-	private String chooseCourseName;
-	private String chooseCourseDescription;
+	private String coursesSetName;
+	private String coursesSetDescription;
 
 	// Fields that will be parsed by parseString() method
 	private List<Course> coursesToBeChosen; // courses that user could choose from
@@ -42,9 +42,9 @@ public class ChooseCourse {
 	 * @param coursesList
 	 * @param creditsTaken
 	 */
-	public ChooseCourse(int chooseCourseID, int majorID, int minorID, String name, String description,
+	public CoursesSet(int chooseCourseID, int majorID, int minorID, String name, String description,
 			Courses coursesList, CreditsTaken creditsTaken) {
-		this.chooseCourseID = chooseCourseID;
+		this.coursesSetID = chooseCourseID;
 		this.majorID = majorID;
 		// minorID can only be added if it does not equal to majorID
 		if (majorID == minorID) {
@@ -53,12 +53,12 @@ public class ChooseCourse {
 		} else {
 			this.minorID = minorID;
 		}
-		this.chooseCourseName = name;
-		this.chooseCourseDescription = description;
+		this.coursesSetName = name;
+		this.coursesSetDescription = description;
 		this.amountOfChosen = 0;
 
 		// Create data out of String from database
-		this.parseString(this.chooseCourseDescription, coursesList);
+		this.parseString(this.coursesSetDescription, coursesList);
 
 		// Initially, the coursesChosen shall be empty.
 		// coursesChosen shall have a full array of empty Course objects
@@ -71,7 +71,7 @@ public class ChooseCourse {
 	 * ACCESSOR METHODS
 	 */
 	public int getChooseCourseID() {
-		return this.chooseCourseID;
+		return this.coursesSetID;
 	}
 
 	public int getMajorID() {
@@ -83,11 +83,11 @@ public class ChooseCourse {
 	}
 
 	public String getName() {
-		return this.chooseCourseName;
+		return this.coursesSetName;
 	}
 
 	public String getDescription() {
-		return this.chooseCourseDescription;
+		return this.coursesSetDescription;
 	}
 
 	public int getAmountOfChoices() {
@@ -232,14 +232,14 @@ public class ChooseCourse {
 	
 	public String toString() {
 		String s = new String();
-		s += "ChooseCourse Object:\n" +
+		s += "CoursesSet Object:\n" +
 			"-------------------------------------\n" + 
 			"DATABASE FIELDS: \n" + 
-			"chooseCourseID: " + this.chooseCourseDescription + "\n" +
+			"coursesSetID: " + this.coursesSetDescription + "\n" +
 			"majorID: " + this.majorID + "\n" +
 			"minorID: " + this.minorID + "\n" +
-			"name:" + this.chooseCourseName + "\n" +
-			"description: " + this.chooseCourseDescription + "\n" +
+			"name:" + this.coursesSetName + "\n" +
+			"description: " + this.coursesSetDescription + "\n" +
 			"-------------------------------------\n" + 
 			"PARSED FIELDS: \n" +
 			"coursesToBeChosen: " + this.coursesToBeChosen + "\n" +
