@@ -33,7 +33,7 @@ public class Plan {
 			int minor2ID) {
 		this.PLAN_ID = planID;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
-		requirements= new GradRequirement(majorID,major2ID, minorID);
+		
 	}
 
 	// Setting values for constructor
@@ -44,6 +44,7 @@ public class Plan {
 		this.profileID = profileID;
 
 		// Instantiation of new objects based on catalogID
+		this.requirements= new GradRequirement(majorID,major2ID, minorID);
 		this.semesters = new Semesters();
 		this.majorsData = new Majors(catalogID);
 		this.minorsData = new Minors(catalogID);
