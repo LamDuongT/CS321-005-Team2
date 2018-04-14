@@ -64,7 +64,13 @@ public class Semesters {
 
 		return aSemester;
 	}
-
+        /**
+         * Gets the list of semesters that the student took
+     * @return the list of semesters
+         */
+        public List<Semester> getSemesterList(){
+            return this.semesterList;
+        }
 	/**
 	 * fetch all data from the table Semester and add to the list
 	 */
@@ -111,10 +117,7 @@ public class Semesters {
 			connectdb.disconectDB();
 		}
 	}
-        public void addSemester(Semester sm){
-            
-        }
-
+      
 	/**
 	 * Override toString method for testing purpose
      * @return 
