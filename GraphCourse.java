@@ -62,7 +62,7 @@ public class GraphCourse {
 				graph = new SingleGraph(graphName);
 				graph.addAttribute("ui.antialias"); 
 				graph.addAttribute("ui.quality"); 
-				graph.setAttribute("ui.stylesheet", "url(src/graph.style.css);"); // get some style
+				graph.setAttribute("ui.stylesheet", "url(libs/graph.style.css);"); // get some style
 				//**********************************Graph Setting********************************************
 
 				// get the list of graduation for majorID and/or minorID
