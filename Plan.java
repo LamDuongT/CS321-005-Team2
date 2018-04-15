@@ -20,6 +20,7 @@ public class Plan {
 	private int catalogID;
 	private int profileID;
 	private CreditsTaken coursesToTake;
+	private GradRequirement requirements;
 
 	// Constructor for empty plan
 	public Plan() {
@@ -32,6 +33,7 @@ public class Plan {
 			int minor2ID) {
 		this.PLAN_ID = planID;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
+		requirements= new GradRequirement(majorID,major2ID, minorID);
 	}
 
 	// Setting values for constructor
