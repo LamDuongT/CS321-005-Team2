@@ -220,11 +220,11 @@ public class NewPlans extends javax.swing.JFrame {
         } else {
             //check if majors and minors confilic each other
             //create a new plan object with all the required fields
-            Plan plan = new Plan(this.planeNametxt.getText().hashCode(), profile.getStudentID(), catalog.getCatalogID(),
+            Plan plan_t = new Plan(this.planeNametxt.getText().hashCode(), profile.getStudentID(), catalog.getCatalogID(),
                     planeNametxt.getText(), major1.getMajorID(), minor1.getMinorID(),
                     major2.getMajorID(), minor2.getMinorID());
             //update database using UpdateData()
-            new UpdateData().updatePlan(plan, 'i');
+            new UpdateData().updatePlan(plan_t, action);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

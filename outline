@@ -1,0 +1,34 @@
+This is an outline for the major function of this program
+
+profile
+    creditTaken //this holds all the taken courses that the user inputed 
+    during creating a new file
+    
+    updateState{
+        call: link
+        //this activate checks the students current states by checking
+        courses for each plan in the profile.
+        //also this activate can be started at any time the program need
+        //this activate uses GradRep GradPreq and chooseCourse to insure that
+        everything is up to date in database
+    }
+    checkPreq{
+        //this stage checks if the student satiated the preqs. for the chosen
+        course
+        //if there was unsatisfied preqs. this function handles this issue 
+    }
+    link{
+        //this stage links majors and minors together and makes sure that they
+        can be checked in updatedState
+        //this works by linking both GradReqem of that major or minor to the 
+        main GradReqem memory
+    }
+    addCourseToBeTaken{
+        //this activate inserts the given courses into the system and uses  
+        updateState
+        call: checkPreq
+        if: checkPreq succeeded
+            do:call: updateState
+    }
+    
+    

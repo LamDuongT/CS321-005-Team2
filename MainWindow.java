@@ -6,6 +6,10 @@
 
 
 import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -21,18 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
     private Profile profile;
     public MainWindow() {
         initComponents();
-        intiTree();
-        //Use this example to set up semesters in plans
-//        JPanel p = new JPanel();
-//        p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
-//        p.add(new SemsterTable("Fall 2012",new String[][]{{"CS110","Essentials of Computer Science","3"},{"MATH113","Analytic Geometry and Calculus I","4"}
-//                ,{"ENGH302","Advanced Composition","3"},{"MATH125","Decrete Math","3"},{"CS112","Introduction to Computer Programming","4"}}));
-//        p.add(new JSeparator());
-//        p.add(new SemsterTable("Spring 2013",new String[][]{{"CS110","Essentials of Computer Science","3"},{"MATH113","Analytic Geometry and Calculus I","4"}
-//                ,{"ENGH302","Advanced Composition","3"},{"MATH125","Decrete Math","3"},{"CS112","Introduction to Computer Programming","4"}}));
-//        this.jScrollPane2.setViewportView(p);
-//        this.jScrollPane2.getViewport().add(new SemsterTable());
-//        this.jScrollPane2.getViewport().add(new SemsterTable());
+        intiPlanTable();
     }
 
     /**
@@ -45,11 +38,11 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -71,14 +64,42 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Plans"));
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTree1MouseClicked(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Plans"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTree1);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable1);
+
+        jButton1.setText("Add New Plan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Genertate Smart Graph");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,20 +107,26 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
-
-        jButton1.setText("Add New Plan");
-
-        jButton2.setText("Genertate Smart Graph");
 
         jMenu1.setText("File");
 
@@ -114,7 +141,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Edit Plan");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Edit");
@@ -161,6 +188,11 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu3.setText("Settings");
 
         jMenuItem8.setText("Window");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Help");
@@ -175,32 +207,23 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,36 +231,55 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // delets the highlited plan 
-        DefaultMutableTreeNode selectedChild = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
-        Plan p = (Plan) selectedChild.getUserObject();
-        new UpdateData().updatePlan(p, 'd');
-        selectedChild.removeFromParent();
-        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-        root.remove(new DefaultMutableTreeNode(p));
-        model.reload(root);
+         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+         Plan p = (Plan) model.getValueAt(jTable1.getSelectedColumn(), jTable1.getSelectedRow());
+         new UpdateData().updatePlan(p, 'd');
+         model.removeRow(jTable1.getSelectedRow());
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // adds a new plan to the profile
-        new NewPlans(profile).setVisible(true);
+        new NewPlans(profile,null,'i').setVisible(true);
+        this.intiPlanTable();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // edits higlited plan
-        DefaultMutableTreeNode selectedChild = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
-        Plan p = (Plan) selectedChild.getUserObject();
-        new NewPlans(profile,p,'U').setVisible(true);
-        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-        root.remove(new DefaultMutableTreeNode(p));
-        root.add(new DefaultMutableTreeNode(p));
-        model.reload(root);
+         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+         Plan plan = (Plan) model.getValueAt(jTable1.getSelectedColumn(), jTable1.getSelectedRow());
+         new NewPlans(profile,plan,'u').setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // adds a new plan
+        new NewPlans(profile,null,'i').setVisible(true);
+        this.intiPlanTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // genarate a graphical representation of the plan
+        //need to work on it
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTree1MouseClicked
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // mouse cliked twice, show semesters
+        //!!!SEMESTERS DON'T HAVE COURSES, DISCUSS THIS ISSUE
+        if(evt.getClickCount()==2){
+            DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+            Plan plan = (Plan) model.getValueAt(jTable1.getSelectedColumn(), jTable1.getSelectedRow());
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+            plan.getSemesters().getSemesterList().forEach((sm) -> {
+                p.add(new SemsterTable(sm));
+                p.add(new JSeparator());
+            });
+             this.jScrollPane2.setViewportView(p);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -295,24 +337,19 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    private void intiTree() {
-        List<Plan> planList = new Plans().getPlans();
-        DefaultMutableTreeNode  root = (DefaultMutableTreeNode) jTree1.getModel().getRoot();
+
+    private void intiPlanTable(){
+        //gets all plans that are linked with the current profile
+        List<Plan> planList = new Plans(profile).getPlans();
+        //now add all plans to the table
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         planList.forEach((p) -> {
-            root.add(new DefaultMutableTreeNode(p));
+            model.addRow(new Plan[]{p});
         });
-        //need to talk with group about this
-//        for(int i = 0 ;i < root.getChildCount();i++){
-//            DefaultMutableTreeNode node = (DefaultMutableTreeNode) root.getChildAt(i);
-//            Plan p = (Plan)node.getUserObject();
-//            for(Semester sem : ){
-//                
-//            }
-//        }
     }
 }

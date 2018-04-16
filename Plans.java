@@ -15,7 +15,10 @@ public class Plans {
 	public Plans() {
 		getPlansData();
 	}
-	
+	public Plans(Profile prof){
+            getPlansData();
+            profile = prof;
+        }
 	/**
 	 * Search through the plansList and return a plan matching a planID
 	 * Method may return "null" if no matches are found during the search
@@ -49,7 +52,7 @@ public class Plans {
 			int _major2ID;
 			int _minor2ID;
 			int _profileID;
-			
+			//!!!WE NEED THIS METHOD TO PULL PLANS THAT ARE RELATED TO THE CURRENT PROFILE!!!
 			// Instantiate query strings with all fields for Plan
 			String queryString = "SELECT planID, catalogID, planName, majorID, minorID, majorID2, minorID2 FROM 'tablplan' ";
 			queryString += "ORDER BY planID ASC";
