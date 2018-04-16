@@ -91,8 +91,33 @@ public class Courses {
 		return new Course();
 	}
 	
+	
 	public List<Course> getCoursesList() {
 		return this.courseList;
+	}
+	
+	
+	/**
+	 * @author Huan nguyen
+	 * This method will return a list of course based on the search string
+	 * */
+	
+	public List<Course> search (String searchQuery) {
+		List<Course> courseList = new LinkedList<>();
+		
+		// search course when the searchQuery is not empty
+		if (!searchQuery.equals("")) {
+			Course aCourse = new Course();
+			
+			for (int index = 0; index < this.courseList.size(); index++) {
+				aCourse = this.courseList.get(index);
+				if (aCourse.getCourseName().toLowerCase().indexOf(searchQuery.toLowerCase()) != -1) {
+					courseList.add(aCourse);
+				}
+			}
+		}		
+		
+		return courseList;
 	}
 
 	/**
