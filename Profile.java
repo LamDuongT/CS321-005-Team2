@@ -1,10 +1,9 @@
-/**
- * 
- */
-
+/*import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;*/
 /**
  * @author Huan Nguyen
- *
+ * @author Lam Duong
  */
 public class Profile {
 	private int studentID;
@@ -15,6 +14,7 @@ public class Profile {
 	private String password;
 	private String profileName;
 	private CreditsTaken coursesTaken;
+	private Plans plans;
 
 	public Profile() {
 		setValue(-1, "", "", "", "", "", "");
@@ -23,7 +23,9 @@ public class Profile {
 	public Profile(int studentID, String netID, String studentName, String studentEmail, String username,
 			String password, String profileName) {
 		setValue(studentID, netID, studentName, studentEmail, username, password, profileName);
-		this.getCoursesSet();
+
+		coursesTaken = new CreditsTaken(studentID);
+		this.plans = new Plans(studentID);
 	}
 
 	public void setValue(int studentID, String netID, String studentName, String studentEmail, String username,
@@ -89,10 +91,10 @@ public class Profile {
 		return this.netID;
 	}
 	
-	public void getCoursesSet() {
-		
+	public CreditsTaken getCoursesTaken() {
+		return coursesTaken;
 	}
-
+	
 	/**
 	 * Override toString method for testing purpose
 	 * 
