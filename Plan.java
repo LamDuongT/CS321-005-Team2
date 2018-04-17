@@ -31,11 +31,9 @@ public class Plan {
 
 	// Standard constructor
 	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
-			int minor2ID, CreditsTaken profileCoursesTaken) {
+			int minor2ID) {
 		this.PLAN_ID = planID;
-		this.profileCoursesTaken=profileCoursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
-		
 	}
 
 	// Setting values for constructor
@@ -212,6 +210,10 @@ public class Plan {
 
 	public void setPlanName(String planName) {
 		this.planName = planName;
+	}
+	
+	public void addProfileCreditsTaken(CreditsTaken coursesTaken) {
+		this.profileCoursesTaken = coursesTaken;
 	}
 
 	public void generateSmartPlan() {

@@ -18,13 +18,20 @@ public class Plans {
 	public Plans() {
 		getPlansData(-1);
 	}
-	
+
 	/**
 	 * Retrieve the plans of a certain student
+	 * 
 	 * @param StudentID
 	 */
 	public Plans(int studentID) {
 		getPlansData(studentID);
+	}
+	
+	public void insertCreditsTakenToPlans(CreditsTaken coursesTaken) {
+		for (int i = 0; i < plansList.size(); i++) {
+			plansList.get(i).addProfileCreditsTaken(coursesTaken);
+		}
 	}
 
 	/**
@@ -67,7 +74,7 @@ public class Plans {
 			// PROFILE!!!
 			// Instantiate query strings with all fields for Plan
 			String queryString = "SELECT planID, catalogID, planName, majorID, minorID, majorID2, minorID2 FROM 'tblplan' ";
-			queryString +=  "WHERE profileID = " + studentID;
+			queryString += "WHERE profileID = " + studentID;
 			queryString += "ORDER BY planID ASC";
 			System.out.println(queryString);
 
