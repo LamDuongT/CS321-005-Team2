@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.Comparator;
 import java.util.*;
 
+
 public class GradRequirement {
 	private ArrayList<CoursesSet> major1Req;
 	private ArrayList<CoursesSet> major2Req;
@@ -67,7 +68,6 @@ public class GradRequirement {
 					}
 				}
 			}
-			//TODO: add more hiuristics for determining which course to add.
 			difference=9999;
 			for(CoursesSet a: tempHolder) {
 				if(Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen())<difference) {
