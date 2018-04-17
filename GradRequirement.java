@@ -137,7 +137,7 @@ public class GradRequirement {
 		CoursesSet reqContainer;
 		try {
 			String queryString;
-			queryString = "SELECT courseName, Desc";
+			queryString = "SELECT courseName, Desc ";
 			queryString += "FROM tblreqcourse ";
 			queryString +="WHERE majorID = " + major1;
 			System.out.println(queryString);
@@ -162,7 +162,7 @@ public class GradRequirement {
 			}
 			statement.close();
 			if (major2 != 0) {
-				queryString = "SELECT courseName, Desc";
+				queryString = "SELECT courseName, Desc ";
 				queryString += "FROM tblreqcourse ";
 				queryString += "WHERE majorID = " + major2;
 				System.out.println(queryString);
@@ -188,7 +188,7 @@ public class GradRequirement {
 				statement.close();
 			}
 			if (minor != 0) {
-				queryString = "SELECT courseName, Desc";
+				queryString = "SELECT courseName, Desc ";
 				queryString += "FROM tblreqcourse ";
 				queryString += "WHERE majorID = " + minor;
 				System.out.println(queryString);
