@@ -1,3 +1,7 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /*
   * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -43,8 +47,10 @@ public class Plan {
 		this.planName = planName;
 		this.catalogID = catalogID;
 		this.profileID = profileID;
+		this.planCredits = new CreditsTaken();
 
 		// Instantiation of new objects based on catalogID
+		this.getPlanCreditsTaken();
 		this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
 		this.semesters = new Semesters();
 		this.majorsData = new Majors(catalogID);
@@ -105,8 +111,37 @@ public class Plan {
 		return this.semesters;
 	}
 	
+	/**
+	 * Method will retrieve CreditsTaken for plan from Database
+	 */
 	public void getPlanCreditsTaken() {
-		
+		ConnectDB connectDB = new ConnectDB();
+		CreditsTaken planCreditsTaken = new CreditsTaken();
+		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,"
+				+ "profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID,"
+				+ "se.semesterName, se.creditMax, se.creditMin"
+				+ "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID"
+				+ "INNER JOIN tblcourse course on course.courseID = credit.courseID"
+				+ "INNer JOIN tblprofile profile on plan.profileID = profile.studentID"
+				+ "INNER JOIN tblsemester se ON se.semesterDesc = credit.semesterID" 
+				+ "WHERE plan.planID = " + this.getPlanID();
+		try (Statement statement = connectDB.theConnection.createStatement()) {
+			ResultSet recordSet = statement.executeQuery(query);
+			while(recordSet.next()) {
+				int _creditsTakenID = recordSet.getInt("creditsTakenID");
+				int _studentID = recordSet.getInt("studentID");
+				int _courseID = recordSet.getInt("courseID");
+				int _semesterID = recordSet.getInt("semesterID");
+				
+				CreditTaken planCreditTaken = new CreditTaken(_creditsTakenID, _studentID, _courseID, _semesterID);
+				planCreditsTaken.getCreditsTakenList().add(planCreditTaken);
+			}
+		} catch (SQLException e) {
+            throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
+		} finally {
+            connectDB.disconectDB();
+        }
+		this.planCredits = planCreditsTaken;
 	}
 
 	/**
