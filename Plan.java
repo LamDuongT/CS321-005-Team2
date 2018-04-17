@@ -31,9 +31,9 @@ public class Plan {
 
 	// Standard constructor
 	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
-			int minor2ID, CreditsTaken coursesTaken) {
+			int minor2ID, CreditsTaken profileCoursesTaken) {
 		this.PLAN_ID = planID;
-		this.profileCoursesTaken = coursesTaken;
+		this.profileCoursesTaken = profileCoursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
 
