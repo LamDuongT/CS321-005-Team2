@@ -28,7 +28,6 @@ public class Plans {
 	public Plans(int studentID, CreditsTaken profileCreditsTaken) {
 		this.profileCreditsTaken = profileCreditsTaken;
 		this.getPlansData(studentID);
-		this.addPlanCreditsTaken();
 	}
 
 	/**
@@ -51,40 +50,6 @@ public class Plans {
 
 	public List<Plan> getPlans() {
 		return this.plansList;
-	}
-	
-	public void addPlanCreditsTaken() {
-		ConnectDB connectDB = new ConnectDB();
-		CreditsTaken planCreditsTaken = new CreditsTaken();
-		String queryPrefix = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,"
-				+ "profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID,"
-				+ "se.semesterName, se.creditMax, se.creditMin"
-				+ "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID"
-				+ "INNER JOIN tblcourse course on course.courseID = credit.courseID"
-				+ "INNer JOIN tblprofile profile on plan.profileID = profile.studentID"
-				+ "INNER JOIN tblsemester se ON se.semesterDesc = credit.semesterID" 
-				+ "WHERE plan.planID = ";
-		String query = new String();
-		try (Statement statement = connectDB.theConnection.createStatement()) {
-			for (int i = 0; i < plansList.size(); i++) {
-				query = queryPrefix + plansList.get(i).getPlanID();
-				ResultSet recordSet = statement.executeQuery(query);
-				while(recordSet.next()) {
-					int _creditsTakenID = recordSet.getInt("creditsTakenID");
-					int _studentID = recordSet.getInt("studentID");
-					int _courseID = recordSet.getInt("courseID");
-					int _semesterID = recordSet.getInt("semesterID");
-					
-					CreditTaken planCreditTaken = new CreditTaken(_creditsTakenID, _studentID, _courseID, _semesterID);
-					planCreditsTaken.getCreditsTakenList().add(planCreditTaken);
-				}
-			}
-		} catch (SQLException e) {
-            throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
-		} finally {
-            connectDB.disconectDB();
-        }
-		
 	}
 
 	/**
