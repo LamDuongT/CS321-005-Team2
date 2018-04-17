@@ -10,7 +10,6 @@ public class CreditTaken {
 	private String courseName;
 	private int semesterID;
 	private int planID;
-	private boolean isChangable;
 
 	/**
 	 * Initialize default values for all attributes
@@ -22,9 +21,8 @@ public class CreditTaken {
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public CreditTaken(int creditTakenID, int studentID, int courseID, String courseName, int semesterID,
-			boolean isChangable, int planID) {
-		setValue(creditTakenID, studentID, courseID, courseName, semesterID, isChangable, planID);
+	public CreditTaken(int creditTakenID, int studentID, int courseID, String courseName, int semesterID, int planID) {
+		setValue(creditTakenID, studentID, courseID, courseName, semesterID, planID);
 	}
 
 	/**
@@ -37,7 +35,6 @@ public class CreditTaken {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.semesterID = semesterID;
-		this.isChangable = isChangable;
 		this.planID = planID;
 	}
 
@@ -70,11 +67,6 @@ public class CreditTaken {
 	public void setPlanID(int planID) {
 		this.planID = planID;
 	}
-
-	// setter for isChangable
-	public void setIsChangable(boolean isChangable) {
-		this.isChangable = isChangable;
-	}
 	
 	public void setCreditTakenName(String creditName) {
 		this.courseName = creditName;
@@ -103,11 +95,6 @@ public class CreditTaken {
 	// getter for semesterID
 	public int getSemesterID() {
 		return this.semesterID;
-	}
-
-	// getter for isChangable
-	public boolean getIsChangable() {
-		return this.isChangable;
 	}
 	
 	public String getCreditTakenName() {
