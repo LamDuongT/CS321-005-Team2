@@ -104,6 +104,10 @@ public class Plan {
 	public Semesters getSemesters() {
 		return this.semesters;
 	}
+	
+	public void getPlanCreditsTaken() {
+		
+	}
 
 	/**
 	 * MUTATOR METHODS:
