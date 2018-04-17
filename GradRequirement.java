@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.Comparator;
 import java.util.*;
 
+
 public class GradRequirement {
 	private ArrayList<CoursesSet> major1Req;
 	private ArrayList<CoursesSet> major2Req;
@@ -44,9 +45,18 @@ public class GradRequirement {
 				}
 			}
 		}
-		//TODO: add more hiuristics for determining which course to add.
 		
-		tempHolder.get(0).scheduleCourse(courseID);
+		int difference=999;
+		int i=0;
+		int s=0;
+		for(CoursesSet a: tempHolder) {
+			if(Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen())<difference) {
+				difference=Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen());
+				s=i;
+			}
+			i++;
+		}
+		tempHolder.get(s).scheduleCourse(courseID);
 		Collections.sort(major1Req);
 		tempHolder.clear();
 		
@@ -58,9 +68,16 @@ public class GradRequirement {
 					}
 				}
 			}
-			//TODO: add more hiuristics for determining which course to add.
-			
-			tempHolder.get(0).scheduleCourse(courseID);
+			difference=9999;
+			for(CoursesSet a: tempHolder) {
+				if(Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen())<difference) {
+					difference=Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen());
+					s=i;
+				}
+				i++;
+			}
+			tempHolder.get(s).scheduleCourse(courseID);
+
 			Collections.sort(major2Req);
 			tempHolder.clear();
 		}
@@ -72,9 +89,15 @@ public class GradRequirement {
 					}
 				}
 			}
-			//TODO: add more hiuristics for determining which course to add.
-			
-			tempHolder.get(0).scheduleCourse(courseID);
+			difference=9999;
+			for(CoursesSet a: tempHolder) {
+				if(Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen())<difference) {
+					difference=Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen());
+					s=i;
+				}
+				i++;
+			}
+			tempHolder.get(s).scheduleCourse(courseID);
 			Collections.sort(minorReq);
 			tempHolder.clear();
 		}
@@ -114,7 +137,7 @@ public class GradRequirement {
 		CoursesSet reqContainer;
 		try {
 			String queryString;
-			queryString = "SELECT courseName, Desc";
+			queryString = "SELECT courseName, Desc ";
 			queryString += "FROM tblreqcourse ";
 			queryString +="WHERE majorID = " + major1;
 			System.out.println(queryString);
@@ -139,7 +162,7 @@ public class GradRequirement {
 			}
 			statement.close();
 			if (major2 != 0) {
-				queryString = "SELECT courseName, Desc";
+				queryString = "SELECT courseName, Desc ";
 				queryString += "FROM tblreqcourse ";
 				queryString += "WHERE majorID = " + major2;
 				System.out.println(queryString);
@@ -165,7 +188,7 @@ public class GradRequirement {
 				statement.close();
 			}
 			if (minor != 0) {
-				queryString = "SELECT courseName, Desc";
+				queryString = "SELECT courseName, Desc ";
 				queryString += "FROM tblreqcourse ";
 				queryString += "WHERE majorID = " + minor;
 				System.out.println(queryString);
