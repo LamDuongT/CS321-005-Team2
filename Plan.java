@@ -20,7 +20,7 @@ public class Plan {
 	private int catalogID;
 	private int profileID;
 	private GradRequirement requirements;
-	private CreditsTaken planCoursesTaken; // retrieved when Plan is constructed
+	private CreditsTaken planCredits; // retrieved when Plan is constructed
 	private CreditsTaken profileCoursesTaken; // retrieved when Profile is constructed
 
 	// Constructor for empty plan
@@ -45,7 +45,7 @@ public class Plan {
 		this.profileID = profileID;
 
 		// Instantiation of new objects based on catalogID
-		this.requirements= new GradRequirement(majorID,major2ID, minorID,courses,profileCoursesTaken,planCoursesTaken);
+		this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
 		this.semesters = new Semesters();
 		this.majorsData = new Majors(catalogID);
 		this.minorsData = new Minors(catalogID);
@@ -110,7 +110,6 @@ public class Plan {
 	 */
 
 	/**
-	 * 
 	 * @param majorPosition
 	 * @param majorID
 	 * @return void
@@ -216,7 +215,7 @@ public class Plan {
 	public void generateSmartPlan() {
 		// TODO: GENERATE SORTING ALGORITHM
 	}
-	
+
 	public String toString() {
 		return new String();
 		// TODO: IMPLEMENT TOSTRING METHOD

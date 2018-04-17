@@ -18,7 +18,7 @@ public class CreditTaken {
 	public CreditTaken() {
 		setValue(-1, -1, -1, "", -1, false, -1);
 	}
-
+	
 	/**
 	 * Initialize all attributes with given information
 	 */

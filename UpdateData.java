@@ -205,7 +205,7 @@ public class UpdateData {
             }
 
             System.out.println(queryString);
-            // Initialize a sql statement
+            // Initialize a SQL statement
             Statement statement = connectdb.theConnection.createStatement();
             // execute the query
             // for INSERT and UPDATE query, there will be no return result
@@ -244,7 +244,7 @@ public class UpdateData {
         }
         //if no duplicate found, then proceed 
         if (!found) {
-            connectdb.reconnect();//reconection with database
+            connectdb.reconnect();// reconnection with database
             String query = "";//the query that to be used
             switch (action) {
                 case 'i':
