@@ -15,7 +15,7 @@ public class CreditTaken {
 	 * Initialize default values for all attributes
 	 */
 	public CreditTaken() {
-		setValue(-1, -1, -1, "", -1, false, -1);
+		setValue(-1, -1, -1, "", -1, -1);
 	}
 	
 	/**
@@ -28,8 +28,7 @@ public class CreditTaken {
 	/**
 	 * Method setValue used for constructors methods
 	 */
-	private void setValue(int creditTakenID, int studentID, int courseID, String courseName, int semesterID,
-			boolean isChangable, int planID) {
+	private void setValue(int creditTakenID, int studentID, int courseID, String courseName, int semesterID, int planID) {
 		this.creditTakenID = creditTakenID;
 		this.studentID = studentID;
 		this.courseID = courseID;
@@ -111,7 +110,7 @@ public class CreditTaken {
 	 */
 	public String toString() {
 		String returnString = "";
-		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditTakenID, this.studentID, this.courseID, this.courseName, this.semesterID, this.isChangable);
+		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditTakenID, this.studentID, this.courseID, this.courseName, this.semesterID);
 
 		return returnString;
 	}
