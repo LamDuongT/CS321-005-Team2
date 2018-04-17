@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Comparator;
+import java.util.*;
 
 public class GradRequirement {
 	private ArrayList<CoursesSet> major1Req;
@@ -13,19 +14,32 @@ public class GradRequirement {
 	private int major1;
 	private int major2;
 	private int minor;
+	private Queue<CoursesSet> queueHolder;
 	
 	//The ids of different major/minor, 0 if no major selected
 	public GradRequirement(int major1, int major2, int minor, Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel ) {
 		this.major1= major1;
 		this.major2=0;
 		this.minor=0;
-		if(major2!=0) 
+		if(major2!=9999) 
 			this.major2=major2;
-		if(minor!=0)
+		if(minor!=9999)
 			this.minor=minor;
 		getGradReqData(coursesList);
+		Collections.sort(major1Req);
+		Collections.sort(major2Req);
+		Collections.sort(minorReq);
+		for(CreditTaken a: planLevel.getCreditsTakenList()) {
+			addCourse(a.getCourseID());
+		}
+		for(CreditTaken a: profileLevel.getCreditsTakenList()) {
+			addCourse(a.getCourseID());
+		}
 	}
-	//query's the database for major requirement information then consturcts CoursesSets for the requirements that are needed to fulfill
+	public void addCourse(int courseID) {
+		
+	}
+	//query's the database for major requirement information then constructs CoursesSets for the requirements that are needed to fulfill
 	private void getGradReqData(Courses coursesList) {
 		ConnectDB connectdb = new ConnectDB();
 		int _majorID;
@@ -59,56 +73,58 @@ public class GradRequirement {
 				this.major1Req.add(reqContainer);
 			}
 			statement.close();
-			
-			queryString = "SELECT courseName, Desc";
-			queryString += "FROM tblreqcourse ";
-			queryString +="WHERE majorID = " + major2;
-			System.out.println(queryString);
-			// Initialize a sql statement
-			statement = connectdb.theConnection.createStatement();
-			// recordSet will hold a data table as sql object
-			// to see how the data table look like, copy the queryString contents and
-			// execute in mysql Workbench
-			recordSet = statement.executeQuery(queryString);
-			//Major 2 retrieval
-			while (recordSet.next()){
-				_courseName = recordSet.getString("courseName");
-				_gradreqDesc = recordSet.getString("gradreqDesc");
-				_minorID= recordSet.getInt("minorID");
-				_majorID= recordSet.getInt("majorID");
-				if(_minorID == 9999 && _majorID == 9999)
-					throw new RuntimeException("the coders suck at programming... sorry");
-				if(_minorID<9999 && _majorID<9999)
-					throw new RuntimeException("the coders suck at programming... sorry");
-				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList);
-				this.major2Req.add(reqContainer);
+			if (major2 != 0) {
+				queryString = "SELECT courseName, Desc";
+				queryString += "FROM tblreqcourse ";
+				queryString += "WHERE majorID = " + major2;
+				System.out.println(queryString);
+				// Initialize a sql statement
+				statement = connectdb.theConnection.createStatement();
+				// recordSet will hold a data table as sql object
+				// to see how the data table look like, copy the queryString contents and
+				// execute in mysql Workbench
+				recordSet = statement.executeQuery(queryString);
+				// Major 2 retrieval
+				while (recordSet.next()) {
+					_courseName = recordSet.getString("courseName");
+					_gradreqDesc = recordSet.getString("gradreqDesc");
+					_minorID = recordSet.getInt("minorID");
+					_majorID = recordSet.getInt("majorID");
+					if (_minorID == 9999 && _majorID == 9999)
+						throw new RuntimeException("the coders suck at programming... sorry");
+					if (_minorID < 9999 && _majorID < 9999)
+						throw new RuntimeException("the coders suck at programming... sorry");
+					reqContainer = new CoursesSet(_courseName, _gradreqDesc, coursesList);
+					this.major2Req.add(reqContainer);
+				}
+				statement.close();
 			}
-			statement.close();
-			
-			queryString = "SELECT courseName, Desc";
-			queryString += "FROM tblreqcourse ";
-			queryString +="WHERE majorID = " + minor;
-			System.out.println(queryString);
-			// Initialize a sql statement
-			statement = connectdb.theConnection.createStatement();
-			// recordSet will hold a data table as sql object
-			// to see how the data table look like, copy the queryString contents and
-			// execute in mysql Workbench
-			recordSet = statement.executeQuery(queryString);
-			//retreving minor data
-			while (recordSet.next()){
-				_courseName = recordSet.getString("courseName");
-				_gradreqDesc = recordSet.getString("gradreqDesc");
-				_minorID= recordSet.getInt("minorID");
-				_majorID= recordSet.getInt("majorID");
-				if(_minorID == 9999 && _majorID == 9999)
-					throw new RuntimeException("Database Error:the coders suck at programming... sorry");
-				if(_minorID<9999 && _majorID<9999)
-					throw new RuntimeException("the coders suck at programming... sorry");
-				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList);
-				this.minorReq.add(reqContainer);
+			if (minor != 0) {
+				queryString = "SELECT courseName, Desc";
+				queryString += "FROM tblreqcourse ";
+				queryString += "WHERE majorID = " + minor;
+				System.out.println(queryString);
+				// Initialize a sql statement
+				statement = connectdb.theConnection.createStatement();
+				// recordSet will hold a data table as sql object
+				// to see how the data table look like, copy the queryString contents and
+				// execute in mysql Workbench
+				recordSet = statement.executeQuery(queryString);
+				// retreving minor data
+				while (recordSet.next()) {
+					_courseName = recordSet.getString("courseName");
+					_gradreqDesc = recordSet.getString("gradreqDesc");
+					_minorID = recordSet.getInt("minorID");
+					_majorID = recordSet.getInt("majorID");
+					if (_minorID == 9999 && _majorID == 9999)
+						throw new RuntimeException("Database Error:the coders suck at programming... sorry");
+					if (_minorID < 9999 && _majorID < 9999)
+						throw new RuntimeException("the coders suck at programming... sorry");
+					reqContainer = new CoursesSet(_courseName, _gradreqDesc, coursesList);
+					this.minorReq.add(reqContainer);
+				}
+				statement.close();
 			}
-			statement.close();
 		}catch (SQLException e) {
 			throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
 		} finally {
@@ -126,9 +142,19 @@ public class GradRequirement {
 		throw new RuntimeException("Error: requirments ID mismatch");
 	}
 	public void CheckAddedClass(Course course) {
-		if(major1==0) {
+		if(major1!=0) {
+			
 		}else {
 			throw new RuntimeException("Error: primary major information removed.");
+		}
+	}
+	private void SortList(int num) {
+		if(num==1){
+			Collections.sort(major1Req);
+		}else if(num==2) {
+			Collections.sort(major2Req);
+		}else if(num==3) {
+			Collections.sort(minorReq);
 		}
 	}
 	

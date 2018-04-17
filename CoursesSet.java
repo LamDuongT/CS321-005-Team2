@@ -75,6 +75,7 @@ public class CoursesSet implements Comparable<CoursesSet>{
 		coursesToBeChosen.add(newClass);
 		amountOfChosen--;
 	}
+	@Override
 	public int compareTo(CoursesSet otherReq) {
 		return this.amountOfChoices+this.amountOfCourses*1000-(otherReq.getAmountOfChoices()+otherReq.getAmountOfClasses()*1000);
 	}
