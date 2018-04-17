@@ -51,6 +51,30 @@ public class CoursesSet implements Comparable<CoursesSet>{
 		// coursesChosen shall have a full array of empty Course objects
 		this.coursesChosen = new LinkedList<Course>();
 	}
+	public boolean checkReq(Course newClass) {
+		for(Course a:coursesToBeChosen) {
+			if(newClass.equals(a))
+				return true;
+		}
+		return false;
+	}
+	public boolean checkScheduled(Course newClass) {
+		for(Course a: coursesChosen) {
+			if(newClass.equals(a))
+				return true;
+		}
+		return false;
+	}
+	public void scheduleCourse(Course newClass) {
+		coursesToBeChosen.remove(newClass);
+		coursesChosen.add(newClass);
+		amountOfChosen++;
+	}
+	public void unScheduleCourse(Course newClass) {
+		coursesChosen.remove(newClass);
+		coursesToBeChosen.add(newClass);
+		amountOfChosen--;
+	}
 	public int compareTo(CoursesSet otherReq) {
 		return this.amountOfChoices+this.amountOfCourses*1000-(otherReq.getAmountOfChoices()+otherReq.getAmountOfClasses()*1000);
 	}
