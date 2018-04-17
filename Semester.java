@@ -33,8 +33,8 @@ public class Semester {
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax) {
-		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, new ArrayList<>());
+	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax,ArrayList<Course> list) {
+		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, list);
 		this.lock = false;
 	}
 
@@ -63,7 +63,14 @@ public class Semester {
 		this.creditMax = creditMax;
 
 	}
-
+        //adds a course to the courses list
+        public void addCourse(Course course){
+            courses.add(course);
+        }
+        // setter for courses
+        public void setCourses(ArrayList<Course> list){
+            this.courses=list;
+        }
 	// setter for semesterID
 	public void setSemesterID(int semesterID) {
 		this.semesterID = semesterID;

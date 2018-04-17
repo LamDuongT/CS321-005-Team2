@@ -222,7 +222,7 @@ public class NewPlans extends javax.swing.JFrame {
             //create a new plan object with all the required fields
             Plan plan_t = new Plan(this.planeNametxt.getText().hashCode(), profile.getStudentID(), catalog.getCatalogID(),
                     planeNametxt.getText(), major1.getMajorID(), minor1.getMinorID(),
-                    major2.getMajorID(), minor2.getMinorID());
+                    major2.getMajorID(), minor2.getMinorID(),profile.getCoursesTaken());
             //update database using UpdateData()
             new UpdateData().updatePlan(plan_t, action);
         }
