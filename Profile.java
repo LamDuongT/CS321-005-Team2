@@ -24,8 +24,9 @@ public class Profile {
 			String password, String profileName) {
 		setValue(studentID, netID, studentName, studentEmail, username, password, profileName);
 
-		coursesTaken = new CreditsTaken(studentID);
-		this.plans = new Plans(studentID);
+		// semesterID being '9999' because we're taking creditsTaken
+		coursesTaken = new CreditsTaken(studentID, 9999);
+		this.plans = new Plans(studentID, coursesTaken);
 	}
 
 	public void setValue(int studentID, String netID, String studentName, String studentEmail, String username,
@@ -93,6 +94,29 @@ public class Profile {
 	
 	public CreditsTaken getCoursesTaken() {
 		return coursesTaken;
+	}
+	
+	/**
+	 * Method to insert creditsTaken into each plan within plans
+	 * @param plans
+	 */
+	public void addPlansCreditsTaken(Plans plans) {
+		ConnectDB connectDB = new ConnectDB();
+		CreditsTaken plansCreditsTaken = null;
+		String queryString = "";
+		for (int i = 0; i < plans.getPlans().size(); i++) {
+			queryString = "SELECT  plan.planID, plan.catalogID, plan.majorID, "
+					+ "plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, "
+					+ "profile.profileName ,course.courseID, course.courseName, credit.semesterID"
+					+ "FROM tblplan plan INNER JOIN tblcreditstaken credit "
+					+ "ON plan.profileID = credit.studentID "
+					+ "INNER JOIN tblcourse course on course.courseID = credit.courseID "
+				    + "INNER JOIN tblprofile profile on plan.profileID = profile.studentID "
+					+ "WHERE planID = " + plans.getPlans().get(i).getPlanID();
+			try {
+				
+			}
+		}
 	}
 	
 	/**

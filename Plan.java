@@ -19,9 +19,9 @@ public class Plan {
 	private Courses courses;
 	private int catalogID;
 	private int profileID;
-	private CreditsTaken planCoursesTaken;
 	private GradRequirement requirements;
-	private CreditsTaken profileCoursesTaken;
+	private CreditsTaken planCoursesTaken; // retrieved when Plan is constructed
+	private CreditsTaken profileCoursesTaken; // retrieved when Profile is constructed
 
 	// Constructor for empty plan
 	public Plan() {
@@ -31,8 +31,9 @@ public class Plan {
 
 	// Standard constructor
 	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
-			int minor2ID) {
+			int minor2ID, CreditsTaken coursesTaken) {
 		this.PLAN_ID = planID;
+		this.profileCoursesTaken = coursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
 
@@ -210,10 +211,6 @@ public class Plan {
 
 	public void setPlanName(String planName) {
 		this.planName = planName;
-	}
-	
-	public void addProfileCreditsTaken(CreditsTaken coursesTaken) {
-		this.profileCoursesTaken = coursesTaken;
 	}
 
 	public void generateSmartPlan() {

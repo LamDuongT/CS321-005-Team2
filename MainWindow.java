@@ -345,7 +345,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void intiPlanTable(){
         //gets all plans that are linked with the current profile
-        List<Plan> planList = new Plans(profile.getStudentID()).getPlans();
+        List<Plan> planList = new Plans(profile.getStudentID(), profile.getCoursesTaken()).getPlans();
         //now add all plans to the table
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         planList.forEach((p) -> {

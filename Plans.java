@@ -11,6 +11,7 @@ import java.util.List;
 public class Plans {
 	private LinkedList<Plan> plansList = new LinkedList<Plan>();
 	private Plan aPlan;
+	private CreditsTaken profileCreditsTaken;
 
 	/**
 	 * Retrieve all the plans
@@ -24,14 +25,9 @@ public class Plans {
 	 * 
 	 * @param StudentID
 	 */
-	public Plans(int studentID) {
+	public Plans(int studentID, CreditsTaken profileCreditsTaken) {
+		this.profileCreditsTaken = profileCreditsTaken;
 		getPlansData(studentID);
-	}
-	
-	public void insertCreditsTakenToPlans(CreditsTaken coursesTaken) {
-		for (int i = 0; i < plansList.size(); i++) {
-			plansList.get(i).addProfileCreditsTaken(coursesTaken);
-		}
 	}
 
 	/**
@@ -83,9 +79,8 @@ public class Plans {
 
 			// recordSet will hold a data table and create an SQL object
 			ResultSet recordSet = statement.executeQuery(queryString);
-
-			// Loop through recordSet and add every plan within database to the list of
-			// Plans
+			
+			// Loop through recordSet and add every plan within database to the list of Plans
 			while (recordSet.next()) {
 				_planID = recordSet.getInt("planID");
 				_catalogID = recordSet.getInt("catalogID");
@@ -97,7 +92,7 @@ public class Plans {
 				_profileID = recordSet.getInt("profileID");
 
 				aPlan = new Plan(_profileID, _planID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID,
-						_minor2ID);
+						_minor2ID, this.profileCreditsTaken);
 				plansList.add(aPlan);
 			}
 			statement.close();
