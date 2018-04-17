@@ -304,16 +304,15 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // mouse cliked twice, show semesters
-        //!!!SEMESTERS DON'T HAVE COURSES, DISCUSS THIS ISSUE
         if(evt.getClickCount()==2){
             DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
             Plan plan = (Plan) model.getValueAt(jTable1.getSelectedColumn(), jTable1.getSelectedRow());
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
-            plan.getSemesters().getSemesterList().forEach((sm) -> {
+            for(Semester sm : plan.getSemestersList()){
                 p.add(new SemsterTable(sm));
                 p.add(new JSeparator());
-            });
+            }
              this.jScrollPane2.setViewportView(p);
         }
     }//GEN-LAST:event_jTable1MouseClicked
@@ -393,7 +392,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void intiPlanTable(){
         //gets all plans that are linked with the current profile
-        List<Plan> planList = new Plans(profile.getStudentID(), profile.getCoursesTaken()).getPlans();
+        //List<Plan> planList = new Plans(profile.getStudentID(), profile.getCoursesTaken()).getPlans();
+        List<Plan> planList = new Plans(1,new CreditsTaken(1)).getPlans();
         //now add all plans to the table
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         planList.forEach((p) -> {
