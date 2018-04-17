@@ -77,7 +77,6 @@ public class CreditsTaken {
 		this.getCreditsTakenList().add(c);
 	}
 	
-	
 	/**
 	 * get CreditsTaken for studentID
 	 * 
