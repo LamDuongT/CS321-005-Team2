@@ -14,7 +14,7 @@ public class GradRequirement {
 	private int major1;
 	private int major2;
 	private int minor;
-	private Queue<CoursesSet> queueHolder;
+	private ArrayList<CoursesSet> tempHolder;
 	
 	//The ids of different major/minor, 0 if no major selected
 	public GradRequirement(int major1, int major2, int minor, Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel ) {
@@ -37,7 +37,72 @@ public class GradRequirement {
 		}
 	}
 	public void addCourse(int courseID) {
+		for(CoursesSet a:major1Req) {
+			if(a.checkReq(courseID)) {
+				if(a.checkScheduled(courseID)) {
+					tempHolder.add(a);
+				}
+			}
+		}
+		//TODO: add more hiuristics for determining which course to add.
 		
+		tempHolder.get(0).scheduleCourse(courseID);
+		Collections.sort(major1Req);
+		tempHolder.clear();
+		
+		if(major2!=0) {
+			for(CoursesSet a:major2Req) {
+				if(a.checkReq(courseID)) {
+					if(a.checkScheduled(courseID)) {
+						tempHolder.add(a);
+					}
+				}
+			}
+			//TODO: add more hiuristics for determining which course to add.
+			
+			tempHolder.get(0).scheduleCourse(courseID);
+			Collections.sort(major2Req);
+			tempHolder.clear();
+		}
+		if(minor!=0) {
+			for(CoursesSet a:minorReq) {
+				if(a.checkReq(courseID)) {
+					if(a.checkScheduled(courseID)) {
+						tempHolder.add(a);
+					}
+				}
+			}
+			//TODO: add more hiuristics for determining which course to add.
+			
+			tempHolder.get(0).scheduleCourse(courseID);
+			Collections.sort(minorReq);
+			tempHolder.clear();
+		}
+	}
+	public void removeCourse(int courseID) {
+		for(CoursesSet a:major1Req) {
+			if(a.checkScheduled(courseID)){
+				a.unScheduleCourse(courseID);
+			}
+		}
+		Collections.sort(major2Req);
+		if(major2!=0) {
+			for(CoursesSet a:major2Req) {
+				if(a.checkScheduled(courseID)){
+					a.unScheduleCourse(courseID);
+				}
+			}
+			Collections.sort(major2Req);
+		}
+		if (minor != 0) {
+			for (CoursesSet a : minorReq) {
+				if (a.checkScheduled(courseID)) {
+					a.unScheduleCourse(courseID);
+				}
+			}
+			Collections.sort(minorReq);
+		}
+	
 	}
 	//query's the database for major requirement information then constructs CoursesSets for the requirements that are needed to fulfill
 	private void getGradReqData(Courses coursesList) {
