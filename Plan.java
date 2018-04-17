@@ -19,8 +19,9 @@ public class Plan {
 	private Courses courses;
 	private int catalogID;
 	private int profileID;
-	private CreditsTaken coursesToTake;
+	private CreditsTaken planCoursesTaken;
 	private GradRequirement requirements;
+	private CreditsTaken profileCoursesTaken;
 
 	// Constructor for empty plan
 	public Plan() {
@@ -30,8 +31,9 @@ public class Plan {
 
 	// Standard constructor
 	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
-			int minor2ID) {
+			int minor2ID, CreditsTaken profileCoursesTaken) {
 		this.PLAN_ID = planID;
+		this.profileCoursesTaken=profileCoursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 		
 	}
@@ -44,7 +46,7 @@ public class Plan {
 		this.profileID = profileID;
 
 		// Instantiation of new objects based on catalogID
-		this.requirements= new GradRequirement(majorID,major2ID, minorID);
+		this.requirements= new GradRequirement(majorID,major2ID, minorID,courses,profileCoursesTaken,planCoursesTaken);
 		this.semesters = new Semesters();
 		this.majorsData = new Majors(catalogID);
 		this.minorsData = new Minors(catalogID);

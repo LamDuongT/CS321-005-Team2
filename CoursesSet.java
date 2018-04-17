@@ -15,7 +15,6 @@ import java.util.Scanner;
 
 public class CoursesSet {
 	// Fields that will be instantiated by constructor parameters
-	private int coursesSetID;
 	private int majorID;
 	private int minorID;
 	private String coursesSetName;
@@ -43,8 +42,8 @@ public class CoursesSet {
 	 * @param coursesList
 	 * @param creditsTaken
 	 */
-	public CoursesSet(int coursesSetID, int majorID, int minorID, String name, String description,
-			Courses coursesList, CreditsTaken creditsTaken) {
+	public CoursesSet(String name, String description,
+			Courses coursesList, CreditsTaken profileCreditsTaken, CreditsTaken planCreditsTaken) {
 		this.coursesSetID = coursesSetID;
 		this.majorID = majorID;
 		// minorID can only be added if it does not equal to majorID
@@ -65,7 +64,8 @@ public class CoursesSet {
 		// coursesChosen shall have a full array of empty Course objects
 		this.coursesChosen = new LinkedList<Course>();
 
-		this.reAdjustChooseCourse(creditsTaken);
+		this.reAdjustChooseCourse(profileCreditsTaken);
+		this.reAdjustChooseCourse(planCreditsTaken);
 	}
 
 	/**
