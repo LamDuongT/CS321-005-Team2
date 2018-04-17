@@ -1,3 +1,13 @@
+40/15/2018
+-----------------------------------------------------------------------
++) The contain method in Java actually call IndexOf to check wheather the substring is in another string
++) When a file is renamed, the dependency must be changed as well. This cause the ripple affect when changing a file name
+   ===> Use refractor feature in the IDE to rename files.
+-----------------------------------------------------------------------
+
+
+04/13/2018
+-----------------------------------------------------------------------
 +) the code is working fine but change it
 	public Major getMajorByID(int majorID) {
 		for (int index = 0; index < this.majorList.size(); index++) {
@@ -36,3 +46,4 @@ Even though for the purpose of the demo, we input data directly to database, thi
    +) security
    +)cost of data migration from different sources
 . The acctual way to input data is to build an administration system that can handle all changes from database.
+-----------------------------------------------------------------------

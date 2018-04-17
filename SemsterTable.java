@@ -18,6 +18,7 @@ public class SemsterTable extends javax.swing.JPanel {
      * @param classes
      */
     private int totalCredit;
+    private Semester semester;
     public SemsterTable(String name,String[][] classes) {
         initComponents();
         totalCredit = 0;
@@ -29,7 +30,12 @@ public class SemsterTable extends javax.swing.JPanel {
         }
         this.jTextField1.setText(""+this.totalCredit);
     }
-
+    public SemsterTable(Semester sm){
+        semester = sm;
+        totalCredit = 0;
+        this.SemsterName.setText(sm.getSemesterName());
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

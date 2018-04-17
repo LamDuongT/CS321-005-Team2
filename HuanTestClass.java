@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 
 public class HuanTestClass {
 
@@ -30,6 +31,8 @@ public class HuanTestClass {
 //		 
 		 Courses coursesList = new Courses();
 		 System.out.println("The list of Courses \n" + coursesList.toString());
+		 List<Course> searchCourses = coursesList.search("110");
+		 System.out.println("The list of search Courses \n" + searchCourses.toString());
 //
 //		 Courses coursesListForCatalog = new Courses(3, -1, -1);
 //		 System.out.println("The list of Courses for catalog \n" +
