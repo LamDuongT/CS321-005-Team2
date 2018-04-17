@@ -1,8 +1,4 @@
 /**
- * 
- */
-
-/**
  * @author Huan Nguyen
  *
  */
@@ -33,10 +29,16 @@ public class Major {
 		this.majorDesc = majorDesc;
 		this.catalogID = catalogID;
 	}
-
-	// MAJOR DOES NOT NEED TO BE CHANGED
-	// ANY CHANGES MADE TO MAJOR IS MADE IN DATABASE, NOT JAVA
-/*	// setter for majorID
+	
+	
+	/* 
+	 * MUTATOR METHODS
+	 * Note: MAJOR DOES NOT NEED TO BE CHANGED
+	 * Any changes made to major is made in database, not Java
+	 * However, any changes made in Java is for debugging
+	 */
+	
+	// setter for majorID
 	public void setMajorID(int majorID) {
 		this.majorID = majorID;
 	}
@@ -54,8 +56,12 @@ public class Major {
 	// setter for catalogID
 	public void setCatalogID(int catalogID) {
 		this.catalogID = catalogID;
-	}*/
-
+	}
+	
+	/*
+	 * ACESSOR METHODS
+	 */
+	
 	// getter for majorID
 	public int getMajorID() {
 		return this.majorID;

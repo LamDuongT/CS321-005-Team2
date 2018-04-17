@@ -41,7 +41,7 @@ public class CoursesSet {
 	 * @param creditsTaken
 	 */
 	public CoursesSet(String name, String description,
-			Courses coursesList, CreditsTaken creditsTaken) {
+			Courses coursesList, CreditsTaken profileCreditsTaken, CreditsTaken planCreditsTaken) {
 		this.coursesSetName = name;
 		this.coursesSetDescription = description;
 		this.amountOfChosen = 0;
@@ -53,7 +53,8 @@ public class CoursesSet {
 		// coursesChosen shall have a full array of empty Course objects
 		this.coursesChosen = new LinkedList<Course>();
 
-		this.reAdjustChooseCourse(creditsTaken);
+		this.reAdjustChooseCourse(profileCreditsTaken);
+		this.reAdjustChooseCourse(planCreditsTaken);
 	}
 
 	public String getName() {

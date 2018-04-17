@@ -65,8 +65,16 @@ public class CreditsTaken {
 		return new CreditTaken();
 	}
 	
+	// Return the LinkedList of creditsTaken
 	public List<CreditTaken> getCreditsTakenList() {
 		return this.creditsTakenList;
+	}
+	
+	// Add a given course and then update it to the SQL database
+	public void addCourseToCreditsTaken(int studentID, int courseID, int semesterID) {
+		CreditTaken c = new CreditTaken();
+		new UpdateData().updateCreditstaken(c, 'i');
+		this.getCreditsTakenList().add(c);
 	}
 	
 	
