@@ -37,13 +37,14 @@ public class CreditsTaken {
 	 * @return aCreditTaken or new CreditTaken()
 	 */
 	public CreditTaken getCreditTakenByID(int creditID) {
+		aCreditTaken = new CreditTaken();
 		for (int i = 0; i < creditsTakenList.size(); i++) {
 			aCreditTaken = creditsTakenList.get(i);
 			if (aCreditTaken.getCreditTakenID() == creditID) {
-				return aCreditTaken;
+				break;
 			}
 		}
-		return new CreditTaken();
+		return aCreditTaken;
 	}
 
 	/**
@@ -59,10 +60,10 @@ public class CreditsTaken {
 		for (int index = 0; index < this.creditsTakenList.size(); index++) {
 			aCreditTaken = this.creditsTakenList.get(index);
 			if (aCreditTaken.getCreditTakenName().toLowerCase().contains(creditName.toLowerCase())) {
-				return aCreditTaken;
+				break;
 			}
 		}
-		return new CreditTaken();
+		return aCreditTaken;
 	}
 	
 	// Return the LinkedList of creditsTaken
@@ -123,10 +124,9 @@ public class CreditsTaken {
 				_courseID = recordSet.getInt("courseID");
 				_courseName = recordSet.getString("courseName");
 				_semesterID = recordSet.getInt("semesterID");
-				_isChangable = recordSet.getBoolean("isChangable");
 				_planID = recordSet.getInt("planID");
 
-				aCreditTaken = new CreditTaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _isChangable, _planID);
+				aCreditTaken = new CreditTaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _planID);
 				this.creditsTakenList.add(aCreditTaken);
 			}
 			statement.close();
