@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.lang.*;
 /**
  * @author Lam Duong 
  * @author Mohammed Alsharf
@@ -13,7 +13,7 @@ import java.util.Scanner;
  * shall hold a list of courses to be chosen from within a catalog year.
  */
 
-public class CoursesSet {
+public class CoursesSet implements Comparable<CoursesSet>{
 	// Fields that will be instantiated by constructor parameters
 	private String coursesSetName;
 	private String coursesSetDescription;
@@ -24,14 +24,13 @@ public class CoursesSet {
 	private int amountOfChoices; // amount of classes that user will need to choose
 	private int amountOfCourses; // amount of classes that are available for choosing
 	private int amountOfChosen; // amount of classes that user has already chosen.
-	// amountOfChosen CANNOT EXCEED amountOfChoices
-
 
 	/**
 	 * Constructor for ChooseCourse. Make sure there's a courseList that is not
 	 * empty is being fed to the arguments.
 	 * @author Lam Duong
 	 * @author Mohammed Alsharf
+	 * @author Robert Tagliaferri
 	 * @param coursesSetID
 	 * @param majorID
 	 * @param minorID
@@ -40,8 +39,7 @@ public class CoursesSet {
 	 * @param coursesList
 	 * @param creditsTaken
 	 */
-	public CoursesSet(String name, String description,
-			Courses coursesList, CreditsTaken profileCreditsTaken, CreditsTaken planCreditsTaken) {
+	public CoursesSet(String name, String description, Courses coursesList) {
 		this.coursesSetName = name;
 		this.coursesSetDescription = description;
 		this.amountOfChosen = 0;
@@ -52,9 +50,9 @@ public class CoursesSet {
 		// Initially, the coursesChosen shall be empty.
 		// coursesChosen shall have a full array of empty Course objects
 		this.coursesChosen = new LinkedList<Course>();
-
-		this.reAdjustChooseCourse(profileCreditsTaken);
-		this.reAdjustChooseCourse(planCreditsTaken);
+	}
+	public int compareTo(CoursesSet otherReq) {
+		return this.amountOfChoices+this.amountOfCourses*1000-(otherReq.getAmountOfChoices()+otherReq.getAmountOfClasses()*1000);
 	}
 
 	public String getName() {

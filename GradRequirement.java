@@ -3,6 +3,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Comparator;
 
 public class GradRequirement {
 	private ArrayList<CoursesSet> major1Req;
@@ -11,6 +13,7 @@ public class GradRequirement {
 	private int major1;
 	private int major2;
 	private int minor;
+	
 	//The ids of different major/minor, 0 if no major selected
 	public GradRequirement(int major1, int major2, int minor, Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel ) {
 		this.major1= major1;
@@ -20,10 +23,10 @@ public class GradRequirement {
 			this.major2=major2;
 		if(minor!=0)
 			this.minor=minor;
-		getGradReqData(coursesList, profileLevel, planLevel);
+		getGradReqData(coursesList);
 	}
 	//query's the database for major requirement information then consturcts CoursesSets for the requirements that are needed to fulfill
-	private void getGradReqData(Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel) {
+	private void getGradReqData(Courses coursesList) {
 		ConnectDB connectdb = new ConnectDB();
 		int _majorID;
 		int _minorID;
@@ -52,7 +55,7 @@ public class GradRequirement {
 					throw new RuntimeException("the coders suck at programming... sorry");
 				if(_minorID<9999 && _majorID<9999)
 					throw new RuntimeException("the coders suck at programming... sorry");
-				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList,profileLevel, planLevel);
+				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList);
 				this.major1Req.add(reqContainer);
 			}
 			statement.close();
@@ -77,7 +80,7 @@ public class GradRequirement {
 					throw new RuntimeException("the coders suck at programming... sorry");
 				if(_minorID<9999 && _majorID<9999)
 					throw new RuntimeException("the coders suck at programming... sorry");
-				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList,profileLevel, planLevel);
+				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList);
 				this.major2Req.add(reqContainer);
 			}
 			statement.close();
@@ -102,7 +105,7 @@ public class GradRequirement {
 					throw new RuntimeException("Database Error:the coders suck at programming... sorry");
 				if(_minorID<9999 && _majorID<9999)
 					throw new RuntimeException("the coders suck at programming... sorry");
-				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList,profileLevel, planLevel);
+				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList);
 				this.minorReq.add(reqContainer);
 			}
 			statement.close();
