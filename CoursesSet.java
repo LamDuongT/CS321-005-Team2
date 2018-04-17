@@ -15,9 +15,6 @@ import java.util.Scanner;
 
 public class CoursesSet {
 	// Fields that will be instantiated by constructor parameters
-	private int coursesSetID;
-	private int majorID;
-	private int minorID;
 	private String coursesSetName;
 	private String coursesSetDescription;
 
@@ -43,17 +40,8 @@ public class CoursesSet {
 	 * @param coursesList
 	 * @param creditsTaken
 	 */
-	public CoursesSet(int coursesSetID, int majorID, int minorID, String name, String description,
+	public CoursesSet(String name, String description,
 			Courses coursesList, CreditsTaken creditsTaken) {
-		this.coursesSetID = coursesSetID;
-		this.majorID = majorID;
-		// minorID can only be added if it does not equal to majorID
-		if (majorID == minorID) {
-			throw new RuntimeException("Either majorID or minorID needs to be -1,"
-					+ " cannot have both be -1 or both be not -1. Fix by changing database entries.");
-		} else {
-			this.minorID = minorID;
-		}
 		this.coursesSetName = name;
 		this.coursesSetDescription = description;
 		this.amountOfChosen = 0;
@@ -66,21 +54,6 @@ public class CoursesSet {
 		this.coursesChosen = new LinkedList<Course>();
 
 		this.reAdjustChooseCourse(creditsTaken);
-	}
-
-	/**
-	 * ACCESSOR METHODS
-	 */
-	public int getChooseCourseID() {
-		return this.coursesSetID;
-	}
-
-	public int getMajorID() {
-		return this.majorID;
-	}
-
-	public int getMinorID() {
-		return this.minorID;
 	}
 
 	public String getName() {
@@ -264,8 +237,6 @@ public class CoursesSet {
 			"-------------------------------------\n" + 
 			"DATABASE FIELDS: \n" + 
 			"coursesSetID: " + this.coursesSetDescription + "\n" +
-			"majorID: " + this.majorID + "\n" +
-			"minorID: " + this.minorID + "\n" +
 			"name:" + this.coursesSetName + "\n" +
 			"description: " + this.coursesSetDescription + "\n" +
 			"-------------------------------------\n" + 
