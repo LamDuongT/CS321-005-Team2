@@ -7,34 +7,30 @@ public class CreditTaken {
 	private int creditTakenID;
 	private int studentID;
 	private int courseID;
-	private String courseName;
 	private int semesterID;
-	private int planID;
 
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public CreditTaken() {
-		setValue(-1, -1, -1, "", -1, -1);
+		setValue(-1, -1, -1, -1);
 	}
 	
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public CreditTaken(int creditTakenID, int studentID, int courseID, String courseName, int semesterID, int planID) {
-		setValue(creditTakenID, studentID, courseID, courseName, semesterID, planID);
+	public CreditTaken(int creditTakenID, int studentID, int courseID, int semesterID) {
+		setValue(creditTakenID, studentID, courseID, semesterID);
 	}
 
 	/**
 	 * Method setValue used for constructors methods
 	 */
-	private void setValue(int creditTakenID, int studentID, int courseID, String courseName, int semesterID, int planID) {
+	private void setValue(int creditTakenID, int studentID, int courseID, int semesterID) {
 		this.creditTakenID = creditTakenID;
 		this.studentID = studentID;
 		this.courseID = courseID;
-		this.courseName = courseName;
 		this.semesterID = semesterID;
-		this.planID = planID;
 	}
 
 	/**
@@ -59,16 +55,6 @@ public class CreditTaken {
 	// setter for semesterID
 	public void setSemesterID(int semesterID) {
 		this.semesterID = semesterID;
-	}
-	
-	// setter for planID
-	// If plan ID is -1, that means that it's a credit that was taken previously
-	public void setPlanID(int planID) {
-		this.planID = planID;
-	}
-	
-	public void setCreditTakenName(String creditName) {
-		this.courseName = creditName;
 	}
 
 	/**
@@ -95,22 +81,13 @@ public class CreditTaken {
 	public int getSemesterID() {
 		return this.semesterID;
 	}
-	
-	public String getCreditTakenName() {
-		return this.courseName;
-	}
-	
-	//getter for planID
-	public int getPlanID() {
-		return this.planID;
-	}
 
 	/**
 	 * Override toString method for testing purpose
 	 */
 	public String toString() {
 		String returnString = "";
-		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditTakenID, this.studentID, this.courseID, this.courseName, this.semesterID);
+		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditTakenID, this.studentID, this.courseID, this.semesterID);
 
 		return returnString;
 	}

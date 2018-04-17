@@ -117,7 +117,7 @@ public class UpdateData {
                     // form the query for insert
                     queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
                     queryString += "VALUES (" + theCreditTaken.getStudentID() + ", " + theCreditTaken.getCourseID()
-                            + ", " + theCreditTaken.getSemesterID() + ", " + theCreditTaken.getIsChangable() + ");";
+                            + ", " + theCreditTaken.getSemesterID() + ");";
                     break;
 
                 // for update existing profile
@@ -127,7 +127,6 @@ public class UpdateData {
                     queryString += "studentID =" + theCreditTaken.getStudentID() + ",";
                     queryString += "courseID =" + theCreditTaken.getCourseID() + ",";
                     queryString += "semesterID =" + theCreditTaken.getSemesterID() + ", ";
-                    queryString += "isChangable = " + theCreditTaken.getIsChangable() + " ";
                     queryString += "WHERE creditstakenID = " + theCreditTaken.getCreditTakenID();
                     break;
 

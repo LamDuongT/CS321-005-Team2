@@ -55,11 +55,11 @@ public class CreditsTaken {
 	 * @param creditName
 	 * @return aCreditTaken or new CreditTaken()
 	 */
-	public CreditTaken getCreditTakenByName(String creditName) {
+	public CreditTaken getCreditTakenByCourseID(int courseID) {
 		CreditTaken aCreditTaken = new CreditTaken();
 		for (int index = 0; index < this.creditsTakenList.size(); index++) {
 			aCreditTaken = this.creditsTakenList.get(index);
-			if (aCreditTaken.getCreditTakenName().toLowerCase().contains(creditName.toLowerCase())) {
+			if (aCreditTaken.getCourseID() == courseID) {
 				break;
 			}
 		}
@@ -99,8 +99,6 @@ public class CreditsTaken {
 			String _courseName;
 			int _semesterID;
 			boolean _isChangable;
-			int _planID;
-
 			String queryString = "SELECT tblcreditstaken.*, tblcourse.courseName "; 
 			queryString += "FROM tblcreditstaken INNER JOIN tblcourse on tblcreditstaken.courseID = tblcourse.courseID ";
 			queryString += "WHERE studentID = " + studentID + " ";
@@ -124,9 +122,8 @@ public class CreditsTaken {
 				_courseID = recordSet.getInt("courseID");
 				_courseName = recordSet.getString("courseName");
 				_semesterID = recordSet.getInt("semesterID");
-				_planID = recordSet.getInt("planID");
 
-				aCreditTaken = new CreditTaken(_creditstakenID, _studentID, _courseID, _courseName, _semesterID, _planID);
+				aCreditTaken = new CreditTaken(_creditstakenID, _studentID, _courseID, _semesterID);
 				this.creditsTakenList.add(aCreditTaken);
 			}
 			statement.close();
