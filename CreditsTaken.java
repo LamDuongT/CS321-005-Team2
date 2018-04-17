@@ -14,6 +14,13 @@ public class CreditsTaken {
 	private CreditTaken aCreditTaken;
 	
 	/**
+	 * Empty constructor for empty creditsTakenList
+	 */
+	public CreditsTaken() {
+		
+	}
+	
+	/**
 	 * Initialize the list of CreditTaken courses for the for studentID
 	 */
 	public CreditsTaken(int studentID) {
@@ -96,9 +103,7 @@ public class CreditsTaken {
 			int _creditstakenID;
 			int _studentID;
 			int _courseID;
-			String _courseName;
 			int _semesterID;
-			boolean _isChangable;
 			String queryString = "SELECT tblcreditstaken.*, tblcourse.courseName "; 
 			queryString += "FROM tblcreditstaken INNER JOIN tblcourse on tblcreditstaken.courseID = tblcourse.courseID ";
 			queryString += "WHERE studentID = " + studentID + " ";
@@ -120,7 +125,6 @@ public class CreditsTaken {
 				_creditstakenID = recordSet.getInt("creditstakenID");
 				_studentID = recordSet.getInt("studentID");
 				_courseID = recordSet.getInt("courseID");
-				_courseName = recordSet.getString("courseName");
 				_semesterID = recordSet.getInt("semesterID");
 
 				aCreditTaken = new CreditTaken(_creditstakenID, _studentID, _courseID, _semesterID);
