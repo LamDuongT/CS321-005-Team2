@@ -20,12 +20,11 @@ public class GradRequirement {
 			this.major2=major2;
 		if(minor!=0)
 			this.minor=minor;
-		getGradReqData(coursesList);
+		getGradReqData(coursesList, profileLevel, planLevel);
 	}
 	//query's the database for major requirement information then consturcts CoursesSets for the requirements that are needed to fulfill
 	private void getGradReqData(Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel) {
 		ConnectDB connectdb = new ConnectDB();
-		int _gradreqcourseID;
 		int _majorID;
 		int _minorID;
 		String _courseName;
@@ -100,7 +99,7 @@ public class GradRequirement {
 				_minorID= recordSet.getInt("minorID");
 				_majorID= recordSet.getInt("majorID");
 				if(_minorID == 9999 && _majorID == 9999)
-					throw new RuntimeException("the coders suck at programming... sorry");
+					throw new RuntimeException("Database Error:the coders suck at programming... sorry");
 				if(_minorID<9999 && _majorID<9999)
 					throw new RuntimeException("the coders suck at programming... sorry");
 				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList,profileLevel, planLevel);
@@ -111,6 +110,22 @@ public class GradRequirement {
 			throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
 		} finally {
 			connectdb.disconectDB();
+		}
+	}
+	//gets requirement data by ID
+	public ArrayList<CoursesSet> reqByID(int ID){
+		if(ID==major1)
+			return major1Req;
+		if(ID==major2)
+			return major2Req;
+		if(ID==minor)
+			return minorReq;
+		throw new RuntimeException("Error: requirments ID mismatch");
+	}
+	public void CheckAddedClass(Course course) {
+		if(major1==0) {
+		}else {
+			throw new RuntimeException("Error: primary major information removed.");
 		}
 	}
 	
