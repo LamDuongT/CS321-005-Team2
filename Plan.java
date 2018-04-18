@@ -40,6 +40,35 @@ public class Plan {
 		this.profileCoursesTaken = profileCoursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
+	public void addCourse(Course addCourse, Semester target){
+		//if course was added successfully
+		boolean wasAdded=false;
+		//Mo or lam handle here with checks to see if the course is a valid add target
+		//Add class to planCOursesTaken and the correct semester
+		
+		/*
+		 * code
+		 */
+		
+		//if the course was added successfully check the req lists and update the requiremnts based on that
+		if(wasAdded) {
+			requirements.addCourse(addCourse.getCourseID());
+		}
+	}
+	public void removeCourse(Course removeCourse, Semester target) {
+		//if course was removed successfully
+		boolean wasRemoved = false;
+		//Mo or lam handle here with checks to see if the course is a valid remove target
+		//remove class to planCOursesTaken and the correct semester
+				
+		/*
+		 * code
+		 */
+		
+		if(wasRemoved) {
+			requirements.removeCourse(removeCourse.getCourseID());
+		}
+	}
 
 	// Setting values for constructor
 	public void setValues(int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
