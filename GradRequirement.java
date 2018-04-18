@@ -28,8 +28,10 @@ public class GradRequirement {
 			this.minor=minor;
 		getGradReqData(coursesList);
 		Collections.sort(major1Req);
-		Collections.sort(major2Req);
-		Collections.sort(minorReq);
+		if(major2==0)
+			Collections.sort(major2Req);
+		if(minor==0)
+			Collections.sort(minorReq);
 		for(CreditTaken a: planLevel.getCreditsTakenList()) {
 			addCourse(a.getCourseID());
 		}
