@@ -135,9 +135,9 @@ public class GradRequirement {
 		String _courseName;
 		String _gradreqDesc;
 		CoursesSet reqContainer;
+		String queryString;
 		try {
-			String queryString;
-			queryString = "SELECT courseName, Desc ";
+			queryString = "SELECT courseName, reqCourseDesc ";
 			queryString += "FROM tblgradreqcourse ";
 			queryString +="WHERE majorID = " + major1;
 			System.out.println(queryString);
@@ -150,7 +150,7 @@ public class GradRequirement {
 			//retrieving information for first major and sending it to CoursesSet
 			while (recordSet.next()){
 				_courseName = recordSet.getString("courseName");
-				_gradreqDesc = recordSet.getString("Desc");
+				_gradreqDesc = recordSet.getString("reqCourseDesc");
 				_minorID= recordSet.getInt("minorID");
 				_majorID= recordSet.getInt("majorID");
 				if(_minorID == 9999 && _majorID == 9999)
@@ -162,7 +162,7 @@ public class GradRequirement {
 			}
 			statement.close();
 			if (major2 != 0) {
-				queryString = "SELECT courseName, Desc ";
+				queryString = "SELECT courseName, reqCourseDesc ";
 				queryString += "FROM tblgradreqcourse ";
 				queryString += "WHERE majorID = " + major2;
 				System.out.println(queryString);
@@ -175,7 +175,7 @@ public class GradRequirement {
 				// Major 2 retrieval
 				while (recordSet.next()) {
 					_courseName = recordSet.getString("courseName");
-					_gradreqDesc = recordSet.getString("Desc");
+					_gradreqDesc = recordSet.getString("reqCourseDesc");
 					_minorID = recordSet.getInt("minorID");
 					_majorID = recordSet.getInt("majorID");
 					if (_minorID == 9999 && _majorID == 9999)
@@ -188,7 +188,7 @@ public class GradRequirement {
 				statement.close();
 			}
 			if (minor != 0) {
-				queryString = "SELECT courseName, Desc ";
+				queryString = "SELECT courseName, reqCourseDesc ";
 				queryString += "FROM tblgradreqcourse ";
 				queryString += "WHERE majorID = " + minor;
 				System.out.println(queryString);
@@ -201,7 +201,7 @@ public class GradRequirement {
 				// retreving minor data
 				while (recordSet.next()) {
 					_courseName = recordSet.getString("courseName");
-					_gradreqDesc = recordSet.getString("Desc");
+					_gradreqDesc = recordSet.getString("reqCourseDesc");
 					_minorID = recordSet.getInt("minorID");
 					_majorID = recordSet.getInt("majorID");
 					if (_minorID == 9999 && _majorID == 9999)
