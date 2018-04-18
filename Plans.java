@@ -71,7 +71,7 @@ public class Plans {
 			// Instantiate query strings with all fields for Plan
 			String queryString = "SELECT profileID, planID, catalogID, planName, majorID, minorID, majorID2, minorID2 FROM tblplan ";
 			queryString += "WHERE profileID = " + studentID;
-			queryString += "ORDER BY planID ASC";
+			queryString += " ORDER BY planID ASC";
 			System.out.println(queryString);
 
 			// Initialize an SQL statement
