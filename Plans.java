@@ -106,8 +106,8 @@ public class Plans {
 		}
 	}
 	
-	public void addPlan(int planID) {
-		
+	public void addPlan(Plan planToBeAdded) {
+		plansList.add(planToBeAdded);
 	}
 	
 	public void removePlan(int planID) {
