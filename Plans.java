@@ -114,12 +114,24 @@ public class Plans {
 		plansList.add(planToBeAdded);
 	}
 	
-	public void removePlan(int planID) {
+	/**
+	 * @author Lam Duong
+	 * Simple removal of Plan Object from Plans List Object.
+	 * Method returns false if the Plans List does not have a Plan
+	 * with the specified planID.
+	 * @param planID
+	 * @return void
+	 */
+	public boolean removePlanFromList(int planID) {
+		boolean successfulRemoval = false;
 		for (int i = 0; i < plansList.size(); i++) {
 			if (plansList.get(i).getPlanID() == planID) {
-				
+				plansList.remove(i);
+				successfulRemoval = true;
+				break;
 			}
 		}
+		return successfulRemoval;
 	}
 	
 	@Override

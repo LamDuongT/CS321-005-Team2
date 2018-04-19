@@ -90,58 +90,78 @@ public class Profile {
 	
 	/**
 	 * README FIRST!
-	 * This method will get 
+	 * This method will insert a new Plan into the Database with given attributes.
+	 * It will then get the auto-incremented planID from the database in order to 
+	 * create a new Plan Object within the Profile Object in Java. Method will 
+	 * return false if user has reached the limit of 10 plans or if there is a
+	 * problem with connecting to Database.
+	 * @author Lam Duong
+	 * @author Mohammed Alsharaf
 	 * @param planName
 	 * @param catalogID
 	 * @param majorID1
 	 * @param majorID2
 	 * @param minorID
-	 * @return
+	 * @return successfulAdd
 	 */
 	public boolean addPlanToProfile(String planName, int catalogID, int majorID1, int majorID2, int minorID) {
+		boolean successfulAdd = true;
 		if (plans.getPlans().size() >= 10) {
-			return false;
+			successfulAdd = false;
+		}else {
+			// Get a new planID from database
+			int newPlanID = 9999;
+			ConnectDB connectDB = new ConnectDB();
+			String query = ""/* "select * from tblplan" */;
+			try {
+				Statement statement = connectDB.theConnection.createStatement();
+				query += "SET FOREIGN_KEY_CHECKS=0;";
+				statement.executeUpdate(query);
+				query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
+				query += "VALUES (" + "\"" + planName + "\"," + catalogID + ", " + majorID1 + ", " + minorID + ", "
+						+ majorID2 + ", " + "9999, " + this.studentID + "); ";
+				query += "SELECT LAST_INSERT_ID() as planID";
+				statement.executeQuery(query);			
+				// recordSet will hold a data table and create an SQL object
+				ResultSet recordSet = statement.executeQuery(query);
+				
+				recordSet.next();
+				newPlanID = recordSet.getInt("planID");
+				
+			} catch (SQLException e) {
+				// We commented out the code line below so that we could return false to throw a
+				// message to the user
+				System.out.println(e.getLocalizedMessage());
+				throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
+			} finally {
+				// close the connection
+				// NOTE: the close connection method need to be called in finally block to
+				// ensure the connection is closed
+				connectDB.disconectDB();
+			}
+			Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2, 9999,
+					this.coursesTaken);
+			plans.addPlan(planToBeAdded);
 		}
-		// Get a new planID from database
-		int newPlanID = 9999;
-		ConnectDB connectDB = new ConnectDB();
-		String query = ""/* "select * from tblplan" */;
-		try {
-			Statement statement = connectDB.theConnection.createStatement();
-			query += "SET FOREIGN_KEY_CHECKS=0;";
-			statement.executeUpdate(query);
-			query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
-			query += "VALUES (" + "\"" + planName + "\"," + catalogID + ", " + majorID1 + ", " + minorID + ", "
-					+ majorID2 + ", " + "9999, " + this.studentID + "); ";
-			query += "SELECT LAST_INSERT_ID() as planID";
-			statement.executeQuery(query);			
-			// recordSet will hold a data table and create an SQL object
-			ResultSet recordSet = statement.executeQuery(query);
-			
-			recordSet.next();
-			newPlanID = recordSet.getInt("planID");
-			
-		} catch (SQLException e) {
-			// We commented out the code line below so that we could return false to throw a
-			// message to the user
-			System.out.println(e.getLocalizedMessage());
-			throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
-		} finally {
-			// close the connection
-			// NOTE: the close connection method need to be called in finally block to
-			// ensure the connection is closed
-			connectDB.disconectDB();
-		}
-		Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2, 9999,
-				this.coursesTaken);
-		plans.addPlan(planToBeAdded);
-		return true;
+		return successfulAdd;
 	}
 	
-	public boolean removePlan(int planID) {
-		Plan planToBeRemoved = plans.getPlanByID(planID);
-		
-		return true;
+	/**
+	 * Method will call on removePlanFromList to remove Plan from Plans List.
+	 * It will then update to the Database by removing the plan from the database.
+	 * Returns true if the removal was successful.
+	 * @param planToBeRemoved
+	 * @return
+	 */
+	public boolean removePlanFromProfile(Plan planToBeRemoved) {
+		boolean successfulRemoval = false;
+		if (plans.removePlanFromList(planToBeRemoved.getPlanID())) {
+			successfulRemoval = true;
+			new UpdateData().updatePlan(planToBeRemoved, 'd');
+		} else {
+			System.out.println("ERROR: The plan to be removed was not found in the List of Plans in Profile");
+		}
+		return successfulRemoval;
 	}
 	
 	public boolean updatePlan(int planID) {
