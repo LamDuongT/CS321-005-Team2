@@ -54,6 +54,12 @@ public class Login_1 extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Login"));
 
+        usernamef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernamefActionPerformed(evt);
+            }
+        });
+
         passwordf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordfActionPerformed(evt);
@@ -180,7 +186,9 @@ public class Login_1 extends javax.swing.JFrame {
         Login login = new Login(this.usernamef.getText(),new String(this.passwordf.getPassword()));
         try{
             login.doLogin();
+            createMainWindow(login);
         }catch(IllegalStateException e){
+            System.out.println("\n\n\n\n"+e.getLocalizedMessage()+"\n\n\n\n");
             JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
             JOptionPane.ERROR_MESSAGE);
         }
@@ -198,9 +206,14 @@ public class Login_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void passwordfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfActionPerformed
-        // test
-        System.out.println(this.passwordf.getPassword());
+        //login
+        this.jButton1ActionPerformed(evt);
     }//GEN-LAST:event_passwordfActionPerformed
+
+    private void usernamefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamefActionPerformed
+        // login
+        this.jButton1ActionPerformed(evt);
+    }//GEN-LAST:event_usernamefActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,4 +264,10 @@ public class Login_1 extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordf;
     private javax.swing.JTextField usernamef;
     // End of variables declaration//GEN-END:variables
+
+    private void createMainWindow(Login login) {
+        Profile profile = login.getProfile(login.getStudentID());
+        new MainWindow(profile).setVisible(true);
+        this.dispose();
+    }
 }

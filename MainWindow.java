@@ -25,7 +25,11 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         intiPlanTable();
     }
-
+    public MainWindow(Profile prof){
+        profile = prof;
+        initComponents();
+        intiPlanTable();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -289,7 +293,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // adds a new plan
-        new NewPlans(profile,null,'i').setVisible(true);
+        new NewPlans(profile).setVisible(true);
         this.intiPlanTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -392,8 +396,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void intiPlanTable(){
         //gets all plans that are linked with the current profile
-        //List<Plan> planList = new Plans(profile.getStudentID(), profile.getCoursesTaken()).getPlans();
-        List<Plan> planList = new Plans(1,new CreditsTaken(1)).getPlans();
+        List<Plan> planList = new Plans(profile.getStudentID(), profile.getCoursesTaken(),profile.getAllSemesters()).getPlans();
+        //List<Plan> planList = new Plans(1,new CreditsTaken(1)).getPlans();
         //now add all plans to the table
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         planList.forEach((p) -> {

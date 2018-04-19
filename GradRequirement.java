@@ -139,9 +139,7 @@ public class GradRequirement {
 		CoursesSet reqContainer;
 		String queryString;
 		try {
-			queryString = "SELECT courseName, reqCourseDesc ";
-			queryString += "FROM tblgradreqcourse ";
-			queryString +="WHERE majorID = " + major1;
+			queryString = "SELECT courseName, gradreqDesc FROM tblgradreqcourse WHERE majorID = "+ major1;
 			System.out.println(queryString);
 			// Initialize a sql statement
 			Statement statement = connectdb.theConnection.createStatement();
@@ -152,7 +150,7 @@ public class GradRequirement {
 			//retrieving information for first major and sending it to CoursesSet
 			while (recordSet.next()){
 				_courseName = recordSet.getString("courseName");
-				_gradreqDesc = recordSet.getString("reqCourseDesc");
+				_gradreqDesc = recordSet.getString("gradreqDesc");
 				_minorID= recordSet.getInt("minorID");
 				_majorID= recordSet.getInt("majorID");
 				if(_minorID == 9999 && _majorID == 9999)
@@ -164,7 +162,7 @@ public class GradRequirement {
 			}
 			statement.close();
 			if (major2 != 0) {
-				queryString = "SELECT courseName, reqCourseDesc ";
+				queryString = "SELECT courseName, gradreqDesc ";
 				queryString += "FROM tblgradreqcourse ";
 				queryString += "WHERE majorID = " + major2;
 				System.out.println(queryString);
@@ -177,7 +175,7 @@ public class GradRequirement {
 				// Major 2 retrieval
 				while (recordSet.next()) {
 					_courseName = recordSet.getString("courseName");
-					_gradreqDesc = recordSet.getString("reqCourseDesc");
+					_gradreqDesc = recordSet.getString("gradreqDesc");
 					_minorID = recordSet.getInt("minorID");
 					_majorID = recordSet.getInt("majorID");
 					if (_minorID == 9999 && _majorID == 9999)
@@ -190,7 +188,7 @@ public class GradRequirement {
 				statement.close();
 			}
 			if (minor != 0) {
-				queryString = "SELECT courseName, reqCourseDesc ";
+				queryString = "SELECT courseName, gradreqDesc ";
 				queryString += "FROM tblgradreqcourse ";
 				queryString += "WHERE majorID = " + minor;
 				System.out.println(queryString);
@@ -203,7 +201,7 @@ public class GradRequirement {
 				// retreving minor data
 				while (recordSet.next()) {
 					_courseName = recordSet.getString("courseName");
-					_gradreqDesc = recordSet.getString("reqCourseDesc");
+					_gradreqDesc = recordSet.getString("gradreqDesc");
 					_minorID = recordSet.getInt("minorID");
 					_majorID = recordSet.getInt("majorID");
 					if (_minorID == 9999 && _majorID == 9999)
@@ -216,6 +214,7 @@ public class GradRequirement {
 				statement.close();
 			}
 		}catch (SQLException e) {
+                    System.out.println("\n\n\n\n\n"+e.getLocalizedMessage()+"\n\n\n\n\n\n");
 			throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
 		} finally {
 			connectdb.disconectDB();
