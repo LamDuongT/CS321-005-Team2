@@ -222,26 +222,32 @@ public class Plan {
 				System.out.println("CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
 			}
 		} else {
-			// Update the CreditsTaken to both the Database and planCredits
-			successfulAdd = planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester);			
+			// If the courseToBeAdded is already within list of planCredits
+			if (planCredits.contains(courseToBeAdded)) {
+				int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
+				successfulAdd = planCredits.updateCourseInCreditsTaken(creditTakenID, )
+			} else {
+				// Add the  new CreditsTaken to both the Database and planCredits
+				successfulAdd = planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester);
+			}
 			if (successfulAdd == true) {
 				
-				// Add course to requirements to see if they meet any kind of requirement
+				// Add courseToBeAdded to requirements to see if they meet any kind of requirement
 				requirements.addCourse(courseToBeAdded.getCourseID());
 				
-				// Add the course to the Semester object in Java
+				// Add the courseToBeTaken to the targetSemester object in Java
 				targetSemester.addCourse(courseToBeAdded);
 				
-				// Update the Semester in the Database
+				// Update the targetSemester in the Database
 				new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
 			}
 		}
 		return successfulAdd;
 	}
 	
-	public void removeCourse(Course courseToBeRemoved, Semester targetSemester) {
+	public boolean removeCourse(Course courseToBeRemoved, Semester targetSemester) {
 		//if course was removed successfully
-		boolean wasRemoved = false;
+		boolean removeSuccessful = false;
 		//Mo or lam handle here with checks to see if the course is a valid remove target
 		//remove class to planCOursesTaken and the correct semester
 				
@@ -249,9 +255,10 @@ public class Plan {
 		 * code
 		 */
 		
-		if(wasRemoved) {
+		if(removeSuccessful == true) {
 			requirements.removeCourse(courseToBeRemoved.getCourseID());
 		}
+		return removeSuccessful;
 	}
 
 	/**
