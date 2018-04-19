@@ -178,8 +178,8 @@ public class UpdateData {
                 // Case for inserting a new plan
                 case 'i':
                     // form the query for insertion
-                    queryString = "INSERT INTO `collegespdb`.`tblplan` (`planID`, `catalogID`, `majorID`, `minorID`, `majorID2`, `minorID2`, `profileID`) ";
-                    queryString += "VALUES (" + thePlan.getPlanID() + "," + thePlan.getCatalogID() + ", " + thePlan.getMajors()[0].getMajorID()
+                    queryString = "INSERT INTO `collegespdb`.`tblplan` (`catalogID`, `majorID`, `minorID`, `majorID2`, `minorID2`, `profileID`) ";
+                    queryString += "VALUES (" + thePlan.getCatalogID() + ", " + thePlan.getMajors()[0].getMajorID()
                             + ", " + thePlan.getMinors()[0].getMinorID() + ", " + thePlan.getMajors()[1].getMajorID()
                             + ", " + thePlan.getMinors()[1].getMinorID() + ", " + thePlan.getProfileID() + ");";
                     break;

@@ -106,12 +106,20 @@ public class Plans {
 		}
 	}
 	
+	/**
+	 * Simple method to add a Plan Object to a List of Plan Objects
+	 * @param planToBeAdded
+	 */
 	public void addPlan(Plan planToBeAdded) {
 		plansList.add(planToBeAdded);
 	}
 	
 	public void removePlan(int planID) {
-		
+		for (int i = 0; i < plansList.size(); i++) {
+			if (plansList.get(i).getPlanID() == planID) {
+				
+			}
+		}
 	}
 	
 	@Override

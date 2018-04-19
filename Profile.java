@@ -88,6 +88,16 @@ public class Profile {
 		this.profileName = profileName;
 	}
 	
+	/**
+	 * README FIRST!
+	 * This method will get 
+	 * @param planName
+	 * @param catalogID
+	 * @param majorID1
+	 * @param majorID2
+	 * @param minorID
+	 * @return
+	 */
 	public boolean addPlanToProfile(String planName, int catalogID, int majorID1, int majorID2, int minorID) {
 		if (plans.getPlans().size() >= 10) {
 			return false;
@@ -95,32 +105,35 @@ public class Profile {
 		// Get a new planID from database
 		int newPlanID = 9999;
 		ConnectDB connectDB = new ConnectDB();
-		String query = ""/*"select * from tblplan"*/;
+		String query = ""/* "select * from tblplan" */;
 		try {
-                    	Statement statement = connectDB.theConnection.createStatement();
+			Statement statement = connectDB.theConnection.createStatement();
 			query += "SET FOREIGN_KEY_CHECKS=0;";
-                        statement.executeUpdate(query);
-                        query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
-			query += "VALUES ("+"\""+planName+"\"," + catalogID + ", " + majorID1 + ", " + minorID + ", " + majorID2 + ", " + "9999 , " +  this.studentID + ");";
-			///query += "SELECT LAST_INSERT_ID() as planID";
 			statement.executeUpdate(query);
-                        query = "select last_insert_id() as planID";
-                        // recordSet will hold a data table and create an SQL object
-                        ResultSet recordSet = statement.executeQuery(query);
+			query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
+			query += "VALUES (" + "\"" + planName + "\"," + catalogID + ", " + majorID1 + ", " + minorID + ", "
+					+ majorID2 + ", " + "9999, " + this.studentID + "); ";
+			query += "SELECT LAST_INSERT_ID() as planID";
+			statement.executeQuery(query);			
+			// recordSet will hold a data table and create an SQL object
+			ResultSet recordSet = statement.executeQuery(query);
+			
 			recordSet.next();
 			newPlanID = recordSet.getInt("planID");
+			
 		} catch (SQLException e) {
-			// We commented out the code line below so that we could return false to throw a message to the user
-                        System.out.println(e.getLocalizedMessage());
-			 throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
+			// We commented out the code line below so that we could return false to throw a
+			// message to the user
+			System.out.println(e.getLocalizedMessage());
+			throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
 		} finally {
 			// close the connection
 			// NOTE: the close connection method need to be called in finally block to
 			// ensure the connection is closed
 			connectDB.disconectDB();
 		}
-		// (int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID, int minor2ID, CreditsTaken profileCoursesTaken)
-		Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2, 9999, this.coursesTaken);
+		Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2, 9999,
+				this.coursesTaken);
 		plans.addPlan(planToBeAdded);
 		return true;
 	}
