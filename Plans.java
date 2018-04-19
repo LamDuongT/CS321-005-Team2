@@ -12,6 +12,7 @@ public class Plans {
 	private LinkedList<Plan> plansList = new LinkedList<Plan>();
 	private Plan aPlan;
 	private CreditsTaken profileCreditsTaken; // inject CreditsTaken from profile to every Plan
+	private Semesters listOfSemesters;
 
 	/**
 	 * Retrieve all the plans
@@ -28,6 +29,7 @@ public class Plans {
 	public Plans(int studentID, CreditsTaken profileCreditsTaken, Semesters listOfSemesters) {
 		this.profileCreditsTaken = profileCreditsTaken;
 		this.getPlansData(studentID);
+		this.listOfSemesters = listOfSemesters;
 	}
 
 	/**
@@ -92,7 +94,7 @@ public class Plans {
 				_profileID = recordSet.getInt("profileID");
 
 				aPlan = new Plan(_profileID, _planID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID,
-						_minor2ID, this.profileCreditsTaken);
+						_minor2ID, this.profileCreditsTaken, this.listOfSemesters);
 				plansList.add(aPlan);
 			}
 			statement.close();

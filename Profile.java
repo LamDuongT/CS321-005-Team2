@@ -140,7 +140,7 @@ public class Profile {
 				connectDB.disconectDB();
 			}
 			Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2,
-					9999, this.coursesTaken);
+					9999, this.coursesTaken, this.listOfSemesters);
 			plans.addPlan(planToBeAdded);
 		}
 		return successfulAdd;

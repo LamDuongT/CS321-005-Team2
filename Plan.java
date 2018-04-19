@@ -207,9 +207,7 @@ public class Plan {
 		boolean successfulAdd=false;
 		//Checks to see if the course is a valid add target
 		//Add class to planCOursesTaken and the correct semester
-		
-		if ()
-		
+	
 		//if the course was added successfully check the req lists and update the requiremnts based on that
 /*		if(wasAdded) {
 			requirements.addCourse(courseToBeAdded.getCourseID());
