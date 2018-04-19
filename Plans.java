@@ -134,6 +134,9 @@ public class Plans {
 		return successfulRemoval;
 	}
 	
+	/**
+	 * @author Lam Duong
+	 */
 	@Override
 	public String toString() {
 		String s = "Plans Object: \n"

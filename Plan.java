@@ -112,12 +112,61 @@ public class Plan {
 		return this.courses;
 	}
 
-	public Semesters getPlanSemesters() {
-		return this.semesters;
+	public List<Semester> getPlanSemesters() {
+		return this.planSemesters;
+	}
+	
+	
+	public List<Semester> getSemestersList() {
+	    ConnectDB connectdb = new ConnectDB();
+	    List<Semester> semesterlist = new ArrayList<>();
+	    String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID\n"
+	            + "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
+	            + "     INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
+	            + "     INNer JOIN tblprofile profile on plan.profileID = profile.studentID\n"
+	            + "WHERE planID = " + PLAN_ID;
+	    try ( // Initialize a sql statement
+	            Statement statement = connectdb.theConnection.createStatement()) {
+	        ResultSet recordSet = statement.executeQuery(query);
+	        //this hashmap stores all of semesters' id and also with it's courses' id
+	        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+	        int catalogID = 1;
+	        while (recordSet.next()) {
+	            //hold the plan id
+	            int plan = recordSet.getInt("planID");
+	            //hold the catalogID accordingly
+	            catalogID = recordSet.getInt("catalogID");
+	            //if the current plan is equal to the given plan, add that semester
+	            if (plan == PLAN_ID) {
+	                int semesterID = recordSet.getInt("semesterID");
+	                if (map.containsKey(semesterID)) {
+	                    map.get(semesterID).add(recordSet.getInt("courseID"));
+	                }
+	            }
+	        }
+	        /*
+	        for each semester in map, get it's correspoding courses and add
+	        them to its course list
+	         */
+	        map.keySet().forEach((intg) -> {
+	            Semester sm = semesters.getSemesterByID(intg);
+	            map.get(intg).forEach((cID) -> {
+	                sm.addCourse(courses.getCourseByID(cID));
+	            });
+	            semesterlist.add(sm);
+	        });
+	    } catch (SQLException e) {
+	        throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+	    } finally {
+	        connectdb.disconectDB();
+	    }
+	    return semesterlist;
 	}
 	
 	/**
 	 * Method will retrieve CreditsTaken for plan from Database
+	 * @author Lam Duong
+	 * @return planCreditsTaken
 	 */
 	public CreditsTaken getPlanCreditsTaken() {
 		ConnectDB connectDB = new ConnectDB();
@@ -128,7 +177,7 @@ public class Plan {
 				+ "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID"
 				+ "INNER JOIN tblcourse course on course.courseID = credit.courseID"
 				+ "INNer JOIN tblprofile profile on plan.profileID = profile.studentID"
-				+ "WHERE plan.planID = " + this.getPlanID();
+				+ "WHERE plan.planID = " + this.PLAN_ID;
 
 		try (Statement statement = connectDB.theConnection.createStatement()) {
 			ResultSet recordSet = statement.executeQuery(query);
@@ -153,19 +202,17 @@ public class Plan {
 	 * MUTATOR METHODS:
 	 */
 	
-	public void addCourse(Course addCourse, Semester target){
+	public void addCourse(Course courseToBeAdded, Semester targetSemester){
 		//if course was added successfully
-		boolean wasAdded=false;
-		//Mo or lam handle here with checks to see if the course is a valid add target
+		boolean successfulAdd=false;
+		//Checks to see if the course is a valid add target
 		//Add class to planCOursesTaken and the correct semester
 		
-		/*
-		 * code
-		 */
+		if ()
 		
 		//if the course was added successfully check the req lists and update the requiremnts based on that
 		if(wasAdded) {
-			requirements.addCourse(addCourse.getCourseID());
+			requirements.addCourse(courseToBeAdded.getCourseID());
 		}
 	}
 	public void removeCourse(Course removeCourse, Semester target) {
@@ -294,53 +341,7 @@ public class Plan {
 	 * @author Mohammed Alsharaf
 	 * @return returns a list of semesters linked with the given plan
 	 */
-	public List<Semester> getSemestersList() {
-	
-	    ConnectDB connectdb = new ConnectDB();
-	    List<Semester> semesterlist = new ArrayList<>();
-	    String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID\n"
-	            + "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
-	            + "     INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
-	            + "     INNer JOIN tblprofile profile on plan.profileID = profile.studentID\n"
-	            + "WHERE planID = " + PLAN_ID;
-	    try ( // Initialize a sql statement
-	            Statement statement = connectdb.theConnection.createStatement()) {
-	        ResultSet recordSet = statement.executeQuery(query);
-	        //this hashmap stores all of semesters' id and also with it's courses' id
-	        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
-	        int catalogID = 1;
-	        while (recordSet.next()) {
-	            //hold the plan id
-	            int plan = recordSet.getInt("planID");
-	            //hold the catalogID accordinglly
-	            catalogID = recordSet.getInt("catalogID");
-	            //if the current plan is equal to the given plan, add that semester
-	            if (plan == PLAN_ID) {
-	                int semesterID = recordSet.getInt("semesterID");
-	                if (map.containsKey(semesterID)) {
-	                    map.get(semesterID).add(recordSet.getInt("courseID"));
-	                }
-	            }
-	        }
-	        /*
-	        for each semester in map, get it's correspoding courses and add
-	        them to its course list
-	         */
-	        map.keySet().forEach((intg) -> {
-	            Semester sm = semesters.getSemesterByID(intg);
-	            map.get(intg).forEach((cID) -> {
-	                sm.addCourse(courses.getCourseByID(cID));
-	            });
-	            semesterlist.add(sm);
-	        });
-	    } catch (SQLException e) {
-	        throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
-	    } finally {
-	        connectdb.disconectDB();
-	    }
-	    return semesterlist;
-	}
-	
+
 	public String toString() {
 		return new String();
 		// TODO: IMPLEMENT TOSTRING METHOD

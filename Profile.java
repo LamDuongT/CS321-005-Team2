@@ -224,6 +224,7 @@ public class Profile {
 		returnString += "username = " + this.username + "\n";
 		returnString += "password = " + this.password + "\n";
 		returnString += "profileName = " + this.profileName + "\n";
+		returnString += "Plans within Profile: \n" + plans.toString();
 
 		return returnString;
 	}
