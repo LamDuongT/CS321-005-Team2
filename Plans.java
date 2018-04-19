@@ -11,7 +11,7 @@ import java.util.List;
 public class Plans {
 	private LinkedList<Plan> plansList = new LinkedList<Plan>();
 	private Plan aPlan;
-	private CreditsTaken profileCreditsTaken;
+	private CreditsTaken profileCreditsTaken; // inject CreditsTaken from profile to every Plan
 
 	/**
 	 * Retrieve all the plans
@@ -104,5 +104,29 @@ public class Plans {
 			// ensure the connection is closed
 			connectDB.disconectDB();
 		}
+	}
+	
+	public void addPlan(int planID) {
+		
+	}
+	
+	public void removePlan(int planID) {
+		
+	}
+	
+	@Override
+	public String toString() {
+		String s = "Plans Object: \n"
+				+ "Plans with their IDs: ";
+		for (int i = 0; i < plansList.size(); i++) {
+			s += plansList.get(i).getPlanID();
+			if (i != (plansList.size()-1)) {
+				s += ", ";
+			}
+			else {
+				s += ". \n";
+			}
+		}
+		return s;
 	}
 }
