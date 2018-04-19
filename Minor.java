@@ -16,7 +16,7 @@ public class Minor {
 	 * Initialize default values for all attributes
 	 */
 	public Minor() {
-		setValue(-1, "", "", -1);
+		setValue(9999, "", "",9999);
 	}
 
 	/**

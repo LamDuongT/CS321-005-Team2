@@ -26,6 +26,8 @@ public class Profile {
 	
 
 	public Profile() {
+                plans = new Plans();
+                this.coursesTaken = new CreditsTaken();
 		setValue(-1, "", "", "", "", "", "");
 	}
 
@@ -59,6 +61,7 @@ public class Profile {
 		this.username = username;
 		this.password = password;
 		this.profileName = profileName;
+                
 	}
 
 	public void setStudentID(int studentID) {
@@ -92,21 +95,24 @@ public class Profile {
 		// Get a new planID from database
 		int newPlanID = 9999;
 		ConnectDB connectDB = new ConnectDB();
-		String query = "select * from tblplan";
+		String query = ""/*"select * from tblplan"*/;
 		try {
-			query += "INSERT INTO 'collegespdb'.'tblplan' ('catalogID', 'majorID', 'minorID', 'majorID2', 'minorID2', 'profileID') ";
-			query += "VALUES ('" + catalogID + "', '" + majorID1 + "', '" + minorID + "', '" + majorID2 + "', " + "'9999' , '" +  this.studentID + "');";
-			query += "SELECT LAST_INSERT_ID() as planID";
-			Statement statement = connectDB.theConnection.createStatement();
-
-			// recordSet will hold a data table and create an SQL object
-			ResultSet recordSet = statement.executeQuery(query);
+                    	Statement statement = connectDB.theConnection.createStatement();
+			query += "SET FOREIGN_KEY_CHECKS=0;";
+                        statement.executeUpdate(query);
+                        query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
+			query += "VALUES ("+"\""+planName+"\"," + catalogID + ", " + majorID1 + ", " + minorID + ", " + majorID2 + ", " + "9999 , " +  this.studentID + ");";
+			///query += "SELECT LAST_INSERT_ID() as planID";
+			statement.executeUpdate(query);
+                        query = "select last_insert_id() as planID";
+                        // recordSet will hold a data table and create an SQL object
+                        ResultSet recordSet = statement.executeQuery(query);
 			recordSet.next();
 			newPlanID = recordSet.getInt("planID");
 		} catch (SQLException e) {
-			return false;
 			// We commented out the code line below so that we could return false to throw a message to the user
-			// throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
+                        System.out.println(e.getLocalizedMessage());
+			 throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
 		} finally {
 			// close the connection
 			// NOTE: the close connection method need to be called in finally block to

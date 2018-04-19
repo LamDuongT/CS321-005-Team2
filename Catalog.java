@@ -11,7 +11,7 @@ public class Catalog {
 	 * Initialize default values for all attributes
 	 */
 	public Catalog() {
-		this.catalogID = -1;
+		this.catalogID = 9999;
 		this.catalogName = "";
 		this.catalogDesc = "";
 	}

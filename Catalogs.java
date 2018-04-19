@@ -46,7 +46,7 @@ public class Catalogs {
 
 		for (int index = 0; index < this.catalogList.size(); index++) {
 			aCatalog = this.catalogList.get(index);
-			if (aCatalog.getCatalogName().toLowerCase().indexOf(catalogName) != -1) {
+			if (aCatalog.getCatalogName().equals(catalogName)) {
 				isFound = true;
 				break;
 			}
