@@ -42,8 +42,8 @@ public class Plan {
 			int minor2ID, CreditsTaken profileCoursesTaken, Semesters listOfSemesters) {
 		this.PLAN_ID = planID;
 		this.profileCoursesTaken = profileCoursesTaken;
-		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 		semesters = listOfSemesters;
+		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
 
 	// Setting values for constructor
@@ -130,7 +130,7 @@ public class Plan {
 	        ResultSet recordSet = statement.executeQuery(query);
 	        //this hashmap stores all of semesters' id and also with it's courses' id
 	        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
-	        int catalogID = 1;
+	        int catalogID;
 	        while (recordSet.next()) {
 	            //hold the plan id
 	            int plan = recordSet.getInt("planID");
@@ -203,8 +203,8 @@ public class Plan {
 	 */
 	
 	/**
-	 * @author Lam Duong
-	 * @author Robert Tagliaferri
+	 * @author Lam Duong - 90%
+	 * @author Robert Tagliaferri - 10%
 	 * @param courseToBeAdded
 	 * @param targetSemester
 	 * @return successfulAdd (boolean)
@@ -222,41 +222,24 @@ public class Plan {
 				System.out.println("CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
 			}
 		} else {
-			targetSemester.addCourse(courseToBeAdded);
-			successfulAdd = true;
-			// if the course was added successfully check the req lists and update the requiremnts based on that
-			requirements.addCourse(courseToBeAdded.getCourseID());
-			ConnectDB connectDB = new ConnectDB(); // connect to the Database
-			
-			// Update the plan level CreditsTaken
-			try {
-				String queryString = "";
-				int newCreditTakenID;
-				Statement statement = connectDB.theConnection.createStatement();
+			// Update the CreditsTaken to both the Database and planCredits
+			successfulAdd = planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester);			
+			if (successfulAdd == true) {
 				
-				queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
-	            queryString += "VALUES (" + this.profileID + ", " + courseToBeAdded.getCourseID()
-	                    + ", " + targetSemester.getSemesterID() + ");";
-	            queryString += "SELECT LAST_INSERT_ID() as creditstakenID";
-	            System.out.println(queryString);
-	            
-	            statement.executeQuery(queryString);
-	            ResultSet recordSet = statement.executeQuery(queryString);
-	            
-	            recordSet.next();
-				newCreditTakenID = recordSet.getInt("creditstakenID");
-			}
-			catch (SQLException e) {
-				System.out.println("ERROR: There was an SQL Insertion error");
-				successfulAdd = false;
-			} finally {
-				connectDB.disconectDB();
+				// Add course to requirements to see if they meet any kind of requirement
+				requirements.addCourse(courseToBeAdded.getCourseID());
+				
+				// Add the course to the Semester object in Java
+				targetSemester.addCourse(courseToBeAdded);
+				
+				// Update the Semester in the Database
+				new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
 			}
 		}
 		return successfulAdd;
 	}
 	
-	public void removeCourse(Course removeCourse, Semester target) {
+	public void removeCourse(Course courseToBeRemoved, Semester targetSemester) {
 		//if course was removed successfully
 		boolean wasRemoved = false;
 		//Mo or lam handle here with checks to see if the course is a valid remove target
@@ -267,7 +250,7 @@ public class Plan {
 		 */
 		
 		if(wasRemoved) {
-			requirements.removeCourse(removeCourse.getCourseID());
+			requirements.removeCourse(courseToBeRemoved.getCourseID());
 		}
 	}
 

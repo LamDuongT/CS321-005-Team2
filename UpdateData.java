@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Huan Nguyen
  * @author Lam Duong
- * @author Mohammed Alsharf
+ * @author Mohammed Alsharaf
  */
 public class UpdateData {
 

@@ -78,11 +78,47 @@ public class CreditsTaken {
 		return this.creditsTakenList;
 	}
 	
-	// Add a given course and then update it to the SQL database
-	public void addCourseToCreditsTaken(int studentID, int courseID, int semesterID) {
-		CreditTaken c = new CreditTaken();
-		new UpdateData().updateCreditstaken(c, 'i');
-		this.getCreditsTakenList().add(c);
+	/**
+	 * This method will add a course to a semester and save it as a CreditTaken object.
+	 * It will update the CreditTaken Object to the database. Then, it will add that Object
+	 * to creditsTakenList in this class in Java.
+	 * @author Lam Duong
+	 * @param profileID
+	 * @param courseToBeAdded
+	 * @param targetSemester
+	 * @return successfulAdd
+	 */
+	public boolean addCourseToCreditsTaken(int profileID, Course courseToBeAdded, Semester targetSemester) {
+		boolean successfulAdd = false;
+		ConnectDB connectDB = new ConnectDB(); // connect to the Database
+		String queryString = "";
+		int newCreditTakenID;
+		try {
+			Statement statement = connectDB.theConnection.createStatement();
+
+			queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID) ";
+            queryString += "VALUES (" + profileID + ", " + courseToBeAdded.getCourseID()
+                    + ", " + targetSemester.getSemesterID() + ");";
+            queryString += "SELECT LAST_INSERT_ID() as creditstakenID";
+            // System.out.println(queryString); Don't want to be printing out everything
+            
+            statement.executeQuery(queryString);
+            ResultSet recordSet = statement.executeQuery(queryString);
+            
+            recordSet.next();
+			newCreditTakenID = recordSet.getInt("creditstakenID");
+			
+			CreditTaken course = new CreditTaken(newCreditTakenID, profileID, courseToBeAdded.getCourseID(), targetSemester.getSemesterID());
+			creditsTakenList.add(course);
+			successfulAdd = true;
+		}
+		catch (SQLException e) {
+			System.out.println("ERROR: There was an SQL Insertion error");
+			successfulAdd = false;
+		} finally {
+			connectDB.disconectDB();
+		}
+		return successfulAdd;
 	}
 	
 	/**
