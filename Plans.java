@@ -87,8 +87,8 @@ public class Plans {
 				_planName = recordSet.getString("planName");
 				_major1ID = recordSet.getInt("majorID");
 				_minor1ID = recordSet.getInt("minorID");
-				_major2ID = recordSet.getInt("major2ID");
-				_minor2ID = recordSet.getInt("minor2ID");
+				_major2ID = recordSet.getInt("majorID2");
+				_minor2ID = recordSet.getInt("minorID2");
 				_profileID = recordSet.getInt("profileID");
 
 				aPlan = new Plan(_profileID, _planID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID,
