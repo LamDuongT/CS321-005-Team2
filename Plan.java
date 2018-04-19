@@ -171,13 +171,12 @@ public class Plan {
 	public CreditsTaken getPlanCreditsTaken() {
 		ConnectDB connectDB = new ConnectDB();
 		CreditsTaken planCreditsTaken = new CreditsTaken();
-		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,"
-				+ "profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID,"
-				+ " creditsTakenID "
-				+ "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID"
-				+ "INNER JOIN tblcourse course on course.courseID = credit.courseID"
-				+ "INNer JOIN tblprofile profile on plan.profileID = profile.studentID"
-				+ "WHERE plan.planID = " + this.PLAN_ID;
+		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,\n" +
+"				profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID,\n" +
+"				 creditsTakenID \n" +
+"				FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n" +
+"				INNER JOIN tblcourse course on course.courseID = credit.courseID\n" +
+"				INNer JOIN tblprofile profile on plan.profileID = profile.studentID WHERE plan.planID = " + this.PLAN_ID;
 
 		try (Statement statement = connectDB.theConnection.createStatement()) {
 			ResultSet recordSet = statement.executeQuery(query);
@@ -191,6 +190,7 @@ public class Plan {
 				planCreditsTaken.getCreditsTakenList().add(planCreditTaken);
 			}
 		} catch (SQLException e) {
+                    System.out.println("\n\n\n\n"+e.getLocalizedMessage()+"\n\n\n\n");
             throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
 		} finally {
             connectDB.disconectDB();

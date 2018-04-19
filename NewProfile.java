@@ -4,16 +4,23 @@
  * and open the template in the editor.
  */
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Mohammed Alsharaf
  */
 public class NewProfile extends javax.swing.JFrame {
-
+    private Courses courses;
     public NewProfile() {
+        courses = new Courses();
         initComponents();
     }
 
@@ -61,6 +68,8 @@ public class NewProfile extends javax.swing.JFrame {
         usrEmail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         usrName = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        studentID = new javax.swing.JTextField();
 
         jLabel3.setText("jLabel3");
 
@@ -242,6 +251,8 @@ public class NewProfile extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setText("Student ID");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,18 +277,19 @@ public class NewProfile extends javax.swing.JFrame {
                                         .addComponent(jLabel5)
                                         .addComponent(jLabel8))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(usrEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(usrPass)
-                                            .addComponent(usrCPass, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(usrEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                                        .addComponent(usrPass)
+                                        .addComponent(usrCPass, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                                        .addComponent(studentID)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel7)
                                     .addGap(58, 58, 58)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(usrID, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                                        .addComponent(usrName)))))
-                        .addGap(0, 216, Short.MAX_VALUE)))
+                                        .addComponent(usrName))))
+                            .addComponent(jLabel9))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -285,7 +297,7 @@ public class NewProfile extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(usrName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -305,9 +317,13 @@ public class NewProfile extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(usrCPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(studentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -336,13 +352,20 @@ public class NewProfile extends javax.swing.JFrame {
             //else if any feild is empty show error message
         } else if (!(this.usrID.getText().isEmpty() && this.usrEmail.getText().isEmpty() && this.usrName.getText().isEmpty()
                 && this.usrPass.getPassword().length == 0 && this.usrCPass.getPassword().length == 0)) {
-            Profile pro = new Profile(0, "", this.usrName.getText(),
-                    //create a new profile and saved into the database
-                    this.usrEmail.getText(), this.usrID.getText(), new String(this.usrPass.getPassword()), "");
-            new UpdateData().updateProfile(pro, 'i');
+            int id = insertProfileToDataBase();
+            String studentName = this.usrName.getText();
+            String userID = studentID.getText();
+            String username = this.usrID.getText();
+            String userEmail = this.usrEmail.getText();
+            String userPass = new String(this.usrPass.getPassword());
+            Profile profile = new Profile(id,userID,studentName,userEmail,username,userPass,"profile");
+            updateCreditTaken(profile);
         } else {
             JOptionPane.showMessageDialog(this, "Please complete all the required fields", "Registration Error", JOptionPane.ERROR_MESSAGE);
         }
+        JOptionPane.showMessageDialog(this,"Congratulation You Successfully Created Your Profile, Now You Can Log In."
+                ,"System Message",JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void usrNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usrNameActionPerformed
@@ -375,7 +398,7 @@ public class NewProfile extends javax.swing.JFrame {
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // if a school was selected then show classes
         String item = (String) evt.getItem();
-        if (jComboBox1.getSelectedIndex()>0) {
+        if (jComboBox1.getSelectedIndex() > 0) {
             this.setCoursesList();
         } else {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -432,6 +455,7 @@ public class NewProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -439,6 +463,7 @@ public class NewProfile extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField searchtxt;
+    private javax.swing.JTextField studentID;
     private javax.swing.JPasswordField usrCPass;
     private javax.swing.JTextField usrEmail;
     private javax.swing.JTextField usrID;
@@ -446,8 +471,7 @@ public class NewProfile extends javax.swing.JFrame {
     private javax.swing.JPasswordField usrPass;
     // End of variables declaration//GEN-END:variables
     /**
-     * author Mohammed Alsharaf 
-     * This method sets up the list of courses to let
+     * author Mohammed Alsharaf This method sets up the list of courses to let
      * the student select course he/she already took
      */
     public void setCoursesList() {
@@ -462,10 +486,74 @@ public class NewProfile extends javax.swing.JFrame {
                 return col == 2;
             }
         });
-        Courses c = new Courses();
+        //Courses c = new Courses();
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-        c.getCoursesList().forEach((classs) -> {
+        courses.getCoursesList().forEach((classs) -> {
             model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), false});
         });
     }
+
+    private int insertProfileToDataBase() {
+        ConnectDB connectdb = new ConnectDB();
+        int ret = 9999;
+        try {
+            String studentName = this.usrName.getText();
+            String userID = studentID.getText();
+            String username = this.usrID.getText();
+            String userEmail = this.usrEmail.getText();
+            String userPass = new String(this.usrPass.getPassword());
+            Statement statement = connectdb.theConnection.createStatement();
+            String query = "SET FOREIGN_KEY_CHECKS=0;";
+            statement.executeUpdate(query);
+            query = "INSERT INTO collegespdb.tblprofile (netID, studentName, studentEmail, username, password, profileName) ";
+            query = query.concat("VALUES(\"").concat(userID).concat("\", \"").concat(studentName).concat("\", \"")
+                    .concat(userEmail).concat("\", \"").concat(username).concat("\", \"").concat(userPass).concat("\", \"profile\");");
+            statement.executeUpdate(query);
+            query = "SELECT LAST_INSERT_ID() as userID";
+            ResultSet ResultSet = statement.executeQuery(query);
+            while (ResultSet.next()) {
+                ret = ResultSet.getInt("userID");
+            }
+        } catch (SQLException ex) {
+        }
+        return ret;
+    }
+    private List<Course> getCourseList(){
+        ArrayList<Course> list = new ArrayList<>();
+        TableModel model = jTable1.getModel();
+        for(int i = 0; i < model.getRowCount();i++){
+            if((boolean)model.getValueAt(i, 2)){
+                list.add(courses.getCourseByName((String)model.getValueAt(i, 0)));
+            }
+        }
+        return list;
+    }
+
+    private void updateCreditTaken(Profile profile) {
+        getCourseList().forEach((course) -> {
+            int id = insertCreditTaken(course,profile);
+            profile.getCoursesTaken().creditsTakenList.add(new CreditTaken(id,profile.getStudentID(),course.getCourseID(),9999));
+        });
+    }
+
+    private int insertCreditTaken(Course course, Profile profile) {
+        ConnectDB connectdb = new ConnectDB();
+        int ret = 9999;
+        try {
+            Statement statement = connectdb.theConnection.createStatement();
+            String query = "SET FOREIGN_KEY_CHECKS=0;";
+            statement.executeUpdate(query);
+            query = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
+            query = query.concat("VALUES(").concat(""+profile.getStudentID()).concat(", "+course.getCourseID()).concat(",9999").concat(", false);");
+            statement.executeUpdate(query);
+            query = "SELECT LAST_INSERT_ID() as creditTakenID";
+            ResultSet ResultSet = statement.executeQuery(query);
+            while (ResultSet.next()) {
+                ret = ResultSet.getInt("userID");
+            }
+        } catch (SQLException ex) {
+        }
+        return ret;
+    }
+
 }

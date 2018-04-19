@@ -115,15 +115,15 @@ public class Profile {
 			String query = ""/* "select * from tblplan" */;
 			try {
 				Statement statement = connectDB.theConnection.createStatement();
-				query += "SET FOREIGN_KEY_CHECKS=0;";
+				query += "SET FOREIGN_KEY_CHECKS=0; ";
+                                statement.executeUpdate(query);
 				query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
 				query += "VALUES (" + "\"" + planName + "\"," + catalogID + ", " + majorID1 + ", " + minorID + ", "
 						+ majorID2 + ", " + "9999, " + this.studentID + "); ";
-				query += "SELECT LAST_INSERT_ID() as planID";
-				statement.executeQuery(query);
+				statement.executeUpdate(query);
 				// recordSet will hold a data table and create an SQL object
+                                query = "SELECT LAST_INSERT_ID() as planID";
 				ResultSet recordSet = statement.executeQuery(query);
-
 				recordSet.next();
 				newPlanID = recordSet.getInt("planID");
 

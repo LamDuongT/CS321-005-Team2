@@ -132,6 +132,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="usernamef">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usernamefActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="passwordf">
           <Events>
