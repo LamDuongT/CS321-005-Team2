@@ -116,7 +116,6 @@ public class Profile {
 			try {
 				Statement statement = connectDB.theConnection.createStatement();
 				query += "SET FOREIGN_KEY_CHECKS=0;";
-				statement.executeUpdate(query);
 				query = "INSERT INTO collegespdb.tblplan(`planName`,`catalogID`,`majorID`,`minorID`,`majorID2`,`minorID2`,`profileID`) ";
 				query += "VALUES (" + "\"" + planName + "\"," + catalogID + ", " + majorID1 + ", " + minorID + ", "
 						+ majorID2 + ", " + "9999, " + this.studentID + "); ";

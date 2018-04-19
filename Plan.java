@@ -202,17 +202,60 @@ public class Plan {
 	 * MUTATOR METHODS:
 	 */
 	
-	public void addCourse(Course courseToBeAdded, Semester targetSemester){
-		//if course was added successfully
-		boolean successfulAdd=false;
+	/**
+	 * @author Lam Duong
+	 * @author Robert Tagliaferri
+	 * @param courseToBeAdded
+	 * @param targetSemester
+	 * @return successfulAdd (boolean)
+	 */
+	public boolean addCourse(Course courseToBeAdded, Semester targetSemester){
+		boolean successfulAdd = false; // if course was added successfully
+		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
+		
 		//Checks to see if the course is a valid add target
 		//Add class to planCOursesTaken and the correct semester
-	
-		//if the course was added successfully check the req lists and update the requiremnts based on that
-/*		if(wasAdded) {
+		// If the target semester is not locked and adding the course will not surpass maxCredits
+		if (targetSemester.isLocked() == false){
+			System.out.println("CANNOT ADD COURSE: The semester is locked. To unlock, check semester preferences.");
+			if (creditsAfterAdding <= targetSemester.getCreditMax()) {
+				System.out.println("CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
+			}
+		} else {
+			targetSemester.addCourse(courseToBeAdded);
+			successfulAdd = true;
+			// if the course was added successfully check the req lists and update the requiremnts based on that
 			requirements.addCourse(courseToBeAdded.getCourseID());
-		}*/
+			ConnectDB connectDB = new ConnectDB(); // connect to the Database
+			
+			// Update the plan level CreditsTaken
+			try {
+				String queryString = "";
+				int newCreditTakenID;
+				Statement statement = connectDB.theConnection.createStatement();
+				
+				queryString = "INSERT INTO collegespdb.tblcreditstaken (studentID, courseID, semesterID, isChangable) ";
+	            queryString += "VALUES (" + this.profileID + ", " + courseToBeAdded.getCourseID()
+	                    + ", " + targetSemester.getSemesterID() + ");";
+	            queryString += "SELECT LAST_INSERT_ID() as creditstakenID";
+	            System.out.println(queryString);
+	            
+	            statement.executeQuery(queryString);
+	            ResultSet recordSet = statement.executeQuery(queryString);
+	            
+	            recordSet.next();
+				newCreditTakenID = recordSet.getInt("creditstakenID");
+			}
+			catch (SQLException e) {
+				System.out.println("ERROR: There was an SQL Insertion error");
+				successfulAdd = false;
+			} finally {
+				connectDB.disconectDB();
+			}
+		}
+		return successfulAdd;
 	}
+	
 	public void removeCourse(Course removeCourse, Semester target) {
 		//if course was removed successfully
 		boolean wasRemoved = false;

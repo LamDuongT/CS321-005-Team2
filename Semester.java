@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * @author Huan Nguyen
+ * @author Lam Duong
  *
  */
 public class Semester {
@@ -17,18 +18,20 @@ public class Semester {
 	private int semesterID;
 	private String semesterName;
 	private String semesterDesc;
+	private int currentCredits;
 	private int creditMin;
 	private int creditMax;
 	private ArrayList<Course> courses;
-	private boolean lock;
+	private boolean locked;
 	private boolean isEmpty;
 
 	/**
 	 * Initialize default values for all attributes
 	 */
 	public Semester() {
-		setValue(-1, "", "", 0, 0, new ArrayList<>());
-		this.lock = false;
+		setValue(-1, "", "", 0, 18, new ArrayList<>());
+		this.locked = false;
+		this.currentCredits = 0;
 	}
 
 	/**
@@ -36,7 +39,7 @@ public class Semester {
 	 */
 	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax,ArrayList<Course> list) {
 		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, list);
-		this.lock = false;
+		this.locked = false;
 	}
 
 	/**
@@ -57,6 +60,9 @@ public class Semester {
 		}
 
 		this.courses = list;
+		for (int i = 0; i < courses.size(); i++) {
+			this.currentCredits += courses.get(i).getCreditHours();
+		}
 		this.semesterID = semesterID;
 		this.semesterName = semesterName;
 		this.semesterDesc = semesterDesc;
@@ -139,10 +145,14 @@ public class Semester {
 	public int getCreditMax() {
 		return this.creditMax;
 	}
+	
+	public int getCurrentCredits() {
+		return this.currentCredits;
+	}
 
 	// getter for lock status
-	public boolean getLock() {
-		return this.lock;
+	public boolean isLocked() {
+		return this.locked;
 	}
 
 	// change credit max
@@ -157,7 +167,7 @@ public class Semester {
 
 	// inverts lock status
 	public void toggleLock(){
-      this.lock = !this.lock;
+      this.locked = !this.locked;
    }
 	
 	public boolean isEmpty() {
