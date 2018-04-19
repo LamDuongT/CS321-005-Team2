@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+
 /**
  * @author Huan Nguyen
  * @author Lam Duong
@@ -16,18 +17,14 @@ public class Profile {
 	private String password;
 	private String profileName;
 	private CreditsTaken coursesTaken;
-	
+
 	// Private fields for Plans Management
 	private Plans plans;
 	private int plansLimit = 10;
-	private LinkedList<Plan> plansToBeAdded;
-	private LinkedList<Plan> plansToBeDeleted;
-	private LinkedList<Plan> plansToBeUpdated;
-	
 
 	public Profile() {
-                plans = new Plans();
-                this.coursesTaken = new CreditsTaken();
+		plans = new Plans();
+		this.coursesTaken = new CreditsTaken();
 		setValue(-1, "", "", "", "", "", "");
 	}
 
@@ -39,11 +36,12 @@ public class Profile {
 		coursesTaken = new CreditsTaken(studentID, 9999);
 		this.plans = new Plans(studentID, coursesTaken);
 	}
-	
+
 	/* MUTATOR METHODS: */
-	
+
 	/**
 	 * Method part of the constructor
+	 * 
 	 * @param studentID
 	 * @param netID
 	 * @param studentName
@@ -61,7 +59,6 @@ public class Profile {
 		this.username = username;
 		this.password = password;
 		this.profileName = profileName;
-                
 	}
 
 	public void setStudentID(int studentID) {
@@ -87,14 +84,14 @@ public class Profile {
 	public void setProfileName(String profileName) {
 		this.profileName = profileName;
 	}
-	
+
 	/**
-	 * README FIRST!
-	 * This method will insert a new Plan into the Database with given attributes.
-	 * It will then get the auto-incremented planID from the database in order to 
-	 * create a new Plan Object within the Profile Object in Java. Method will 
-	 * return false if user has reached the limit of 10 plans or if there is a
+	 * README FIRST! This method will insert a new Plan into the Database with given
+	 * attributes. It will then get the auto-incremented planID from the database in
+	 * order to create a new Plan Object within the Profile Object in Java. Method
+	 * will return false if user has reached the limit of 10 plans or if there is a
 	 * problem with connecting to Database.
+	 * 
 	 * @author Lam Duong
 	 * @author Mohammed Alsharaf
 	 * @param planName
@@ -106,9 +103,9 @@ public class Profile {
 	 */
 	public boolean addPlanToProfile(String planName, int catalogID, int majorID1, int majorID2, int minorID) {
 		boolean successfulAdd = true;
-		if (plans.getPlans().size() >= 10) {
+		if (plans.getPlans().size() >= plansLimit) {
 			successfulAdd = false;
-		}else {
+		} else {
 			// Get a new planID from database
 			int newPlanID = 9999;
 			ConnectDB connectDB = new ConnectDB();
@@ -121,13 +118,13 @@ public class Profile {
 				query += "VALUES (" + "\"" + planName + "\"," + catalogID + ", " + majorID1 + ", " + minorID + ", "
 						+ majorID2 + ", " + "9999, " + this.studentID + "); ";
 				query += "SELECT LAST_INSERT_ID() as planID";
-				statement.executeQuery(query);			
+				statement.executeQuery(query);
 				// recordSet will hold a data table and create an SQL object
 				ResultSet recordSet = statement.executeQuery(query);
-				
+
 				recordSet.next();
 				newPlanID = recordSet.getInt("planID");
-				
+
 			} catch (SQLException e) {
 				// We commented out the code line below so that we could return false to throw a
 				// message to the user
@@ -139,17 +136,18 @@ public class Profile {
 				// ensure the connection is closed
 				connectDB.disconectDB();
 			}
-			Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2, 9999,
-					this.coursesTaken);
+			Plan planToBeAdded = new Plan(newPlanID, this.studentID, catalogID, planName, majorID1, minorID, majorID2,
+					9999, this.coursesTaken);
 			plans.addPlan(planToBeAdded);
 		}
 		return successfulAdd;
 	}
-	
+
 	/**
-	 * Method will call on removePlanFromList to remove Plan from Plans List.
-	 * It will then update to the Database by removing the plan from the database.
+	 * Method will call on removePlanFromList to remove Plan from Plans List. It
+	 * will then update to the Database by removing the plan from the database.
 	 * Returns true if the removal was successful.
+	 * 
 	 * @param planToBeRemoved
 	 * @return
 	 */
@@ -163,16 +161,21 @@ public class Profile {
 		}
 		return successfulRemoval;
 	}
-	
-	public boolean updatePlan(int planID) {
-		return true;
-		
+
+	/**
+	 * Method simply saves the profile or any changes to database.
+	 * @return
+	 */
+	public boolean saveProfile() {
+		boolean successfulSave = true;
+		try {
+			new UpdateData().updateProfile(this, 'u');
+		} catch (IllegalStateException e) {
+			successfulSave = false;
+		}
+		return successfulSave;
 	}
-	
-	public void saveProfile() {
-		
-	}
-	
+
 	/* ACCESSOR METHODS: */
 
 	public int getStudentID() {
@@ -202,11 +205,11 @@ public class Profile {
 	public String getNetID() {
 		return this.netID;
 	}
-	
+
 	public CreditsTaken getCoursesTaken() {
 		return coursesTaken;
 	}
-	
+
 	/**
 	 * Override toString method for testing purpose
 	 * 
@@ -221,10 +224,7 @@ public class Profile {
 		returnString += "username = " + this.username + "\n";
 		returnString += "password = " + this.password + "\n";
 		returnString += "profileName = " + this.profileName + "\n";
-		
+
 		return returnString;
 	}
-	
-	/**/
-
 }

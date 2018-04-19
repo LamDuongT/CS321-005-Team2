@@ -22,7 +22,8 @@ public class Plan {
 	private Minors minorsData;
 	private Major[] majors;
 	private Minor[] minors;
-	private Semesters semesters;
+	private Semesters semesters; // All semesters within Database
+	private List<Semester> planSemesters;
 	private Courses courses;
 	private int catalogID;
 	private int profileID;
@@ -43,35 +44,6 @@ public class Plan {
 		this.profileCoursesTaken = profileCoursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
 	}
-	public void addCourse(Course addCourse, Semester target){
-		//if course was added successfully
-		boolean wasAdded=false;
-		//Mo or lam handle here with checks to see if the course is a valid add target
-		//Add class to planCOursesTaken and the correct semester
-		
-		/*
-		 * code
-		 */
-		
-		//if the course was added successfully check the req lists and update the requiremnts based on that
-		if(wasAdded) {
-			requirements.addCourse(addCourse.getCourseID());
-		}
-	}
-	public void removeCourse(Course removeCourse, Semester target) {
-		//if course was removed successfully
-		boolean wasRemoved = false;
-		//Mo or lam handle here with checks to see if the course is a valid remove target
-		//remove class to planCOursesTaken and the correct semester
-				
-		/*
-		 * code
-		 */
-		
-		if(wasRemoved) {
-			requirements.removeCourse(removeCourse.getCourseID());
-		}
-	}
 
 	// Setting values for constructor
 	public void setValues(int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
@@ -80,15 +52,16 @@ public class Plan {
 		this.catalogID = catalogID;
 		this.profileID = profileID;
 		this.planCredits = new CreditsTaken();
-
-		// Instantiation of new objects based on catalogID
-		this.getPlanCreditsTaken();
+		
+		// These methods will fetch from database
+		this.majorsData = new Majors(catalogID); // fetch majors from DB within a catalog
+		this.minorsData = new Minors(catalogID);// fetch minors from DB within a catalog
+		this.courses = new Courses(catalogID); // fetch courses from DB within a catalog
+		this.semesters = new Semesters(); // fetch ALL semesters from DB
+		this.planCredits = this.getPlanCreditsTaken(); // fetch CreditsTaken of a Plan from DB
+		this.planSemesters = this.getSemestersList(); // fetch Semesters of a Plan from DB
 		this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
-		this.semesters = new Semesters();
-		this.majorsData = new Majors(catalogID);
-		this.minorsData = new Minors(catalogID);
-		this.courses = new Courses(catalogID);
-
+		
 		// Instantiation of empty minors and majors
 		this.majors = new Major[] { new Major(), new Major() };
 		this.minors = new Minor[] { new Minor(), new Minor() };
@@ -139,14 +112,14 @@ public class Plan {
 		return this.courses;
 	}
 
-	public Semesters getSemesters() {
+	public Semesters getPlanSemesters() {
 		return this.semesters;
 	}
 	
 	/**
 	 * Method will retrieve CreditsTaken for plan from Database
 	 */
-	public void getPlanCreditsTaken() {
+	public CreditsTaken getPlanCreditsTaken() {
 		ConnectDB connectDB = new ConnectDB();
 		CreditsTaken planCreditsTaken = new CreditsTaken();
 		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,"
@@ -173,12 +146,42 @@ public class Plan {
 		} finally {
             connectDB.disconectDB();
         }
-		this.planCredits = planCreditsTaken;
+		return planCreditsTaken;
 	}
 
 	/**
 	 * MUTATOR METHODS:
 	 */
+	
+	public void addCourse(Course addCourse, Semester target){
+		//if course was added successfully
+		boolean wasAdded=false;
+		//Mo or lam handle here with checks to see if the course is a valid add target
+		//Add class to planCOursesTaken and the correct semester
+		
+		/*
+		 * code
+		 */
+		
+		//if the course was added successfully check the req lists and update the requiremnts based on that
+		if(wasAdded) {
+			requirements.addCourse(addCourse.getCourseID());
+		}
+	}
+	public void removeCourse(Course removeCourse, Semester target) {
+		//if course was removed successfully
+		boolean wasRemoved = false;
+		//Mo or lam handle here with checks to see if the course is a valid remove target
+		//remove class to planCOursesTaken and the correct semester
+				
+		/*
+		 * code
+		 */
+		
+		if(wasRemoved) {
+			requirements.removeCourse(removeCourse.getCourseID());
+		}
+	}
 
 	/**
 	 * @param majorPosition
@@ -267,7 +270,7 @@ public class Plan {
 	}
 
 	/**
-	 * @author Mohammed Alsharf
+	 * @author Mohammed Alsharaf
 	 * @param sm
 	 * @param action
 	 */
@@ -286,59 +289,61 @@ public class Plan {
 	public void generateSmartPlan() {
 		// TODO: GENERATE SORTING ALGORITHM
 	}
-
+	
+	    /**
+	 * @author Mohammed Alsharaf
+	 * @return returns a list of semesters linked with the given plan
+	 */
+	public List<Semester> getSemestersList() {
+	
+	    ConnectDB connectdb = new ConnectDB();
+	    List<Semester> semesterlist = new ArrayList<>();
+	    String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID\n"
+	            + "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
+	            + "     INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
+	            + "     INNer JOIN tblprofile profile on plan.profileID = profile.studentID\n"
+	            + "WHERE planID = " + PLAN_ID;
+	    try ( // Initialize a sql statement
+	            Statement statement = connectdb.theConnection.createStatement()) {
+	        ResultSet recordSet = statement.executeQuery(query);
+	        //this hashmap stores all of semesters' id and also with it's courses' id
+	        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+	        int catalogID = 1;
+	        while (recordSet.next()) {
+	            //hold the plan id
+	            int plan = recordSet.getInt("planID");
+	            //hold the catalogID accordinglly
+	            catalogID = recordSet.getInt("catalogID");
+	            //if the current plan is equal to the given plan, add that semester
+	            if (plan == PLAN_ID) {
+	                int semesterID = recordSet.getInt("semesterID");
+	                if (map.containsKey(semesterID)) {
+	                    map.get(semesterID).add(recordSet.getInt("courseID"));
+	                }
+	            }
+	        }
+	        /*
+	        for each semester in map, get it's correspoding courses and add
+	        them to its course list
+	         */
+	        map.keySet().forEach((intg) -> {
+	            Semester sm = semesters.getSemesterByID(intg);
+	            map.get(intg).forEach((cID) -> {
+	                sm.addCourse(courses.getCourseByID(cID));
+	            });
+	            semesterlist.add(sm);
+	        });
+	    } catch (SQLException e) {
+	        throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+	    } finally {
+	        connectdb.disconectDB();
+	    }
+	    return semesterlist;
+	}
+	
 	public String toString() {
 		return new String();
 		// TODO: IMPLEMENT TOSTRING METHOD
 	}
-        /**
-     * @author Mohammed Alsharaf
-     * @return returns a list of semesters linked with the given plan
-     */
-    public List<Semester> getSemestersList() {
 
-        ConnectDB connectdb = new ConnectDB();
-        List<Semester> semesterlist = new ArrayList<>();
-        String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID\n"
-                + "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
-                + "     INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
-                + "     INNer JOIN tblprofile profile on plan.profileID = profile.studentID\n"
-                + "WHERE planID = " + PLAN_ID;
-        try ( // Initialize a sql statement
-                Statement statement = connectdb.theConnection.createStatement()) {
-            ResultSet recordSet = statement.executeQuery(query);
-            //this hashmap stores all of semesters' id and also with it's courses' id
-            HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
-            int catalogID = 1;
-            while (recordSet.next()) {
-                //hold the plan id
-                int plan = recordSet.getInt("planID");
-                //hold the catalogID accordinglly
-                catalogID = recordSet.getInt("catalogID");
-                //if the current plan is equal to the given plan, add that semester
-                if (plan == PLAN_ID) {
-                    int semesterID = recordSet.getInt("semesterID");
-                    if (map.containsKey(semesterID)) {
-                        map.get(semesterID).add(recordSet.getInt("courseID"));
-                    }
-                }
-            }
-            /*
-            for each semester in map, get it's correspoding courses and add
-            them to its course list
-             */
-            map.keySet().forEach((intg) -> {
-                Semester sm = semesters.getSemesterByID(intg);
-                map.get(intg).forEach((cID) -> {
-                    sm.addCourse(courses.getCourseByID(cID));
-                });
-                semesterlist.add(sm);
-            });
-        } catch (SQLException e) {
-            throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
-        } finally {
-            connectdb.disconectDB();
-        }
-        return semesterlist;
-    }
 }
