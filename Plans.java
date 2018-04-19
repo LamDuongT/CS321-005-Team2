@@ -25,7 +25,7 @@ public class Plans {
 	 * 
 	 * @param StudentID
 	 */
-	public Plans(int studentID, CreditsTaken profileCreditsTaken) {
+	public Plans(int studentID, CreditsTaken profileCreditsTaken, Semesters listOfSemesters) {
 		this.profileCreditsTaken = profileCreditsTaken;
 		this.getPlansData(studentID);
 	}

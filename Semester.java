@@ -21,6 +21,7 @@ public class Semester {
 	private int creditMax;
 	private ArrayList<Course> courses;
 	private boolean lock;
+	private boolean isEmpty;
 
 	/**
 	 * Initialize default values for all attributes
@@ -158,6 +159,15 @@ public class Semester {
 	public void toggleLock(){
       this.lock = !this.lock;
    }
+	
+	public boolean isEmpty() {
+		if (courses.size() == 0) {
+			this.isEmpty = true;
+		} else {
+			this.isEmpty = false;
+		}
+		return this.isEmpty;
+	}
 
 	/**
 	 * Override toString method for testing purpose

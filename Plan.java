@@ -39,10 +39,11 @@ public class Plan {
 
 	// Standard constructor
 	public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
-			int minor2ID, CreditsTaken profileCoursesTaken) {
+			int minor2ID, CreditsTaken profileCoursesTaken, Semesters listOfSemesters) {
 		this.PLAN_ID = planID;
 		this.profileCoursesTaken = profileCoursesTaken;
 		this.setValues(profileID, catalogID, planName, majorID, minorID, major2ID, minor2ID);
+		semesters = listOfSemesters;
 	}
 
 	// Setting values for constructor
@@ -57,7 +58,6 @@ public class Plan {
 		this.majorsData = new Majors(catalogID); // fetch majors from DB within a catalog
 		this.minorsData = new Minors(catalogID);// fetch minors from DB within a catalog
 		this.courses = new Courses(catalogID); // fetch courses from DB within a catalog
-		this.semesters = new Semesters(); // fetch ALL semesters from DB
 		this.planCredits = this.getPlanCreditsTaken(); // fetch CreditsTaken of a Plan from DB
 		this.planSemesters = this.getSemestersList(); // fetch Semesters of a Plan from DB
 		this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
@@ -211,9 +211,9 @@ public class Plan {
 		if ()
 		
 		//if the course was added successfully check the req lists and update the requiremnts based on that
-		if(wasAdded) {
+/*		if(wasAdded) {
 			requirements.addCourse(courseToBeAdded.getCourseID());
-		}
+		}*/
 	}
 	public void removeCourse(Course removeCourse, Semester target) {
 		//if course was removed successfully

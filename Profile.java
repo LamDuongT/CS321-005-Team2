@@ -17,6 +17,7 @@ public class Profile {
 	private String password;
 	private String profileName;
 	private CreditsTaken coursesTaken;
+	private Semesters listOfSemesters; // fetch all semesters from DB
 
 	// Private fields for Plans Management
 	private Plans plans;
@@ -26,6 +27,7 @@ public class Profile {
 		plans = new Plans();
 		this.coursesTaken = new CreditsTaken();
 		setValue(-1, "", "", "", "", "", "");
+		listOfSemesters = new Semesters();
 	}
 
 	public Profile(int studentID, String netID, String studentName, String studentEmail, String username,
@@ -34,7 +36,8 @@ public class Profile {
 
 		// semesterID being '9999' because we're taking creditsTaken
 		coursesTaken = new CreditsTaken(studentID, 9999);
-		this.plans = new Plans(studentID, coursesTaken);
+		this.listOfSemesters = new Semesters();
+		this.plans = new Plans(studentID, coursesTaken, listOfSemesters);
 	}
 
 	/* MUTATOR METHODS: */
@@ -208,6 +211,10 @@ public class Profile {
 
 	public CreditsTaken getCoursesTaken() {
 		return coursesTaken;
+	}
+	
+	public Semesters getAllSemesters() {
+		return listOfSemesters;
 	}
 
 	/**
