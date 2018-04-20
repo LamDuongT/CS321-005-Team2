@@ -232,34 +232,32 @@ public class Plan {
 			if (creditTakenID != 9999) {
 				// CASE: MOVING A COURSE FROM ONE SEMESTER TO ANOTHER
 				// Update CreditsTaken by updating the current plansCredit 
-				successfulAdd = planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester);
-				if (successfulAdd == true) {
+				if (planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester) == true) {
 					// The rest of this if block is about UPDATING SEMESTERS
 					Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
 					if (oldSemester.removeCourse(courseToBeAdded) == true) {
-						if (targetSemester.addCourse(courseToBeAdded) == false) {
-							successfulAdd = false;
-							// FROM HERE: Revert changes since something went wrong
-							oldSemester.addCourse(courseToBeAdded);
-						} else {
+						if (targetSemester.addCourse(courseToBeAdded) == true) {
 							// No problems regarding semesters changes, update them in DB
 							new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
 							new UpdateData().updateSemester(this.PLAN_ID, oldSemester, 'u');
+							successfulAdd = true;
+						} else {
+							// FROM HERE: Revert changes since something went wrong
+							oldSemester.addCourse(courseToBeAdded);
 						}
 					}
 				}
 			} else {
 				// CASE: ADDING A NEW COURSE TO A SEMESTER
-				successfulAdd = planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester);
-				if (successfulAdd == true) {
+				if (planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester) == true) {
 					// Since it's a new Course, check if it meets requirements
 					requirements.addCourse(courseToBeAdded.getCourseID());
 
 					// Add the courseToBeTaken to the targetSemester object in Java
-					successfulAdd = targetSemester.addCourse(courseToBeAdded);	
-					if (successfulAdd == true) {
+					if (targetSemester.addCourse(courseToBeAdded) == true) {
 						// Update the targetSemester in the Database
 						new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
+						successfulAdd = true;
 					}
 				}
 			}
