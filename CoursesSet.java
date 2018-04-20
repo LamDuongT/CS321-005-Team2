@@ -1,7 +1,5 @@
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
-import java.lang.*;
 /**
  * @author Lam Duong 
  * @author Mohammed Alsharf
