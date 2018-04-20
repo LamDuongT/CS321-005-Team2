@@ -37,7 +37,8 @@ public class Semester {
 	/**
 	 * Initialize all attributes with given information
 	 */
-	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax,ArrayList<Course> list) {
+	public Semester(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax,
+			ArrayList<Course> list) {
 		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, list);
 		this.locked = false;
 	}
@@ -70,14 +71,41 @@ public class Semester {
 		this.creditMax = creditMax;
 
 	}
-        //adds a course to the courses list
-        public void addCourse(Course course){
-            courses.add(course);
-        }
-        // setter for courses
-        public void setCourses(ArrayList<Course> list){
-            this.courses=list;
-        }
+
+	// adds a course to the courses list
+	public boolean addCourse(Course course) {
+		boolean successfulAdd = false;
+		if ((course.getCreditHours()+this.currentCredits) > this.creditMax) {
+			courses.add(course);
+			successfulAdd = true;
+		}
+		if (successfulAdd == false) {
+			System.out.println("Could not add Course:" + course.getCourseID() + " to Semester:" + this.semesterID + "\n"
+					+ "Adding this Course would surpass the maximum creditLimit of this Semester!");
+		}
+		return successfulAdd;
+	}
+
+	public boolean removeCourse(Course course) {
+		boolean successfulRemoval = false;
+		for (int i = 0; i < courses.size(); i++) {
+			if (courses.get(i).getCourseID() == course.getCourseID()) {
+				courses.remove(course);
+				successfulRemoval = true;
+			}
+		}
+		if (successfulRemoval == false) {
+			System.out.println("Could not remove Course:" + course.getCourseID() + " from Semester:" + this.semesterID + "\n"
+					+ "This Course is not in this Semester! DEVS: Check to see if IDs match.");
+		}
+		return successfulRemoval;
+	}
+
+	// setter for courses
+	public void setCourses(ArrayList<Course> list) {
+		this.courses = list;
+	}
+
 	// setter for semesterID
 	public void setSemesterID(int semesterID) {
 		this.semesterID = semesterID;
@@ -145,7 +173,7 @@ public class Semester {
 	public int getCreditMax() {
 		return this.creditMax;
 	}
-	
+
 	public int getCurrentCredits() {
 		return this.currentCredits;
 	}
@@ -166,10 +194,10 @@ public class Semester {
 	}
 
 	// inverts lock status
-	public void toggleLock(){
-      this.locked = !this.locked;
-   }
-	
+	public void toggleLock() {
+		this.locked = !this.locked;
+	}
+
 	public boolean isEmpty() {
 		if (courses.size() == 0) {
 			this.isEmpty = true;
@@ -177,6 +205,16 @@ public class Semester {
 			this.isEmpty = false;
 		}
 		return this.isEmpty;
+	}
+
+	public boolean contains(Course course) {
+		boolean hasCourse = false;
+		for (int i = 0; i < courses.size(); i++) {
+			if (course.getCourseID() == courses.get(i).getCourseID()) {
+				hasCourse = true;
+			}
+		}
+		return hasCourse;
 	}
 
 	/**

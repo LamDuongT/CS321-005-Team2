@@ -53,7 +53,7 @@ public class Plan {
 		this.catalogID = catalogID;
 		this.profileID = profileID;
 		this.planCredits = new CreditsTaken();
-		
+
 		// These methods will fetch from database
 		this.majorsData = new Majors(catalogID); // fetch majors from DB within a catalog
 		this.minorsData = new Minors(catalogID);// fetch minors from DB within a catalog
@@ -61,7 +61,7 @@ public class Plan {
 		this.planCredits = this.getPlanCreditsTaken(); // fetch CreditsTaken of a Plan from DB
 		this.planSemesters = this.getSemestersList(); // fetch Semesters of a Plan from DB
 		this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
-		
+
 		// Instantiation of empty minors and majors
 		this.majors = new Major[] { new Major(), new Major() };
 		this.minors = new Minor[] { new Minor(), new Minor() };
@@ -115,147 +115,168 @@ public class Plan {
 	public List<Semester> getPlanSemesters() {
 		return this.planSemesters;
 	}
-	
-	
+
 	public List<Semester> getSemestersList() {
-	    ConnectDB connectdb = new ConnectDB();
-	    List<Semester> semesterlist = new ArrayList<>();
-	    String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID\n"
-	            + "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
-	            + "     INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
-	            + "     INNer JOIN tblprofile profile on plan.profileID = profile.studentID\n"
-	            + "WHERE planID = " + PLAN_ID;
-	    try ( // Initialize a sql statement
-	            Statement statement = connectdb.theConnection.createStatement()) {
-	        ResultSet recordSet = statement.executeQuery(query);
-	        //this hashmap stores all of semesters' id and also with it's courses' id
-	        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
-	        int catalogID;
-	        while (recordSet.next()) {
-	            //hold the plan id
-	            int plan = recordSet.getInt("planID");
-	            //hold the catalogID accordingly
-	            catalogID = recordSet.getInt("catalogID");
-	            //if the current plan is equal to the given plan, add that semester
-	            if (plan == PLAN_ID) {
-	                int semesterID = recordSet.getInt("semesterID");
-	                if (map.containsKey(semesterID)) {
-	                    map.get(semesterID).add(recordSet.getInt("courseID"));
-	                }
-	            }
-	        }
-	        /*
-	        for each semester in map, get it's correspoding courses and add
-	        them to its course list
-	         */
-	        map.keySet().forEach((intg) -> {
-	            Semester sm = semesters.getSemesterByID(intg);
-	            map.get(intg).forEach((cID) -> {
-	                sm.addCourse(courses.getCourseByID(cID));
-	            });
-	            semesterlist.add(sm);
-	        });
-	    } catch (SQLException e) {
-	        throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
-	    } finally {
-	        connectdb.disconectDB();
-	    }
-	    return semesterlist;
+		ConnectDB connectdb = new ConnectDB();
+		List<Semester> semesterlist = new ArrayList<>();
+		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2, profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID\n"
+				+ "FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
+				+ "     INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
+				+ "     INNer JOIN tblprofile profile on plan.profileID = profile.studentID\n" + "WHERE planID = "
+				+ PLAN_ID;
+		try ( // Initialize a sql statement
+				Statement statement = connectdb.theConnection.createStatement()) {
+			ResultSet recordSet = statement.executeQuery(query);
+			// this hashmap stores all of semesters' id and also with it's courses' id
+			HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+			int catalogID;
+			while (recordSet.next()) {
+				// hold the plan id
+				int plan = recordSet.getInt("planID");
+				// hold the catalogID accordingly
+				catalogID = recordSet.getInt("catalogID");
+				// if the current plan is equal to the given plan, add that semester
+				if (plan == PLAN_ID) {
+					int semesterID = recordSet.getInt("semesterID");
+					if (map.containsKey(semesterID)) {
+						map.get(semesterID).add(recordSet.getInt("courseID"));
+					}
+				}
+			}
+			/*
+			 * for each semester in map, get it's correspoding courses and add them to its
+			 * course list
+			 */
+			map.keySet().forEach((intg) -> {
+				Semester sm = semesters.getSemesterByID(intg);
+				map.get(intg).forEach((cID) -> {
+					sm.addCourse(courses.getCourseByID(cID));
+				});
+				semesterlist.add(sm);
+			});
+		} catch (SQLException e) {
+			throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+		} finally {
+			connectdb.disconectDB();
+		}
+		return semesterlist;
 	}
-	
+
 	/**
 	 * Method will retrieve CreditsTaken for plan from Database
+	 * 
 	 * @author Lam Duong
 	 * @return planCreditsTaken
 	 */
 	public CreditsTaken getPlanCreditsTaken() {
 		ConnectDB connectDB = new ConnectDB();
 		CreditsTaken planCreditsTaken = new CreditsTaken();
-		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,\n" +
-"				profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID,\n" +
-"				 creditsTakenID \n" +
-"				FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n" +
-"				INNER JOIN tblcourse course on course.courseID = credit.courseID\n" +
-"				INNer JOIN tblprofile profile on plan.profileID = profile.studentID WHERE plan.planID = " + this.PLAN_ID;
+		String query = "SELECT plan.planID, plan.catalogID, plan.majorID, plan.minorID, plan.majorID2, plan.minorID2,\n"
+				+ "				profile.studentID, profile.profileName, course.courseID, course.courseName, credit.semesterID,\n"
+				+ "				 creditsTakenID \n"
+				+ "				FROM tblplan plan INNER JOIN tblcreditstaken credit ON plan.profileID = credit.studentID\n"
+				+ "				INNER JOIN tblcourse course on course.courseID = credit.courseID\n"
+				+ "				INNer JOIN tblprofile profile on plan.profileID = profile.studentID WHERE plan.planID = "
+				+ this.PLAN_ID;
 
 		try (Statement statement = connectDB.theConnection.createStatement()) {
 			ResultSet recordSet = statement.executeQuery(query);
-			while(recordSet.next()) {
+			while (recordSet.next()) {
 				int _creditsTakenID = recordSet.getInt("creditsTakenID");
 				int _studentID = recordSet.getInt("studentID");
 				int _courseID = recordSet.getInt("courseID");
 				int _semesterID = recordSet.getInt("semesterID");
-				
+
 				CreditTaken planCreditTaken = new CreditTaken(_creditsTakenID, _studentID, _courseID, _semesterID);
 				planCreditsTaken.getCreditsTakenList().add(planCreditTaken);
 			}
 		} catch (SQLException e) {
-                    System.out.println("\n\n\n\n"+e.getLocalizedMessage()+"\n\n\n\n");
-            throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
+			System.out.println("\n\n\n\n" + e.getLocalizedMessage() + "\n\n\n\n");
+			throw new IllegalStateException("[ERROR] there is an error with the SQL query!", e);
 		} finally {
-            connectDB.disconectDB();
-        }
+			connectDB.disconectDB();
+		}
 		return planCreditsTaken;
 	}
 
 	/**
 	 * MUTATOR METHODS:
 	 */
-	
+
 	/**
+	 * This method will either add a new course to a semester or
+	 * update a course by moving it to a new semester. Method will return
+	 * true if everything went well. It will return false and will also
+	 * print out a message if something went wrong.
 	 * @author Lam Duong - 90%
 	 * @author Robert Tagliaferri - 10%
 	 * @param courseToBeAdded
 	 * @param targetSemester
 	 * @return successfulAdd (boolean)
 	 */
-	public boolean addCourse(Course courseToBeAdded, Semester targetSemester){
+	public boolean addCourseToSemester(Course courseToBeAdded, Semester targetSemester) {
 		boolean successfulAdd = false; // if course was added successfully
 		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
-		
-		//Checks to see if the course is a valid add target
-		//Add class to planCOursesTaken and the correct semester
-		// If the target semester is not locked and adding the course will not surpass maxCredits
-		if (targetSemester.isLocked() == false){
+
+		// If the target semester is not locked and adding the course will not surpass
+		// maxCredits
+		if (targetSemester.isLocked() == false) {
 			System.out.println("CANNOT ADD COURSE: The semester is locked. To unlock, check semester preferences.");
 			if (creditsAfterAdding <= targetSemester.getCreditMax()) {
-				System.out.println("CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
+				System.out.println(
+						"CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
 			}
 		} else {
+			// Try to get the creditTakenID of the courseToBeAdded
+			int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
 			// If the courseToBeAdded is already within list of planCredits
-			if (planCredits.contains(courseToBeAdded)) {
-				int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
-				successfulAdd = planCredits.updateCourseInCreditsTaken(creditTakenID, )
+			if (creditTakenID != 9999) {
+				// CASE: MOVING A COURSE FROM ONE SEMESTER TO ANOTHER
+				// Update CreditsTaken by updating the current plansCredit 
+				successfulAdd = planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester);
+				if (successfulAdd == true) {
+					// Get the "old semester" of where the Course exists before it is added
+					Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
+					if (oldSemester.removeCourse(courseToBeAdded) == true) {
+						if (targetSemester.addCourse(courseToBeAdded) == false) {
+							successfulAdd = false;
+							// FROM HERE: Revert changes since something went wrong
+							oldSemester.addCourse(courseToBeAdded);
+						}
+					}
+				}
 			} else {
-				// Add the  new CreditsTaken to both the Database and planCredits
+				// CASE: ADDING A NEW COURSE TO A SEMESTER
 				successfulAdd = planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester);
-			}
-			if (successfulAdd == true) {
-				
-				// Add courseToBeAdded to requirements to see if they meet any kind of requirement
-				requirements.addCourse(courseToBeAdded.getCourseID());
-				
-				// Add the courseToBeTaken to the targetSemester object in Java
-				targetSemester.addCourse(courseToBeAdded);
-				
-				// Update the targetSemester in the Database
-				new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
+				if (successfulAdd == true) {
+
+					// Add courseToBeAdded to requirements to see if they meet any kind of
+					// requirement
+					requirements.addCourse(courseToBeAdded.getCourseID());
+
+					// Add the courseToBeTaken to the targetSemester object in Java
+					targetSemester.addCourse(courseToBeAdded);
+
+					// Update the targetSemester in the Database
+					new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
+				}
 			}
 		}
 		return successfulAdd;
 	}
-	
-	public boolean removeCourse(Course courseToBeRemoved, Semester targetSemester) {
-		//if course was removed successfully
+
+	public boolean removeCourseFromSemester(Course courseToBeRemoved, Semester targetSemester) {
+		// if course was removed successfully
 		boolean removeSuccessful = false;
-		//Mo or lam handle here with checks to see if the course is a valid remove target
-		//remove class to planCOursesTaken and the correct semester
-				
+		// Mo or lam handle here with checks to see if the course is a valid remove
+		// target
+		// remove class to planCOursesTaken and the correct semester
+
 		/*
 		 * code
 		 */
-		
-		if(removeSuccessful == true) {
+
+		if (removeSuccessful == true) {
 			requirements.removeCourse(courseToBeRemoved.getCourseID());
 		}
 		return removeSuccessful;
@@ -367,8 +388,8 @@ public class Plan {
 	public void generateSmartPlan() {
 		// TODO: GENERATE SORTING ALGORITHM
 	}
-	
-	    /**
+
+	/**
 	 * @author Mohammed Alsharaf
 	 * @return returns a list of semesters linked with the given plan
 	 */

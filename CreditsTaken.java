@@ -36,6 +36,38 @@ public class CreditsTaken {
 	}
 	
 	/**
+	 * Check to see if a course is in the list of CreditsTaken
+	 * @param course
+	 * @return
+	 */
+	public boolean contains(Course course) {
+		boolean hasCourse = false;
+		for (int i = 0; i < creditsTakenList.size(); i++) {
+			if (course.getCourseID() == creditsTakenList.get(i).getCourseID()) {
+				hasCourse = true;
+			}
+		}
+		return hasCourse;
+	}
+	
+	/**
+	 * Method to retrieve the creditTakenID from CreditsTakenList
+	 * given a Course Object.
+	 * METHOD RETURNS 9999 IF NO COURSE IS FOUND
+	 * @param course
+	 * @return
+	 */
+	public int getCreditTakenID(Course course) {
+		int creditTakenID= 9999;
+		for (int i = 0; i < creditsTakenList.size(); i++) {
+			if (course.getCourseID() == creditsTakenList.get(i).getCourseID()){
+				creditTakenID = creditsTakenList.get(i).getCreditTakenID();
+			}
+		}
+		return creditTakenID;
+	}
+	
+	/**
 	 * This is to retrieve a single CreditTaken class (singular)
 	 * within the list creditsTakenList by ID. Will return an empty
 	 * CreditTaken Object if not found.
@@ -119,6 +151,33 @@ public class CreditsTaken {
 			connectDB.disconectDB();
 		}
 		return successfulAdd;
+	}
+	
+	public boolean updateCourseInCreditsTaken(int creditTakenID, int profileID, Course course, Semester semester) {
+		boolean successfulUpdate = false;
+		boolean nothingFound = true;
+		
+		CreditTaken courseToBeUpdated = new CreditTaken(creditTakenID, profileID, course.getCourseID(), semester.getSemesterID());
+		for (int i = 0; i < creditsTakenList.size(); i++) {
+			if (creditsTakenList.get(i).getCreditTakenID() == creditTakenID) {
+				CreditTaken oldCourse = creditsTakenList.get(i);
+				creditsTakenList.set(i, courseToBeUpdated);
+				try {
+					new UpdateData().updateCreditstaken(courseToBeUpdated, 'u');
+					successfulUpdate = true;
+					nothingFound = false;
+				} catch (IllegalStateException e) {
+					successfulUpdate = false;
+					System.out.println("There was a problem with updating to the database. Reverting changes.");
+					creditsTakenList.set(i, oldCourse);
+				}
+				break;
+			}
+		}
+		if (nothingFound == true) {
+			System.out.println("Could not update CreditTaken because the creditTakenID input did not match with any CreditTaken in creditsTakenList");
+		}
+		return successfulUpdate;
 	}
 	
 	/**
