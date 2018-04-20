@@ -22,6 +22,9 @@ public class GradRequirement {
 		this.major1= major1;
 		this.major2=0;
 		this.minor=0;
+                major1Req = new ArrayList<>();
+                major2Req = new ArrayList<>();
+                minorReq  = new ArrayList<>();
 		if(major2!=9999) 
 			this.major2=major2;
 		if(minor!=9999)

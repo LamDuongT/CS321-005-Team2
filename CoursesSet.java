@@ -223,11 +223,12 @@ public class CoursesSet implements Comparable<CoursesSet>{
 	private void parseString(String query, Courses coursesList) {
 
 		// split string to start deciphering
+                if(query!=null&&!query.isEmpty()){
 		String[] parts = query.split("\\|");
 
 		// We start at parts[1] because parts[0] is just "%"
-		this.amountOfChoices = Integer.parseInt(parts[1]);
-		this.amountOfCourses = Integer.parseInt(parts[2]);
+		this.amountOfChoices = Integer.parseInt(parts[0]);
+		this.amountOfCourses = Integer.parseInt(parts[1]);
 		this.coursesToBeChosen = new LinkedList<Course>();
 
 		String[] classes = parts[3].split("\\,");
@@ -265,6 +266,7 @@ public class CoursesSet implements Comparable<CoursesSet>{
 				coursesToBeChosen.add(course);
 			}
 		}
+                }
 	}
 	
 	public String toString() {
