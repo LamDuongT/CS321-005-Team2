@@ -60,7 +60,7 @@ public class Plan {
 		this.courses = new Courses(catalogID); // fetch courses from DB within a catalog
 		this.planCredits = this.getPlanCreditsTaken(); // fetch CreditsTaken of a Plan from DB
 		this.planSemesters = this.getSemestersList(); // fetch Semesters of a Plan from DB
-		this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
+		//this.requirements = new GradRequirement(majorID, major2ID, minorID, courses, profileCoursesTaken, planCredits);
 		
 		// Instantiation of empty minors and majors
 		this.majors = new Major[] { new Major(), new Major() };

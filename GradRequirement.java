@@ -151,12 +151,12 @@ public class GradRequirement {
 			while (recordSet.next()){
 				_courseName = recordSet.getString("courseName");
 				_gradreqDesc = recordSet.getString("gradreqDesc");
-				_minorID= recordSet.getInt("minorID");
-				_majorID= recordSet.getInt("majorID");
-				if(_minorID == 9999 && _majorID == 9999)
-					throw new RuntimeException("the coders suck at programming... sorry");
-				if(_minorID<9999 && _majorID<9999)
-					throw new RuntimeException("the coders suck at programming... sorry");
+//				_minorID= recordSet.getInt("minorID");
+//				_majorID= recordSet.getInt("majorID");
+//				if(_minorID == 9999 && _majorID == 9999)
+//					throw new RuntimeException("the coders suck at programming... sorry");
+//				if(_minorID<9999 && _majorID<9999)
+//					throw new RuntimeException("the coders suck at programming... sorry");
 				reqContainer = new CoursesSet(_courseName, _gradreqDesc,coursesList);
 				this.major1Req.add(reqContainer);
 			}
@@ -176,12 +176,12 @@ public class GradRequirement {
 				while (recordSet.next()) {
 					_courseName = recordSet.getString("courseName");
 					_gradreqDesc = recordSet.getString("gradreqDesc");
-					_minorID = recordSet.getInt("minorID");
-					_majorID = recordSet.getInt("majorID");
-					if (_minorID == 9999 && _majorID == 9999)
-						throw new RuntimeException("the coders suck at programming... sorry");
-					if (_minorID < 9999 && _majorID < 9999)
-						throw new RuntimeException("the coders suck at programming... sorry");
+//					_minorID = recordSet.getInt("minorID");
+//					_majorID = recordSet.getInt("majorID");
+//					if (_minorID == 9999 && _majorID == 9999)
+//						throw new RuntimeException("the coders suck at programming... sorry");
+//					if (_minorID < 9999 && _majorID < 9999)
+//						throw new RuntimeException("the coders suck at programming... sorry");
 					reqContainer = new CoursesSet(_courseName, _gradreqDesc, coursesList);
 					this.major2Req.add(reqContainer);
 				}
@@ -202,12 +202,12 @@ public class GradRequirement {
 				while (recordSet.next()) {
 					_courseName = recordSet.getString("courseName");
 					_gradreqDesc = recordSet.getString("gradreqDesc");
-					_minorID = recordSet.getInt("minorID");
-					_majorID = recordSet.getInt("majorID");
-					if (_minorID == 9999 && _majorID == 9999)
-						throw new RuntimeException("Database Error:the coders suck at programming... sorry");
-					if (_minorID < 9999 && _majorID < 9999)
-						throw new RuntimeException("the coders suck at programming... sorry");
+//					_minorID = recordSet.getInt("minorID");
+//					_majorID = recordSet.getInt("majorID");
+//					if (_minorID == 9999 && _majorID == 9999)
+//						throw new RuntimeException("Database Error:the coders suck at programming... sorry");
+//					if (_minorID < 9999 && _majorID < 9999)
+//						throw new RuntimeException("the coders suck at programming... sorry");
 					reqContainer = new CoursesSet(_courseName, _gradreqDesc, coursesList);
 					this.minorReq.add(reqContainer);
 				}

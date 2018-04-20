@@ -74,11 +74,11 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Plans"
+                "Name", "Object"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -287,7 +287,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // edits higlited plan
          DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-         Plan plan = (Plan) model.getValueAt(jTable1.getSelectedColumn(), jTable1.getSelectedRow());
+         Plan plan = (Plan) model.getValueAt(jTable1.getSelectedRow(),1);
          new NewPlans(profile,plan,'u').setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -310,7 +310,8 @@ public class MainWindow extends javax.swing.JFrame {
         // mouse cliked twice, show semesters
         if(evt.getClickCount()==2){
             DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-            Plan plan = (Plan) model.getValueAt(jTable1.getSelectedColumn(), jTable1.getSelectedRow());
+            //Plans(int studentID, CreditsTaken profileCreditsTaken, Semesters listOfSemesters)
+            Plan plan = (Plan) model.getValueAt(jTable1.getSelectedRow(), 1);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
             for(Semester sm : plan.getSemestersList()){
@@ -327,6 +328,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // adds a new semester
+        new NewSemester().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -401,7 +403,7 @@ public class MainWindow extends javax.swing.JFrame {
         //now add all plans to the table
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         planList.forEach((p) -> {
-            model.addRow(new Plan[]{p});
+            model.addRow(new Object[]{p.getPlanName(),p});
         });
     }
 }
