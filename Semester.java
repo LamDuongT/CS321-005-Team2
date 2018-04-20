@@ -72,14 +72,24 @@ public class Semester {
 
 	}
 
-	// adds a course to the courses list
+	/**
+	 * 
+	 * @param course
+	 * @return
+	 */
 	public boolean addCourse(Course course) {
 		boolean successfulAdd = false;
+		
+		// Check if by adding this course, it would surpass semester credit limit
 		if ((course.getCreditHours()+this.currentCredits) > this.creditMax) {
-			courses.add(course);
-			successfulAdd = true;
-		}
-		if (successfulAdd == false) {
+			try {
+				new UpdateData().updateSemester(this, 'u');
+				courses.add(course);
+				successfulAdd = true;
+			} catch (IllegalStateException e){
+				System.out.println("ERROR: There was an error with the SQL query. Try again.");
+			}
+		} else {
 			System.out.println("Could not add Course:" + course.getCourseID() + " to Semester:" + this.semesterID + "\n"
 					+ "Adding this Course would surpass the maximum creditLimit of this Semester!");
 		}
@@ -88,15 +98,22 @@ public class Semester {
 
 	public boolean removeCourse(Course course) {
 		boolean successfulRemoval = false;
+		boolean notFound = true;
 		for (int i = 0; i < courses.size(); i++) {
 			if (courses.get(i).getCourseID() == course.getCourseID()) {
-				courses.remove(course);
-				successfulRemoval = true;
+				try {
+					new UpdateData().updateSemester(this, 'u');
+					courses.remove(course);
+					successfulRemoval = true;
+					notFound = false;
+				} catch (IllegalStateException e) {
+					System.out.println("There was a problem regarding updating to the database. Try again.");
+				}
 			}
 		}
-		if (successfulRemoval == false) {
+		if (notFound == true) {
 			System.out.println("Could not remove Course:" + course.getCourseID() + " from Semester:" + this.semesterID + "\n"
-					+ "This Course is not in this Semester! DEVS: Check to see if IDs match.");
+					+ "This Course is not in this Semester! NOTE: Check to see if IDs match.");
 		}
 		return successfulRemoval;
 	}

@@ -114,7 +114,11 @@ public class Plan {
 	public List<Semester> getPlanSemesters() {
 		return this.planSemesters;
 	}
-
+	
+	/**
+	 * @author Mohammed Alsharaf
+	 * @return
+	 */
 	public List<Semester> getSemestersList() {
 		ConnectDB connectdb = new ConnectDB();
 		List<Semester> semesterlist = new ArrayList<>();
@@ -207,6 +211,8 @@ public class Plan {
 	 * update a course by moving it to a new semester. Method will return
 	 * true if everything went well. It will return false and will also
 	 * print out a message if something went wrong.
+	 * Should something go wrong, this method will also automatically revert
+	 * any changes made to its original state.
 	 * @author Lam Duong - 90%
 	 * @author Robert Tagliaferri - 10%
 	 * @param courseToBeAdded
@@ -236,14 +242,10 @@ public class Plan {
 					// The rest of this if block is about UPDATING SEMESTERS
 					Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
 					if (oldSemester.removeCourse(courseToBeAdded) == true) {
-						if (targetSemester.addCourse(courseToBeAdded) == true) {
-							// No problems regarding semesters changes, update them in DB
-							new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
-							new UpdateData().updateSemester(this.PLAN_ID, oldSemester, 'u');
-							successfulAdd = true;
-						} else {
-							// FROM HERE: Revert changes since something went wrong
-							oldSemester.addCourse(courseToBeAdded);
+						successfulAdd = targetSemester.addCourse(courseToBeAdded);
+						if (successfulAdd == false) {
+							// FROM HERE: Revert change since something went wrong at the final step
+							oldSemester.addCourse(courseToBeAdded);	
 						}
 					}
 				}
@@ -254,16 +256,14 @@ public class Plan {
 					requirements.addCourse(courseToBeAdded.getCourseID());
 
 					// Add the courseToBeTaken to the targetSemester object in Java
-					if (targetSemester.addCourse(courseToBeAdded) == true) {
-						// Update the targetSemester in the Database
-						new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
-						successfulAdd = true;
+					successfulAdd = targetSemester.addCourse(courseToBeAdded);
 					}
 				}
 			}
-		}
+
 		return successfulAdd;
-	}
+		}
+		
 
 	public boolean removeCourseFromSemester(Course courseToBeRemoved, Semester targetSemester) {
 		// if course was removed successfully
@@ -374,7 +374,7 @@ public class Plan {
 	 * @param action
 	 */
 	public void setSemester(Semester sm, char action) {
-		new UpdateData().updateSemester(PLAN_ID, sm, action);
+		new UpdateData().updateSemester(sm, action);
 	}
 
 	public void setCatalog(int catalogID) {

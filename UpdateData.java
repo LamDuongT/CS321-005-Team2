@@ -221,13 +221,12 @@ public class UpdateData {
 
     /**
      * Method for updating the semesters in database insert, update and delete
-     *
-     * @param PlanID
+     * @author Mohammed Alsharaf
      * @param sm
      * @param action
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void updateSemester(int PlanID, Semester sm, char action) {
+    public void updateSemester(Semester sm, char action) {
         if (sm == null) {
             throw new IllegalArgumentException("[ERROR] Semester can not be null!");
         }
