@@ -221,10 +221,10 @@ public class Plan {
 		// maxCredits
 		if (targetSemester.isLocked() == false) {
 			System.out.println("CANNOT ADD COURSE: The semester is locked. To unlock, check semester preferences.");
-			if (creditsAfterAdding <= targetSemester.getCreditMax()) {
-				System.out.println(
-						"CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
-			}
+		}
+		else if (creditsAfterAdding <= targetSemester.getCreditMax()) {
+			System.out.println(
+					"CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
 		} else {
 			// Try to get the creditTakenID of the courseToBeAdded
 			int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
@@ -234,13 +234,17 @@ public class Plan {
 				// Update CreditsTaken by updating the current plansCredit 
 				successfulAdd = planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester);
 				if (successfulAdd == true) {
-					// Get the "old semester" of where the Course exists before it is added
+					// The rest of this if block is about UPDATING SEMESTERS
 					Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
 					if (oldSemester.removeCourse(courseToBeAdded) == true) {
 						if (targetSemester.addCourse(courseToBeAdded) == false) {
 							successfulAdd = false;
 							// FROM HERE: Revert changes since something went wrong
 							oldSemester.addCourse(courseToBeAdded);
+						} else {
+							// No problems regarding semesters changes, update them in DB
+							new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
+							new UpdateData().updateSemester(this.PLAN_ID, oldSemester, 'u');
 						}
 					}
 				}
@@ -248,16 +252,15 @@ public class Plan {
 				// CASE: ADDING A NEW COURSE TO A SEMESTER
 				successfulAdd = planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester);
 				if (successfulAdd == true) {
-
-					// Add courseToBeAdded to requirements to see if they meet any kind of
-					// requirement
+					// Since it's a new Course, check if it meets requirements
 					requirements.addCourse(courseToBeAdded.getCourseID());
 
 					// Add the courseToBeTaken to the targetSemester object in Java
-					targetSemester.addCourse(courseToBeAdded);
-
-					// Update the targetSemester in the Database
-					new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
+					successfulAdd = targetSemester.addCourse(courseToBeAdded);	
+					if (successfulAdd == true) {
+						// Update the targetSemester in the Database
+						new UpdateData().updateSemester(this.PLAN_ID, targetSemester, 'u');
+					}
 				}
 			}
 		}
