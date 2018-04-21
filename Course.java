@@ -25,7 +25,8 @@ public class Course {
 	private String minorID;
 	private Prereqs prereqList;
 	private boolean isEmpty;
-
+    private boolean taken; // Just for GUI
+    
 	/**
 	 * Initialize default values for all attributes
 	 */
@@ -33,6 +34,7 @@ public class Course {
 		setValue(-1, "", "", -1, -1, "-1", "-1");
 		this.prereqList = null;
 		this.isEmpty = true;
+                taken =false;
 	}
 
 	/**
@@ -44,6 +46,7 @@ public class Course {
 		setValue(courseID, courseName, courseDesc, creditHours, catalogID, majorID, minorID);
 		this.prereqList = new Prereqs(courseID);
 		this.isEmpty = false;
+                taken = false;
 	}
 
 	// Fields population method for constructor method
@@ -57,8 +60,10 @@ public class Course {
 		this.majorID = majorID;
 		this.minorID = minorID;
 	}
-	
-	
+	//this method is used in NewProfile
+	public void setTaken(boolean bool){
+            taken = bool;
+        }
 	// NOTE: WE DO NOT NEED SETTER METHODS FOR THE COURSE CLASS
 	// ANY CHANGES TO THE CLASS SHOULD BE DONE IN DATABASE
 	/**
@@ -144,6 +149,10 @@ public class Course {
 	public boolean isEmpty() {
 		return this.isEmpty;
 	}
+        //used for NewProfile
+        public boolean isTaken(){
+            return taken;
+        }
 
 	/**
 	 * Override toString method for testing purposes
