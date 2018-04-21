@@ -1,3 +1,15 @@
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,11 +22,22 @@
  */
 public class NewSemester extends javax.swing.JFrame {
 
+    private Profile profile;
+    private Plan plan;
+    private final Courses coursesClass = new Courses();
+
     /**
      * Creates new form NewSemester
      */
     public NewSemester() {
         initComponents();
+    }
+
+    public NewSemester(Profile profile, Plan plan) {
+        initComponents();
+        this.profile = profile;
+        this.plan = plan;
+        initCourseList();
     }
 
     /**
@@ -132,11 +155,46 @@ public class NewSemester extends javax.swing.JFrame {
     }//GEN-LAST:event_semesterNametxtActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // adds the new semester into the database
+        if (this.semesterNametxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please give this semester a name", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ConnectDB connectdb = new ConnectDB();
+            Semester sm;
+            try {
+                String semesterName = this.semesterNametxt.getText();
+                Statement statement = connectdb.theConnection.createStatement();
+                String query = "INSERT INTO collegespdb.tblsemester(semesterName,semesterDesc,creditMin,creditMax)VALUES";
+                query = query.concat("(\"").concat(semesterName).concat("\", \"").concat(semesterName).concat("\",")
+                        .concat("0,18);");
+                statement.executeUpdate(query);
+                query = "SELECT LAST_INSERT_ID() as semesterID";
+                ResultSet ResultSet = statement.executeQuery(query);
+                int id = 9999;
+                while (ResultSet.next()) {
+                    id = ResultSet.getInt("semesterID");
+                }
+                sm = new Semester(id, semesterName, semesterName, 0, 18,new ArrayList<>());
+                System.out.println(semesterName + " was added to database");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex.getLocalizedMessage());
+            } finally {
+                connectdb.disconectDB();
+            }
+            TableModel model = this.jTable1.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                if ((boolean) model.getValueAt(i, 2)) {
+                    Course acourse = coursesClass.getCourseByName((String) model.getValueAt(i, 0));
+                    plan.addCourseToSemester(acourse, sm);
+                }
+            }
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // closes the window
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -183,4 +241,24 @@ public class NewSemester extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField semesterNametxt;
     // End of variables declaration//GEN-END:variables
+
+    private void initCourseList() {
+        List<Course> courses = coursesClass.getCoursesList();
+        this.jTable1.setModel(new DefaultTableModel(new String[]{"ID", "Name", "Choose"}, 0) {
+            @Override
+            public java.lang.Class<?> getColumnClass(int index) {
+                return getValueAt(0, index).getClass();
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return col == 2;
+            }
+        });
+        //Courses c = new Courses();
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+        courses.forEach((classs) -> {
+            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), false});
+        });
+    }
 }

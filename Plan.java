@@ -221,17 +221,18 @@ public class Plan {
 	 */
 	public boolean addCourseToSemester(Course courseToBeAdded, Semester targetSemester) {
 		boolean successfulAdd = false; // if course was added successfully
-		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
+		//int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
 
 		// If the target semester is not locked and adding the course will not surpass
 		// maxCredits
-		if (targetSemester.isLocked() == false) {
-			System.out.println("CANNOT ADD COURSE: The semester is locked. To unlock, check semester preferences.");
-		}
-		else if (creditsAfterAdding <= targetSemester.getCreditMax()) {
-			System.out.println(
-					"CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
-		} else {
+//		if (targetSemester.isLocked() == false) {
+//			System.out.println("CANNOT ADD COURSE: The semester is locked. To unlock, check semester preferences.");
+//		}
+//		if (creditsAfterAdding <= targetSemester.getCreditMax()) {
+//			System.out.println(
+//					"CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
+//		} else 
+                {
 			// Try to get the creditTakenID of the courseToBeAdded
 			int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
 			// If the courseToBeAdded is already within list of planCredits
