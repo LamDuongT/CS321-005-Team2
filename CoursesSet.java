@@ -56,6 +56,7 @@ public class CoursesSet implements Comparable<CoursesSet>{
 		}
 		return false;
 	}
+	//schedules a course
 	public void scheduleCourse(int ID) {
 		Course Temp=null;
 		for(Course a: coursesChosen) {
