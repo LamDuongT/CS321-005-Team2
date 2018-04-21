@@ -222,6 +222,16 @@ public class Plan {
 	public boolean addCourseToSemester(Course courseToBeAdded, Semester targetSemester) {
 		boolean successfulAdd = false; // if course was added successfully
 		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
+		
+		// Check if prerequisites have already been taken
+		List<Prereq> p = courseToBeAdded.getPrereqList().getPrereqList();
+		for (int i = 0; i < p.size(); i++) {
+			if (planCredits.contains(p.get(i).getCourseID())){
+				System.out.println("ERROR: Cannot add Course:" + courseToBeAdded.getCourseID()
+				+ " to Semester:" + targetSemester.getSemesterID() + "\nThe prerequisites are of"
+				+ "this class are not met in previous semesters");
+			}
+		}
 
 		// If the target semester is not locked and adding the course will not surpass
 		// maxCredits
