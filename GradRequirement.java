@@ -19,6 +19,7 @@ public class GradRequirement {
 	
 	//The ids of different major/minor, 0 if no major selected
 	public GradRequirement(int major1, int major2, int minor, Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel ) {
+		//
 		this.major1= major1;
 		this.major2=0;
 		this.minor=0;
@@ -42,6 +43,46 @@ public class GradRequirement {
 			addCourse(a.getCourseID());
 		}
 	}
+	//
+	public float checkCompletion(int reqSel) {
+		int coursesNeeded=0;
+		int coursesFufilled=0;
+		if(reqSel==1) {
+			for(CoursesSet a: major1Req) {
+				coursesNeeded+=a.getAmountOfChoices();
+				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
+					coursesFufilled+=a.getAmountOfChosen();
+				}else {
+					coursesFufilled+=a.getAmountOfChoices();
+				}
+					
+				
+			}
+		}
+		if(reqSel==2) {
+			for(CoursesSet a: major2Req) {
+				coursesNeeded+=a.getAmountOfChoices();
+				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
+					coursesFufilled+=a.getAmountOfChosen();
+				}else {
+					coursesFufilled+=a.getAmountOfChoices();
+				}
+					
+				
+			}
+		}
+		if(reqSel==3) {
+			for(CoursesSet a: minorReq) {
+				coursesNeeded+=a.getAmountOfChoices();
+				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
+					coursesFufilled+=a.getAmountOfChosen();
+				}else {
+					coursesFufilled+=a.getAmountOfChoices();
+				}				
+			}
+		}
+		return ((float)coursesFufilled)/coursesNeeded;
+	}
 	public void addCourse(int courseID) {
 		for(CoursesSet a:major1Req) {
 			if(a.checkReq(courseID)) {
@@ -52,7 +93,9 @@ public class GradRequirement {
 		}
 		
 		int difference=999;
+		//iterator
 		int i=0;
+		//captures a specific i in ze loops
 		int s=0;
 		for(CoursesSet a: tempHolder) {
 			if(Math.abs(a.getAmountOfChoices()-a.getAmountOfChosen())<difference) {
@@ -240,7 +283,7 @@ public class GradRequirement {
 			throw new RuntimeException("Error: primary major information removed.");
 		}
 	}
-	private void SortList(int num) {
+	public void SortList(int num) {
 		if(num==1){
 			Collections.sort(major1Req);
 		}else if(num==2) {
@@ -248,6 +291,11 @@ public class GradRequirement {
 		}else if(num==3) {
 			Collections.sort(minorReq);
 		}
+	}
+	public void SortLists() {
+		Collections.sort(major1Req);
+		Collections.sort(major2Req);
+		Collections.sort(minorReq);
 	}
 	
 }
