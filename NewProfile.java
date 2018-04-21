@@ -121,6 +121,11 @@ public class NewProfile extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -467,6 +472,14 @@ public class NewProfile extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchtxtKeyPressed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // saves the courses tha has been checked as taken
+        TableModel model = jTable1.getModel();
+        Course course = courses.getCourseByName((String) model.getValueAt(jTable1.getSelectedRow(), 0));
+        course.setTaken((boolean) model.getValueAt(jTable1.getSelectedRow(), 2));
+        courses.getCoursesList().set(courses.getCoursesList().indexOf(course), course);
+    }//GEN-LAST:event_jTable1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -516,10 +529,9 @@ public class NewProfile extends javax.swing.JFrame {
         //Courses c = new Courses();
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         courses.getCoursesList().forEach((classs) -> {
-            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), false});
+            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), classs.isTaken()});
         });
     }
-
     private int insertProfileToDataBase() {
         ConnectDB connectdb = new ConnectDB();
         int ret = 9999;
