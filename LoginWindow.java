@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,12 +13,12 @@ import javax.swing.JPanel;
  *
  * @author moo7md
  */
-public class Login_1 extends javax.swing.JFrame {
+public class LoginWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login_1() {
+    public LoginWindow() {
         initComponents();
         //gmu icon
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/GMUlogo.png"));
@@ -183,14 +182,23 @@ public class Login_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Login login = new Login(this.usernamef.getText(),new String(this.passwordf.getPassword()));
-        try{
-            login.doLogin();
-            createMainWindow(login);
-        }catch(IllegalStateException e){
-            System.out.println("\n\n\n\n"+e.getLocalizedMessage()+"\n\n\n\n");
+        if (usernamef.getText().isEmpty() || new String(passwordf.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
-            JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
+        } else {
+            Login login = new Login(this.usernamef.getText(), new String(this.passwordf.getPassword()));
+            try {
+                login.doLogin();
+                if(login.isLoggedIn())createMainWindow(login);
+                else{
+                    JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("\n\n\n\n" + e.getLocalizedMessage() + "\n\n\n\n");
+                JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -231,22 +239,19 @@ public class Login_1 extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException 
+                | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login_1().setVisible(true);
+                new LoginWindow().setVisible(true);
             }
         });
     }
