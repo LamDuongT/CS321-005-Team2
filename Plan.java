@@ -2,6 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 /**
  * @author Lam Duong
- * @author Mohammed Alsharf
+ * @author Mohammed Alsharaf
  */
 public class Plan {
 	private final int PLAN_ID;
@@ -201,6 +202,68 @@ public class Plan {
 		}
 		return planCreditsTaken;
 	}
+	
+	/**
+	 * This method will check for a course within a semester and see if it
+	 * would belong in this semester by checking its prerequisites.
+	 * @author Lam Duong
+	 * @param courseToBeAdded
+	 * @param targetSemester
+	 * @return requirementsMet
+	 */
+	public boolean checkPrerequisites(Course courseToBeAdded, Semester targetSemester) {
+		// Check for if the prerequisite requirements have been met in previous semesters
+		boolean requirementsMet = false; // if the requirements are met
+		List<Prereq> prerequisites = courseToBeAdded.getPrereqList().getPrereqList();
+		int amountOfPrerequisitesMet = 0;
+		if (prerequisites.size() != 0) {
+			List<Integer> coursesFulfilled= new LinkedList<Integer>();
+			for (int i = 0; i < planSemesters.size(); i++) {
+				for (int j = 0; j < prerequisites.size(); j++) {
+					if (amountOfPrerequisitesMet < prerequisites.size()) {
+						if (planSemesters.get(i).contains(courseToBeAdded.getCourseID())){
+							amountOfPrerequisitesMet++;
+							coursesFulfilled.add(courseToBeAdded.getCourseID());
+						}
+					} else {
+						requirementsMet = true;
+						break;
+					}
+				}
+				if (requirementsMet == true) {
+					break;
+				}
+			}
+			// Now check prerequisite requirements from user's past
+			if (requirementsMet == false) {
+				for (int i = 0; i < planCredits.getCreditsTakenList().size(); i++) {
+					for (int j = 0; j < prerequisites.size(); j++) {
+						CreditTaken course = planCredits.getCreditsTakenList().get(i);
+						if (course.getCourseID() == prerequisites.get(j).getCourseID()) {
+							amountOfPrerequisitesMet++;
+							coursesFulfilled.add(courseToBeAdded.getCourseID());
+							requirementsMet = true;
+							break;
+						}
+					}
+				}
+			}
+			if (requirementsMet == false) {
+				String s = "The course:" + courseToBeAdded.getCourseID() + " has not met its prerequisite reuirements"
+						+ " to take the class in Semester:" + targetSemester.getSemesterID()
+						+ "\nThe courses still need to be met are:\n";
+				for (int k = 0; k < coursesFulfilled.size(); k++) {
+					if (k < coursesFulfilled.size()-1) {
+						s += coursesFulfilled.get(k) + ", ";
+					} else {
+						s += coursesFulfilled.get(k) + ".";
+					}
+				}
+				System.out.println(s);
+			}
+		}
+		return requirementsMet;
+	}
 
 	/**
 	 * MUTATOR METHODS:
@@ -221,28 +284,19 @@ public class Plan {
 	 */
 	public boolean addCourseToSemester(Course courseToBeAdded, Semester targetSemester) {
 		boolean successfulAdd = false; // if course was added successfully
-		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
 		
-		// Check if prerequisites have already been taken
-		List<Prereq> p = courseToBeAdded.getPrereqList().getPrereqList();
-		for (int i = 0; i < p.size(); i++) {
-			if (planCredits.contains(p.get(i).getCourseID())){
-				System.out.println("ERROR: Cannot add Course:" + courseToBeAdded.getCourseID()
-				+ " to Semester:" + targetSemester.getSemesterID() + "\nThe prerequisites are of"
-				+ "this class are not met in previous semesters");
-			}
+		// STAGE 1: CHECK FOR REQUIREMENTS:
+		if (!this.checkPrerequisites(courseToBeAdded, targetSemester)) {
+			return false;
 		}
-
-		// If the target semester is not locked and adding the course will not surpass
-		// maxCredits
-//		if (targetSemester.isLocked() == false) {
-//			System.out.println("CANNOT ADD COURSE: The semester is locked. To unlock, check semester preferences.");
-//		}
+		
+		// STAGE 2: ADD COURSE
+		
+		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
+		// If adding the course will not surpass maxCredits
 		if (creditsAfterAdding <= targetSemester.getCreditMax()) {
-			System.out.println(
-					"CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
-		} else 
-                {
+			System.out.println("CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
+		} else {
 			// Try to get the creditTakenID of the courseToBeAdded
 			int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
 			// If the courseToBeAdded is already within list of planCredits
@@ -255,7 +309,7 @@ public class Plan {
 					if (oldSemester.removeCourse(courseToBeAdded) == true) {
 						successfulAdd = targetSemester.addCourse(courseToBeAdded);
 						if (successfulAdd == false) {
-							// FROM HERE: Revert change since something went wrong at the final step
+							// Revert change since something went wrong at the final step
 							oldSemester.addCourse(courseToBeAdded);	
 						}
 					}
@@ -265,21 +319,19 @@ public class Plan {
 				if (planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester) == true) {
 					// Since it's a new Course, check if it meets requirements
 					requirements.addCourse(courseToBeAdded.getCourseID());
-
 					// Add the courseToBeTaken to the targetSemester object in Java
 					successfulAdd = targetSemester.addCourse(courseToBeAdded);
-					}
 				}
 			}
-
-		return successfulAdd;
 		}
+		return successfulAdd;
+	}
 		
 
 	public boolean removeCourseFromSemester(Course courseToBeRemoved, Semester targetSemester) {
 		// if course was removed successfully
-		boolean removeSuccessful = false;
-		// Mo or lam handle here with checks to see if the course is a valid remove
+		boolean successfulRemoval = false;
+		// Handle here with checks to see if the course is a valid remove
 		// target
 		// remove class to planCOursesTaken and the correct semester
 
@@ -287,10 +339,10 @@ public class Plan {
 		 * code
 		 */
 
-		if (removeSuccessful == true) {
+		if (successfulRemoval == true) {
 			requirements.removeCourse(courseToBeRemoved.getCourseID());
 		}
-		return removeSuccessful;
+		return successfulRemoval;
 	}
 
 	/**

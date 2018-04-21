@@ -224,10 +224,10 @@ public class Semester {
 		return this.isEmpty;
 	}
 
-	public boolean contains(Course course) {
+	public boolean contains(int courseID) {
 		boolean hasCourse = false;
 		for (int i = 0; i < courses.size(); i++) {
-			if (course.getCourseID() == courses.get(i).getCourseID()) {
+			if (courseID == courses.get(i).getCourseID()) {
 				hasCourse = true;
 			}
 		}
