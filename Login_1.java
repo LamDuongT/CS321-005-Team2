@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -183,14 +182,23 @@ public class Login_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Login login = new Login(this.usernamef.getText(),new String(this.passwordf.getPassword()));
-        try{
-            login.doLogin();
-            createMainWindow(login);
-        }catch(IllegalStateException e){
-            System.out.println("\n\n\n\n"+e.getLocalizedMessage()+"\n\n\n\n");
+        if (usernamef.getText().isEmpty() || new String(passwordf.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
-            JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
+        } else {
+            Login login = new Login(this.usernamef.getText(), new String(this.passwordf.getPassword()));
+            try {
+                login.doLogin();
+                if(login.isLoggedIn())createMainWindow(login);
+                else{
+                    JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("\n\n\n\n" + e.getLocalizedMessage() + "\n\n\n\n");
+                JOptionPane.showMessageDialog(this, "Login error: check username or password", "Login Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
