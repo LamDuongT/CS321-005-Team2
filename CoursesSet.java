@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.List;
 /**
  * @author Lam Duong 
- * @author Mohammed Alsharf
+ * @author Robert Tagliaferri
  * FOREWARNING: ChooseCourse methods are tailored for Plan
  * class. Using ChooseCourse class OUTSIDE of Plan class is dangerous.
  * ALSO, do not feed in EMPTY coursesList into arguments of this class.

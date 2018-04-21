@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.Comparator;
 import java.util.*;
 
+//@author Robert Tagliaferri
 
 public class GradRequirement {
 	private ArrayList<CoursesSet> major1Req;
