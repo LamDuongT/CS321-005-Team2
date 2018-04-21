@@ -454,7 +454,6 @@ public class NewProfile extends javax.swing.JFrame {
             //target string
             String target = searchtxt.getText()+((Character.isLetter(evt.getKeyChar())||
                     Character.isDigit(evt.getKeyChar()))?evt.getKeyChar():"");
-            System.out.println("target = "+target);
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             for (int i = 0; i < model.getRowCount(); i++) {
                 String valueAtCol0 = (String) model.getValueAt(i, 0);
