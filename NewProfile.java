@@ -147,6 +147,11 @@ public class NewProfile extends javax.swing.JFrame {
                 searchtxtActionPerformed(evt);
             }
         });
+        searchtxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchtxtKeyPressed(evt);
+            }
+        });
 
         jButton3.setText("Search");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -439,6 +444,29 @@ public class NewProfile extends javax.swing.JFrame {
         searchtxt.setText("");
         this.searchtxtActionPerformed(evt);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void searchtxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchtxtKeyPressed
+        // search as soon the user write something
+        System.out.println(evt.getKeyChar());
+        if (jComboBox1.getSelectedIndex() > 0) {
+            //creates the list of courses or reset it
+            setCoursesList();
+            //target string
+            String target = searchtxt.getText()+((Character.isLetter(evt.getKeyChar())||
+                    Character.isDigit(evt.getKeyChar()))?evt.getKeyChar():"");
+            System.out.println("target = "+target);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String valueAtCol0 = (String) model.getValueAt(i, 0);
+                String valueAtCol1 = (String) model.getValueAt(i, 1);
+                if (!(valueAtCol0.contains(target) || valueAtCol1.contains(target))) {
+                    model.removeRow(i);
+                    i = -1;
+                }
+            }
+            model.fireTableDataChanged();
+        }
+    }//GEN-LAST:event_searchtxtKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
