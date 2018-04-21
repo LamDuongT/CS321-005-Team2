@@ -24,6 +24,10 @@ public class Semesters {
     public Semesters() {
         getSemesterData();
     }
+    public Semesters(int id){
+        profileID = id;
+        getSemesterData();
+    }
 
     /**
      * Get Semester by ID from the list of Semesters

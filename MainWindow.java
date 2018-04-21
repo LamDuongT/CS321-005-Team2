@@ -328,7 +328,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // adds a new semester
-        new NewSemester().setVisible(true);
+        Plan plan = (Plan) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1);
+        new NewSemester(profile,plan).setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

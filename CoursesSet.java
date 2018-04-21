@@ -225,8 +225,8 @@ public class CoursesSet implements Comparable<CoursesSet>{
 		String[] parts = query.split("\\|");
 
 		// We start at parts[1] because parts[0] is just "%"
-		this.amountOfChoices = Integer.parseInt(parts[0]);
-		this.amountOfCourses = Integer.parseInt(parts[1]);
+		this.amountOfChoices = Integer.parseInt(parts[1]);
+		this.amountOfCourses = Integer.parseInt(parts[2]);
 		this.coursesToBeChosen = new LinkedList<Course>();
 
 		String[] classes = parts[3].split("\\,");
