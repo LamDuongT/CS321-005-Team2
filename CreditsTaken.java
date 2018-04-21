@@ -40,10 +40,10 @@ public class CreditsTaken {
 	 * @param course
 	 * @return
 	 */
-	public boolean contains(Course course) {
+	public boolean contains(int courseID) {
 		boolean hasCourse = false;
 		for (int i = 0; i < creditsTakenList.size(); i++) {
-			if (course.getCourseID() == creditsTakenList.get(i).getCourseID()) {
+			if (courseID == creditsTakenList.get(i).getCourseID()) {
 				hasCourse = true;
 			}
 		}

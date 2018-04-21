@@ -15,11 +15,13 @@ import java.util.List;
 public class Prereqs {
 	private List<Prereq> prereqList = new LinkedList<Prereq>();
 	private Prereq aPrereq;
+	private int amountOfPrerequisites;
 
 	/**
 	 * Initialize the list of prereq course for the courseID
 	 */
 	public Prereqs(int courseID) {
+		this.amountOfPrerequisites = 0;
 		getPrereqData(courseID);
 	}
 	
@@ -86,6 +88,7 @@ public class Prereqs {
 
 				aPrereq = new Prereq(_prereqID, _courseID, _prereqCourseID, _courseName, _prereqCourseName);
 				this.prereqList.add(aPrereq);
+				amountOfPrerequisites++;
 			}
 			statement.close();
 
