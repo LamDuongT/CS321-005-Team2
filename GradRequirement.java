@@ -43,17 +43,23 @@ public class GradRequirement {
 			addCourse(a.getCourseID());
 		}
 	}
-	//
+	//returns the %completion of a major/minor
 	public float checkCompletion(int reqSel) {
+		//number needed for a major/minor
 		int coursesNeeded=0;
-		int coursesFufilled=0;
+		//number fulfilled for a major/minor
+		int coursesFulfilled=0;
+		//same method done 3 times based on the indexed variable
 		if(reqSel==1) {
+			//goes through each CoursesSet and adds the reamining courses and needed courses int
 			for(CoursesSet a: major1Req) {
 				coursesNeeded+=a.getAmountOfChoices();
+				//make sure you are not counting a requirement that has fufilled its requirements
 				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
-					coursesFufilled+=a.getAmountOfChosen();
+					coursesFulfilled+=a.getAmountOfChosen();
 				}else {
-					coursesFufilled+=a.getAmountOfChoices();
+					//this prevents weird stuff like getting 120% completion
+					coursesFulfilled+=a.getAmountOfChoices();
 				}
 					
 				
@@ -63,9 +69,9 @@ public class GradRequirement {
 			for(CoursesSet a: major2Req) {
 				coursesNeeded+=a.getAmountOfChoices();
 				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
-					coursesFufilled+=a.getAmountOfChosen();
+					coursesFulfilled+=a.getAmountOfChosen();
 				}else {
-					coursesFufilled+=a.getAmountOfChoices();
+					coursesFulfilled+=a.getAmountOfChoices();
 				}
 					
 				
@@ -75,18 +81,19 @@ public class GradRequirement {
 			for(CoursesSet a: minorReq) {
 				coursesNeeded+=a.getAmountOfChoices();
 				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
-					coursesFufilled+=a.getAmountOfChosen();
+					coursesFulfilled+=a.getAmountOfChosen();
 				}else {
-					coursesFufilled+=a.getAmountOfChoices();
+					coursesFulfilled+=a.getAmountOfChoices();
 				}				
 			}
 		}
-		return ((float)coursesFufilled)/coursesNeeded;
+		return ((float)coursesFulfilled)/coursesNeeded;
 	}
+	
 	public void addCourse(int courseID) {
 		for(CoursesSet a:major1Req) {
 			if(a.checkReq(courseID)) {
-				if(a.checkScheduled(courseID)) {
+				if(!a.checkScheduled(courseID)) {
 					tempHolder.add(a);
 				}
 			}
@@ -111,7 +118,7 @@ public class GradRequirement {
 		if(major2!=0) {
 			for(CoursesSet a:major2Req) {
 				if(a.checkReq(courseID)) {
-					if(a.checkScheduled(courseID)) {
+					if(!a.checkScheduled(courseID)) {
 						tempHolder.add(a);
 					}
 				}
@@ -132,7 +139,7 @@ public class GradRequirement {
 		if(minor!=0) {
 			for(CoursesSet a:minorReq) {
 				if(a.checkReq(courseID)) {
-					if(a.checkScheduled(courseID)) {
+					if(!a.checkScheduled(courseID)) {
 						tempHolder.add(a);
 					}
 				}

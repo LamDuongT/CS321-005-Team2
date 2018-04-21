@@ -56,13 +56,6 @@ public class CoursesSet implements Comparable<CoursesSet>{
 		}
 		return false;
 	}
-	public boolean checkScheduled(int ID) {
-		for(Course a: coursesChosen) {
-			if(a.getCourseID()==ID)
-				return true;
-		}
-		return false;
-	}
 	public void scheduleCourse(int ID) {
 		Course Temp=null;
 		for(Course a: coursesChosen) {
@@ -97,7 +90,16 @@ public class CoursesSet implements Comparable<CoursesSet>{
 	public String getDescription() {
 		return this.coursesSetDescription;
 	}
-
+	//checks if a course is chosen
+	public boolean checkScheduled(int courseID) {
+		for(Course a:coursesChosen) {
+			if(a.getCourseID()==courseID) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getAmountOfChoices() {
 		return this.amountOfChoices;
 	}
