@@ -25,7 +25,6 @@ public class Course {
 	private String minorID;
 	private Prereqs prereqList;
 	private boolean isEmpty;
-		
 
 	/**
 	 * Initialize default values for all attributes
