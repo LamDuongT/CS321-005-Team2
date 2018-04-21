@@ -96,6 +96,11 @@ public class Semester {
 		return successfulAdd;
 	}
 
+	/**
+	 * 
+	 * @param course
+	 * @return
+	 */
 	public boolean removeCourse(Course course) {
 		boolean successfulRemoval = false;
 		boolean notFound = true;
@@ -107,6 +112,7 @@ public class Semester {
 					successfulRemoval = true;
 					notFound = false;
 				} catch (IllegalStateException e) {
+					successfulRemoval = false;
 					System.out.println("There was a problem regarding updating to the database. Try again.");
 				}
 			}
@@ -115,6 +121,7 @@ public class Semester {
 			System.out.println("Could not remove Course:" + course.getCourseID() + " from Semester:" + this.semesterID + "\n"
 					+ "This Course is not in this Semester! NOTE: Check to see if IDs match.");
 		}
+		isEmpty = courses.isEmpty();
 		return successfulRemoval;
 	}
 

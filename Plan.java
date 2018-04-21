@@ -327,18 +327,24 @@ public class Plan {
 		return successfulAdd;
 	}
 		
-
+	/**
+	 * 
+	 * @param courseToBeRemoved
+	 * @param targetSemester
+	 * @return successfulRemoval
+	 */
 	public boolean removeCourseFromSemester(Course courseToBeRemoved, Semester targetSemester) {
 		// if course was removed successfully
+		
 		boolean successfulRemoval = false;
 		// Handle here with checks to see if the course is a valid remove
 		// target
-		// remove class to planCOursesTaken and the correct semester
-
-		/*
-		 * code
-		 */
-
+		// remove class to planCOursesTaken and the correct semesters
+		
+		// Check if 
+		if (targetSemester.removeCourse(courseToBeRemoved) == true) {
+			
+		}
 		if (successfulRemoval == true) {
 			requirements.removeCourse(courseToBeRemoved.getCourseID());
 		}
@@ -365,9 +371,7 @@ public class Plan {
 				// minors array
 				if ((!m.getMajorName().equals(minors[0].getMinorName()))
 						&& (!m.getMajorName().equals(minors[1].getMinorName()))) {
-
 					majors[majorPosition] = m;
-
 				} else {
 					throw new RuntimeException(
 							"ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
@@ -431,15 +435,6 @@ public class Plan {
 		new UpdateData().updatePlan(this, 'u');
 	}
 
-	/**
-	 * @author Mohammed Alsharaf
-	 * @param sm
-	 * @param action
-	 */
-	public void setSemester(Semester sm, char action) {
-		new UpdateData().updateSemester(sm, action);
-	}
-
 	public void setCatalog(int catalogID) {
 		this.catalogID = catalogID;
 	}
@@ -452,14 +447,9 @@ public class Plan {
 		// TODO: GENERATE SORTING ALGORITHM
 	}
 
-	/**
-	 * @author Mohammed Alsharaf
-	 * @return returns a list of semesters linked with the given plan
-	 */
-
 	public String toString() {
-		return new String();
-		// TODO: IMPLEMENT TOSTRING METHOD
+		String s = "";
+		return s;
 	}
 
 }
