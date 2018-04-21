@@ -1,5 +1,5 @@
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -18,12 +18,14 @@ public class MohammedAlsharafTest {
         This file is created to test some code in UpdateData().updateSemester(...)
          */
         //Fake Plan...
-        Plan plan = new Plan(1, 1, 1, "Plan1", 1, -1, -1, -1);
+//        Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
+//			int minor2ID, CreditsTaken profileCoursesTaken, Semesters listOfSemesters)
+        Plan plan = new Plan(9998,9998,9998,"PlanTest", 1, 9999, 9999, 9999,new CreditsTaken(),new Semesters());
         //Fake Semesters
-        Semester sm = new Semester(1, "Fall 2018", "Bla Bla", 9, 18);
+        Semester sm = new Semester(1, "Fall 2018", "Bla Bla", 9, 18,new ArrayList<>());
         //This line of code tests the updateSemester(...)
         try {
-            new UpdateData().updateSemester(plan.getPlanID(), sm, 'i');
+            new UpdateData().updateSemester(sm, 'i');
             System.out.println("Test 1: succeeded");
         } catch (RuntimeException e) {
             System.out.println("[Error] something wrong happned");
