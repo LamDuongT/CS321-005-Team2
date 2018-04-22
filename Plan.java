@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * @author Lam Duong
  * @author Mohammed Alsharaf
+ * @author Robert Tagliaferri
  */
 public class Plan {
 	private final int PLAN_ID;

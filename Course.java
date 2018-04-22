@@ -8,9 +8,10 @@ import java.util.List;
 
 /**
  *
- * @author Mohammed Alsharf
- * @author Huan Nguyen
- * @author Lam Duong
+ * @author Mohammed Alsharf - 10%
+ * @author Huan Nguyen - 40%
+ * @author Lam Duong - 10%
+ * @author Robert Tagliaferri -40%
  */
 public class Course {
 	private final int MINIMAL_CREDIT_HOURS = 0;
@@ -66,7 +67,7 @@ public class Course {
         }
 	// NOTE: WE DO NOT NEED SETTER METHODS FOR THE COURSE CLASS
 	// ANY CHANGES TO THE CLASS SHOULD BE DONE IN DATABASE
-	/**
+
 	// setter for courseID
 	public void setCourseID(int courseID) {
 		this.courseID = courseID;
@@ -104,7 +105,6 @@ public class Course {
 	public void setMinorID(String minorID) {
 		this.minorID = minorID;
 	}
-	*/
 
 	// getter for courseID
 	public int getCourseID() {
@@ -149,10 +149,10 @@ public class Course {
 	public boolean isEmpty() {
 		return this.isEmpty;
 	}
-        //used for NewProfile
-        public boolean isTaken(){
-            return taken;
-        }
+    //used for NewProfile
+    public boolean isTaken(){
+        return taken;
+    }
 
 	/**
 	 * Override toString method for testing purposes

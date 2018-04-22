@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * @author Huan Nguyen
  * @author Lam Duong
+ * @author Robert Tagliaferri
+ * @author Mohammed Alsharaf
  */
 public class Profile {
 	private int studentID;
