@@ -3,6 +3,7 @@
 -- Host: 127.0.0.1    Database: collegespdb
 -- ------------------------------------------------------
 -- Server version	5.7.21-log
+truncate tblsemester;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +22,7 @@
 
 LOCK TABLES `tblsemester` WRITE;
 /*!40000 ALTER TABLE `tblsemester` DISABLE KEYS */;
-INSERT INTO `tblsemester` VALUES (1,'Summer 2016','Summer 2016',0,15),(2,'Fall 2016','Fall 2016',0,18),(3,'Spring 2017','Spring 2017',0,18),(4,'Summer 2017','Summer 2017',0,15),(5,'Fall 2017','Fall 2017',0,18),(6,'Spring 2018','Spring 2018',0,18),(7,'Summer 2018','Summer 2018',0,15),(8,'Fall 2018','Fall 2018',0,18);
+INSERT INTO `tblsemester` VALUES (1,'Summer 2016','Summer 2016',0,15),(2,'Fall 2016','Fall 2016',0,18),(3,'Spring 2017','Spring 2017',0,18),(4,'Summer 2017','Summer 2017',0,15),(5,'Fall 2017','Fall 2017',0,18),(6,'Spring 2018','Spring 2018',0,18),(7,'Summer 2018','Summer 2018',0,15),(8,'Fall 2018','Fall 2018',0,18),(9999,'none','none',0,0);
 /*!40000 ALTER TABLE `tblsemester` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +35,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-08 21:40:22
+-- Dump completed on 2018-04-21 22:05:06

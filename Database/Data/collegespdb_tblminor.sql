@@ -3,6 +3,7 @@
 -- Host: 127.0.0.1    Database: collegespdb
 -- ------------------------------------------------------
 -- Server version	5.7.21-log
+truncate tblminor;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +22,7 @@
 
 LOCK TABLES `tblminor` WRITE;
 /*!40000 ALTER TABLE `tblminor` DISABLE KEYS */;
-INSERT INTO `tblminor` VALUES (1,'CS','Computer Science',3),(2,'IT','Information Technology',3);
+INSERT INTO `tblminor` VALUES (1,'CS','Computer Science',3),(2,'IT','Information Technology',3),(9999,'none','none',9999);
 /*!40000 ALTER TABLE `tblminor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +35,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-08 21:40:20
+-- Dump completed on 2018-04-21 22:05:05
