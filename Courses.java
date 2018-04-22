@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Huan Nguyen
- * @author Lam Duong
+ * @author Huan Nguyen - 60%
+ * @author Lam Duong - 40%
  */
 public class Courses {
 	// the list of Course objects
