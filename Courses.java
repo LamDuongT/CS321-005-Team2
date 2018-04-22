@@ -150,7 +150,7 @@ public class Courses {
 			// if the catalogID is different from 1, meaning that we need to fetch data for courses by the catalogID
 			// also, if majorOrMinorID != -1, meaning that we need to constrain the major or minor as well
 			if (majorID != -1 && minorID != -1) {				
-				whereCondition += " AND majorID like '%" + majorID + "%'  AND minorID like '%" + majorID + "%'";				
+				whereCondition += " AND majorID like '%" + majorID + "%' OR minorID like '%" + minorID + "%'";				
 			}
 			else if (majorID != -1 && minorID == -1) {
 				whereCondition += " AND majorID like '%" + majorID + "%'";
