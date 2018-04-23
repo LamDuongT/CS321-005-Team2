@@ -217,12 +217,13 @@ public class Plan {
 		boolean requirementsMet = false; // if the requirements are met
 		List<Prereq> prerequisites = courseToBeAdded.getPrereqList().getPrereqList();
 		int amountOfPrerequisitesMet = 0;
+		
 		if (prerequisites.size() != 0) {
-			List<Integer> coursesFulfilled= new LinkedList<Integer>();
-			for (int i = 0; i < planSemesters.size(); i++) {
+			List<Integer> coursesFulfilled= new ArrayList<Integer>();
+			for (Semester aSemester : planSemesters) {
 				for (int j = 0; j < prerequisites.size(); j++) {
 					if (amountOfPrerequisitesMet < prerequisites.size()) {
-						if (planSemesters.get(i).contains(courseToBeAdded.getCourseID())){
+						if (aSemester.contains(courseToBeAdded.getCourseID())){
 							amountOfPrerequisitesMet++;
 							coursesFulfilled.add(courseToBeAdded.getCourseID());
 						}
@@ -231,16 +232,15 @@ public class Plan {
 						break;
 					}
 				}
-				if (requirementsMet == true) {
+				if (requirementsMet) {
 					break;
 				}
 			}
 			// Now check prerequisite requirements from user's past
-			if (requirementsMet == false) {
-				for (int i = 0; i < planCredits.getCreditsTakenList().size(); i++) {
-					for (int j = 0; j < prerequisites.size(); j++) {
-						CreditTaken course = planCredits.getCreditsTakenList().get(i);
-						if (course.getCourseID() == prerequisites.get(j).getCourseID()) {
+			if (!requirementsMet) {
+				for (CreditTaken aCreditTaken : planCredits.getCreditsTakenList()) {
+					for (Prereq aPrerequisite : prerequisites) {
+						if (aCreditTaken.getCourseID() == aPrerequisite.getCourseID()) {
 							amountOfPrerequisitesMet++;
 							coursesFulfilled.add(courseToBeAdded.getCourseID());
 							requirementsMet = true;
@@ -249,7 +249,9 @@ public class Plan {
 					}
 				}
 			}
-			if (requirementsMet == false) {
+			// After all that, and if the requirements are not met, then print a list of classes
+			// not fulfilled by the user.
+			if (!requirementsMet) {
 				String s = "The course:" + courseToBeAdded.getCourseID() + " has not met its prerequisite reuirements"
 						+ " to take the class in Semester:" + targetSemester.getSemesterID()
 						+ "\nThe courses still need to be met are:\n";
@@ -264,6 +266,26 @@ public class Plan {
 			}
 		}
 		return requirementsMet;
+	}
+	
+	/**
+	 * This method will check if the course here is already taken by the user,
+	 * whether in the past or is already in the plan.
+	 * @param course
+	 * @param semester
+	 * @return isADuplicate
+	 */
+	public boolean checkDuplicate(int courseID) {
+		boolean isADuplicate = false;
+		CreditTaken courseTaken = profileCoursesTaken.getCreditTakenByCourseID(courseID);
+		CreditTaken courseInPlan = planCredits.getCreditTakenByCourseID(courseID);
+		
+		// If CreditsTaken class could retrieve non-empty CreditTaken Objects
+		if ((courseInPlan.getCourseID() != -1) && (courseTaken.getCourseID() != -1)) {
+			isADuplicate = true;
+		}
+		return isADuplicate;
+		
 	}
 
 	/**
@@ -292,40 +314,38 @@ public class Plan {
 		}
 		
 		// STAGE 2: ADD COURSE
-		
-		int creditsAfterAdding = courseToBeAdded.getCreditHours() + targetSemester.getCurrentCredits();
-		// If adding the course will not surpass maxCredits
-		if (creditsAfterAdding <= targetSemester.getCreditMax()) {
-			System.out.println("CANNOT ADD COURSE: Adding the course would exceed the preferred maximum credit limit");
-		} else {
-			// Try to get the creditTakenID of the courseToBeAdded
-			int creditTakenID = planCredits.getCreditTakenID(courseToBeAdded);
-			// If the courseToBeAdded is already within list of planCredits
-			if (creditTakenID != 9999) {
-				// CASE: MOVING A COURSE FROM ONE SEMESTER TO ANOTHER
-				// Update CreditsTaken by updating the current plansCredit 
-				if (planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester) == true) {
-					// The rest of this if block is about UPDATING SEMESTERS
-					Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
-					if (oldSemester.removeCourse(courseToBeAdded) == true) {
-						successfulAdd = targetSemester.addCourse(courseToBeAdded);
-						if (successfulAdd == false) {
-							// Revert change since something went wrong at the final step
-							oldSemester.addCourse(courseToBeAdded);	
-						}
+		int creditTakenID = planCredits.getCreditTakenIDOfCourse(courseToBeAdded);
+		// If the courseToBeAdded is already within list of planCredits
+		// NOTE: 9999 is the creditTakenID when no creditTaken by that ID is found
+		if (creditTakenID != 9999) {
+			// CASE: MOVING A COURSE FROM ONE SEMESTER TO ANOTHER
+			// Let the user know their course to be added will be moved 
+			Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
+			System.out.println("The course: " + courseToBeAdded.getCourseID() + "already exists in semester: " + oldSemester.getSemesterID()
+								+ "\nThe program will now try to move it to target semester: " + targetSemester.getSemesterID());
+			// Update CreditsTaken by updating the current plansCredit
+			if (planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester)) {
+				// The rest of this if block is about UPDATING SEMESTERS
+				if (oldSemester.removeCourse(courseToBeAdded) == true) {
+					successfulAdd = targetSemester.addCourse(courseToBeAdded);
+					// Let use know they already have the course. It is now moved.
+					System.out.println("The course: " );
+					if (!successfulAdd) {
+						// Revert change since something went wrong at the final step
+						oldSemester.addCourse(courseToBeAdded);	
 					}
 				}
-			} else {
-				// CASE: ADDING A NEW COURSE TO A SEMESTER
-				if (planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester) == true) {
-					// Since it's a new Course, check if it meets requirements
-					requirements.addCourse(courseToBeAdded.getCourseID());
-					// Add the courseToBeTaken to the targetSemester object in Java
-					successfulAdd = targetSemester.addCourse(courseToBeAdded);
-				}
+			}
+		} else {
+			// CASE: ADDING A NEW COURSE TO A SEMESTER
+			if (planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester)) {
+				// Since it's a new Course, check if it meets requirements
+				requirements.addCourse(courseToBeAdded.getCourseID());
+				// Add the courseToBeTaken to the targetSemester object in Java
+				successfulAdd = targetSemester.addCourse(courseToBeAdded);
 			}
 		}
-		return successfulAdd;
+		return successfulAdd; 
 	}
 		
 	/**
@@ -335,24 +355,27 @@ public class Plan {
 	 * @return successfulRemoval
 	 */
 	public boolean removeCourseFromSemester(Course courseToBeRemoved, Semester targetSemester) {
-		// if course was removed successfully
-		
 		boolean successfulRemoval = false;
-		// Handle here with checks to see if the course is a valid remove
-		// target
-		// remove class to planCOursesTaken and the correct semesters
+		boolean removingRetake = this.checkDuplicate(courseToBeRemoved.getCourseID());
+		int creditTakenID = planCredits.getCreditTakenIDOfCourse(courseToBeRemoved);
 		
-		// Check if 
-		if (targetSemester.removeCourse(courseToBeRemoved) == true) {
-			
+		// Remove it from the planCredits and semester
+		if (planCredits.removeCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeRemoved, targetSemester)) {
+			if (targetSemester.removeCourse(courseToBeRemoved)) {
+				successfulRemoval = true;
+				if (removingRetake) {
+					// Only change requirement if it's a successful removal and we're not removing a retake
+					requirements.removeCourse(courseToBeRemoved.getCourseID());
+				}
+			}
 		}
-		if (successfulRemoval == true) {
-			requirements.removeCourse(courseToBeRemoved.getCourseID());
-		}
+		
 		return successfulRemoval;
 	}
 
 	/**
+	 * @author Mohammed Alsharaf
+	 * @author Lam Duong
 	 * @param majorPosition
 	 * @param majorID
 	 * @return void
@@ -374,8 +397,7 @@ public class Plan {
 						&& (!m.getMajorName().equals(minors[1].getMinorName()))) {
 					majors[majorPosition] = m;
 				} else {
-					throw new RuntimeException(
-							"ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
+					throw new RuntimeException("ERROR: Major-minor conflict: Cannot add a major that is the same name as a minor!");
 				}
 			} else {
 				throw new RuntimeException("ERROR: Major-major conflict: Cannot add the same major again!");
@@ -397,7 +419,8 @@ public class Plan {
 	}
 
 	/**
-	 * 
+	 * @author Lam Duong
+	 * @author Mohammed Alsharaf
 	 * @param minorPosition
 	 * @param minorID
 	 * @return void
@@ -406,7 +429,6 @@ public class Plan {
 		// Add and Change
 		// If not removing (minorID not being -1)
 		if (minorID >= 0) {
-
 			Minor m = this.minorsData.getMinorByID(minorID);
 
 			// If minor being added doesn't already exist within the minors array
@@ -421,8 +443,7 @@ public class Plan {
 
 				} else {
 
-					throw new RuntimeException(
-							"ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
+					throw new RuntimeException("ERROR: Minor-major conflict: Cannot add a minor that is the same name as a major!");
 				}
 			} else {
 				throw new RuntimeException("ERROR: Minor-minor conflict: Cannot add the same minor again!");

@@ -57,11 +57,11 @@ public class CreditsTaken {
 	 * @param course
 	 * @return
 	 */
-	public int getCreditTakenID(Course course) {
+	public int getCreditTakenIDOfCourse(Course course) {
 		int creditTakenID= 9999;
-		for (int i = 0; i < creditsTakenList.size(); i++) {
-			if (course.getCourseID() == creditsTakenList.get(i).getCourseID()){
-				creditTakenID = creditsTakenList.get(i).getCreditTakenID();
+		for (CreditTaken aCreditTaken : creditsTakenList) {
+			if(course.getCourseID() == aCreditTaken.getCourseID()) {
+				creditTakenID = aCreditTaken.getCreditTakenID();
 			}
 		}
 		return creditTakenID;
@@ -90,16 +90,38 @@ public class CreditsTaken {
 	 * This is to retrieve a single CreditTaken class (singular)
 	 * within the list creditsTakenList by name. Will return an empty
 	 * CreditTaken Object if not found.
+	 * O(N) runtime.
 	 * @author Lam Duong
-	 * @param creditName
+	 * @param courseID
 	 * @return aCreditTaken or new CreditTaken()
 	 */
 	public CreditTaken getCreditTakenByCourseID(int courseID) {
 		CreditTaken aCreditTaken = new CreditTaken();
-		for (int index = 0; index < this.creditsTakenList.size(); index++) {
-			aCreditTaken = this.creditsTakenList.get(index);
-			if (aCreditTaken.getCourseID() == courseID) {
+		for (CreditTaken course : creditsTakenList) {
+			if (course.getCourseID() == courseID) {
+				aCreditTaken = course;
 				break;
+			}
+		}
+		return aCreditTaken;
+	}
+	
+	/**
+	 * README: Essentially the same thing as getCreditTakenByCourseID() above
+	 * but will takes in semesterID so that it finds duplicates of the same course
+	 * not in the same semester.
+	 * @param courseID
+	 * @param semesterID
+	 * @return
+	 */
+	public CreditTaken getCreditTakenDuplicateByCourseID(int courseID, int semesterID) {
+		CreditTaken aCreditTaken = new CreditTaken();
+		for (CreditTaken course : creditsTakenList) {
+			if (course.getCourseID() == courseID) {
+				if (course.getSemesterID() != semesterID) {
+					aCreditTaken = course;
+					break;
+				}
 			}
 		}
 		return aCreditTaken;
@@ -153,6 +175,15 @@ public class CreditsTaken {
 		return successfulAdd;
 	}
 	
+	/**
+	 * Method will loop through creditsTakenList and change to that course the corresponding semester
+	 * @author Lam Duong
+	 * @param creditTakenID
+	 * @param profileID
+	 * @param course
+	 * @param semester
+	 * @return successfulUpdate
+	 */
 	public boolean updateCourseInCreditsTaken(int creditTakenID, int profileID, Course course, Semester semester) {
 		boolean successfulUpdate = false;
 		boolean nothingFound = true;
@@ -174,10 +205,40 @@ public class CreditsTaken {
 				break;
 			}
 		}
-		if (nothingFound == true) {
+		if (nothingFound) {
 			System.out.println("Could not update CreditTaken because the creditTakenID input did not match with any CreditTaken in creditsTakenList");
 		}
 		return successfulUpdate;
+	}
+	
+	/**
+	 * @author Lam Duong
+	 * @param creditTakenID
+	 * @param profileID
+	 * @param course
+	 * @param semester
+	 * @return
+	 */
+	public boolean removeCourseInCreditsTaken(int creditTakenID, int profileID, Course course, Semester semester) {
+		boolean successfulRemoval= false;
+		
+		CreditTaken courseToBeRemoved = new CreditTaken(creditTakenID, profileID, course.getCourseID(), semester.getSemesterID());
+		for (CreditTaken aCourse : creditsTakenList) {
+			if (aCourse.getCourseID() == creditTakenID) {
+				try {
+					new UpdateData().updateCreditstaken(courseToBeRemoved, 'd');
+					if (creditsTakenList.remove(aCourse)) {
+						successfulRemoval = true;
+					} else {
+						System.out.println("Couldn't remove course from creditsTakenList. Course: " + aCourse.getCourseID() + " is not found in creditsTakenList!");
+					}
+					break;
+				} catch (IllegalStateException e) {
+					System.out.println("There was a problem with removing in the database.");
+				}
+			}
+		}
+		return successfulRemoval;
 	}
 	
 	/**
@@ -211,7 +272,7 @@ public class CreditsTaken {
 
 			// Initialize an SQL statement
 			Statement statement = connectdb.theConnection.createStatement();
-			// recordSet will hold a data table as sql object
+			// recordSet will hold a data table as SQL object
 			// to see how the data table look like, copy the queryString contents and
 			// execute in mySQL Workbench
 			ResultSet recordSet = statement.executeQuery(queryString);

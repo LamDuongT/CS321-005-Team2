@@ -42,12 +42,17 @@ public class Semester {
 		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, list);
 		this.locked = false;
 	}
-
+	
 	/**
-	 * The method to set value for constructors
 	 * 
+	 * @param semesterID
+	 * @param semesterName
+	 * @param semesterDesc
+	 * @param creditMin
+	 * @param creditMax
+	 * @param list
 	 * @exception IllegalArgumentException
-	 *                throw exception if creditMinx or creditMax out of bound
+	 * 				Throw exception if creditMinx or creditMax out of bound
 	 */
 	private void setValue(int semesterID, String semesterName, String semesterDesc, int creditMin, int creditMax,
 			ArrayList<Course> list) {
@@ -69,43 +74,54 @@ public class Semester {
 		this.semesterDesc = semesterDesc;
 		this.creditMin = creditMin;
 		this.creditMax = creditMax;
-
 	}
 
 	/**
-	 * 
+	 * @author Lam Duong
 	 * @param course
-	 * @return
+	 * @return successfulAdd
 	 */
 	public boolean addCourse(Course course) {
 		boolean successfulAdd = false;
+		int creditsAfterAdding = course.getCreditHours() + this.currentCredits;
 		
 		// Check if by adding this course, it would surpass semester credit limit
-		if ((course.getCreditHours()+this.currentCredits) > this.creditMax) {
-			try {
-				new UpdateData().updateSemester(this, 'u');
-				courses.add(course);
-				successfulAdd = true;
-			} catch (IllegalStateException e){
-				System.out.println("ERROR: There was an error with the SQL query. Try again.");
+		if ((creditsAfterAdding) > this.creditMax) {
+			if (!this.courses.contains(course)) {
+				try {
+					new UpdateData().updateSemester(this, 'u');
+					courses.add(course);
+					successfulAdd = true;
+				} catch (IllegalStateException e){
+					System.out.println("ERROR: There was an error with the SQL query. Try again.");
+				}
+			} else {
+				System.out.println("Could not add Course:" + course.getCourseID() + " to Semester:" + this.semesterID
+						+ "\n The Course is already in the semester. Cannot add the same Course twice into the same semester.");
 			}
 		} else {
 			System.out.println("Could not add Course:" + course.getCourseID() + " to Semester:" + this.semesterID + "\n"
-					+ "Adding this Course would surpass the maximum creditLimit of this Semester!");
+					+ "Adding this Course would surpass the maximum credit limit of this Semester!"
+					+ "\nCurrent Semester limit: " + this.getCreditMax() + "\nCredits after adding the course: " + creditsAfterAdding);
 		}
+		if (isEmpty) {
+			isEmpty = false;
+		}
+		this.currentCredits = creditsAfterAdding;
 		return successfulAdd;
 	}
 
 	/**
-	 * 
+	 * @author Lam Duong
 	 * @param course
-	 * @return
+	 * @return successfulRemoval
 	 */
 	public boolean removeCourse(Course course) {
 		boolean successfulRemoval = false;
 		boolean notFound = true;
-		for (int i = 0; i < courses.size(); i++) {
-			if (courses.get(i).getCourseID() == course.getCourseID()) {
+		int creditsAfterRemoval = course.getCreditHours() - this.currentCredits;
+		for (Course aCourse : courses) {
+			if (aCourse.getCourseID() == course.getCourseID()) {
 				try {
 					new UpdateData().updateSemester(this, 'u');
 					courses.remove(course);
@@ -121,7 +137,10 @@ public class Semester {
 			System.out.println("Could not remove Course:" + course.getCourseID() + " from Semester:" + this.semesterID + "\n"
 					+ "This Course is not in this Semester! NOTE: Check to see if IDs match.");
 		}
-		isEmpty = courses.isEmpty();
+		if (courses.size() == 0) {
+			isEmpty = true;
+		}
+		this.currentCredits = creditsAfterRemoval;
 		return successfulRemoval;
 	}
 
@@ -147,7 +166,6 @@ public class Semester {
 
 	/**
 	 * setter for creditMin
-	 * 
 	 * @exception IllegalArgumentException
 	 *                throw exception if creditMin is out of bound
 	 */
@@ -221,20 +239,15 @@ public class Semester {
 	public void toggleLock() {
 		this.locked = !this.locked;
 	}
-
+	
 	public boolean isEmpty() {
-		if (courses.size() == 0) {
-			this.isEmpty = true;
-		} else {
-			this.isEmpty = false;
-		}
 		return this.isEmpty;
 	}
 
 	public boolean contains(int courseID) {
 		boolean hasCourse = false;
-		for (int i = 0; i < courses.size(); i++) {
-			if (courseID == courses.get(i).getCourseID()) {
+		for (Course aCourse : courses) {
+			if (courseID == aCourse.getCourseID()) {
 				hasCourse = true;
 			}
 		}
