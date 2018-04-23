@@ -254,14 +254,16 @@ public class Plan {
 			if (!requirementsMet) {
 				String s = "The course:" + courseToBeAdded.getCourseID() + " has not met its prerequisite reuirements"
 						+ " to take the class in Semester:" + targetSemester.getSemesterID()
-						+ "\nThe courses still need to be met are:\n";
-				for (int k = 0; k < coursesFulfilled.size(); k++) {
-					if (k < coursesFulfilled.size()-1) {
-						s += coursesFulfilled.get(k) + ", ";
-					} else {
-						s += coursesFulfilled.get(k) + ".";
+						+ "\nThe courses:";
+				// Show a string 
+				for (Prereq aPrerequisite : prerequisites) {
+					for (Integer i : coursesFulfilled) {
+						if (aPrerequisite.getCourseID() != i) {
+							s += aPrerequisite.getCourseID() + ", ";
+						}
 					}
 				}
+				s += "still need to be taken.";
 				System.out.println(s);
 			}
 		}
@@ -328,11 +330,18 @@ public class Plan {
 				// The rest of this if block is about UPDATING SEMESTERS
 				if (oldSemester.removeCourse(courseToBeAdded) == true) {
 					successfulAdd = targetSemester.addCourse(courseToBeAdded);
-					// Let use know they already have the course. It is now moved.
-					System.out.println("The course: " );
-					if (!successfulAdd) {
+					if (successfulAdd) {
+						// Let use know they already have the course. It is now moved.
+						System.out.println("The course has been moved successfully!");
+					} else {
 						// Revert change since something went wrong at the final step
-						oldSemester.addCourse(courseToBeAdded);	
+						oldSemester.addCourse(courseToBeAdded);
+					}
+					
+					if (targetSemester.addCourse(courseToBeAdded)) {
+						System.out.println("The course has been moved successfully!");
+					} else {
+						oldSemester.addCourse(courseToBeAdded);
 					}
 				}
 			}
@@ -369,7 +378,6 @@ public class Plan {
 				}
 			}
 		}
-		
 		return successfulRemoval;
 	}
 

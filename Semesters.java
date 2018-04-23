@@ -106,12 +106,12 @@ public class Semesters {
 
             // recordSet will hold a data table as sql object
             // to see how the data table look like, copy the queryString contents and
-            // execute in mysql Workbench
-            try ( // Initialize a sql statement
+            // execute in mySQL Workbench
+            try ( // Initialize a SQL statement
                     Statement statement = connectdb.theConnection.createStatement()) {
                 // recordSet will hold a data table as sql object
                 // to see how the data table look like, copy the queryString contents and
-                // execute in mysql Workbench
+                // execute in mySQL Workbench
                 ResultSet recordSet = statement.executeQuery(queryString);
 
                 while (recordSet.next()) {
