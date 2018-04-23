@@ -26,6 +26,7 @@ public class GradRequirement {
 		this.major1= major1;
 		this.major2=0;
 		this.minor=0;
+		tempHolder=new ArrayList<>();
                 major1Req = new ArrayList<>();
                 major2Req = new ArrayList<>();
                 minorReq  = new ArrayList<>();
@@ -47,6 +48,44 @@ public class GradRequirement {
 		}
 	}
 	//returns the %completion of a major/minor
+	public float checkTotalCompletion() {
+		int coursesNeeded=0;
+		int coursesFulfilled=0;
+		for(CoursesSet a: major1Req) {
+			coursesNeeded+=a.getAmountOfChoices();
+			if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
+				coursesFulfilled+=a.getAmountOfChosen();
+			}else {
+				coursesFulfilled+=a.getAmountOfChoices();
+			}
+		}
+		if(major2!=0) {
+			for(CoursesSet a: major2Req) {
+				
+				coursesNeeded+=a.getAmountOfChoices();
+				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
+					coursesFulfilled+=a.getAmountOfChosen();
+				}else {
+					coursesFulfilled+=a.getAmountOfChoices();
+				}
+		
+			}
+		}
+		if(minor!=0) {
+			for(CoursesSet a: minorReq) {
+				
+				coursesNeeded+=a.getAmountOfChoices();
+				if(!(a.getAmountOfChoices()-a.getAmountOfChosen()<0)) {
+					coursesFulfilled+=a.getAmountOfChosen();
+				}else {
+					coursesFulfilled+=a.getAmountOfChoices();
+				}
+		
+			}
+		}
+		return ((float)coursesFulfilled)/coursesNeeded;		
+
+	}
 	public float checkCompletion(int reqSel) {
 		//number needed for a major/minor
 		int coursesNeeded=0;
@@ -286,13 +325,7 @@ public class GradRequirement {
 			return minorReq;
 		throw new RuntimeException("Error: requirments ID mismatch");
 	}
-	public void CheckAddedClass(Course course) {
-		if(major1!=0) {
-			
-		}else {
-			throw new RuntimeException("Error: primary major information removed.");
-		}
-	}
+	//
 	public void SortList(int num) {
 		if(num==1){
 			Collections.sort(major1Req);
@@ -302,6 +335,7 @@ public class GradRequirement {
 			Collections.sort(minorReq);
 		}
 	}
+	//
 	public void SortLists() {
 		Collections.sort(major1Req);
 		Collections.sort(major2Req);
