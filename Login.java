@@ -144,9 +144,14 @@ public class Login {
 					String _profileName = recordSet.getString("profileName");
 
 					// create aProfile object with all local information
-					aProfile.setValue(_studentID, _netID, _studentName, _studentEmail, _username, _password,
-							_profileName);
-
+//					aProfile.setValue(_studentID, _netID, _studentName, _studentEmail, _username, _password,
+//							_profileName);
+/*
+                                        int studentID, String netID, String studentName, String studentEmail, String username,
+			String password, String profileName
+*/
+                                        aProfile = new Profile(_studentID,_netID,_studentName,_studentEmail,_username,_password,
+                                        _profileName);
 					System.out.println(aProfile.toString());
 
 				}

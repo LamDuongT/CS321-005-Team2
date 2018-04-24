@@ -1,17 +1,11 @@
 
-import java.awt.Color;
-import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /*
@@ -19,7 +13,6 @@ import javax.swing.table.TableModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author moo7md
@@ -29,7 +22,7 @@ public class NewSemester extends javax.swing.JFrame {
     private Profile profile;
     private Plan plan;
     private final Courses coursesClass = new Courses();
-    private int numberOfAddedCourses;
+    private int numberOfAddedCredit;
 
     /**
      * Creates new form NewSemester
@@ -43,7 +36,7 @@ public class NewSemester extends javax.swing.JFrame {
         this.profile = profile;
         this.plan = plan;
         initCourseList();
-        numberOfAddedCourses=0;
+        numberOfAddedCredit = 0;
     }
 
     /**
@@ -62,6 +55,10 @@ public class NewSemester extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        counter = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,30 +109,48 @@ public class NewSemester extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        jLabel3.setText("Search");
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+
+        jLabel4.setText("Number of credits:");
+
+        counter.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(semesterNametxt)))
-                .addContainerGap(196, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(semesterNametxt)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(counter)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,16 +161,19 @@ public class NewSemester extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(semesterNametxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(counter))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(75, 75, 75)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(40, Short.MAX_VALUE)))
         );
 
         pack();
@@ -185,7 +203,7 @@ public class NewSemester extends javax.swing.JFrame {
                 while (ResultSet.next()) {
                     id = ResultSet.getInt("semesterID");
                 }
-                sm = new Semester(id, semesterName, semesterName, 0, 18,new ArrayList<>());
+                sm = new Semester(id, semesterName, semesterName, 0, 18, new ArrayList<>());
                 System.out.println(semesterName + " was added to database");
             } catch (SQLException ex) {
                 throw new RuntimeException(ex.getLocalizedMessage());
@@ -197,7 +215,6 @@ public class NewSemester extends javax.swing.JFrame {
                 if ((boolean) model.getValueAt(i, 2)) {
                     Course acourse = coursesClass.getCourseByName((String) model.getValueAt(i, 0));
                     plan.addCourseToSemester(acourse, sm);
-                    numberOfAddedCourses++;
                 }
             }
             this.dispose();
@@ -211,18 +228,62 @@ public class NewSemester extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // if a class was selected check if it 
+        /*
+        FIX THE CHECKED ITEMS BY CHENHING THE ISTAKEN VALUE
+        */
         boolean isSelected = (boolean) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
-        if(isSelected){
-            String courseName = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
-            Course aCourse = plan.getCoursesList().getCourseByName(courseName);
-            if(profile.getCoursesTaken().contains(aCourse.getCourseID())){
+        String courseName = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+        Course aCourse = plan.getCoursesList().getCourseByName(courseName);
+        if((numberOfAddedCredit+aCourse.getCreditHours())>18){
+            JOptionPane.showMessageDialog(this, "You have exceeded the max credit allowed", "Max Credit Error", JOptionPane.ERROR_MESSAGE);
+            jTable1.setValueAt(false, jTable1.getSelectedRow(), 2);
+            return;
+        }
+        if (isSelected) {
+            if (profile.getCoursesTaken().contains(aCourse.getCourseID())) {
                 JOptionPane.showMessageDialog(this, "You already took this course", "Reminder", JOptionPane.INFORMATION_MESSAGE);
-            }else if(plan.checkPrerequisites(aCourse)){
-                JOptionPane.showMessageDialog(this, "You can't take this class", "Reminder", HEIGHT);
+                 numberOfAddedCredit += aCourse.getCreditHours();
+                this.counter.setText("" + numberOfAddedCredit);
+                int i = coursesClass.getCoursesList().indexOf(aCourse);
+                coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(true);
+            } else if (!plan.checkPrerequisites(aCourse)) {
+                String listOfPrerq = "";
+                for (Prereq pre : aCourse.getPrereqList().getPrereqList()) {
+                    listOfPrerq = listOfPrerq.concat(pre.getPrereqCourseName()).concat("\n");
+                }
+                JOptionPane.showMessageDialog(this, "You can't take this class\nYou have to take these courses first:\n"
+                        + listOfPrerq, "Reminder", HEIGHT);
                 jTable1.setValueAt(false, jTable1.getSelectedRow(), 2);
+                coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(false);
+            } else {
+                coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(true);
+                numberOfAddedCredit += aCourse.getCreditHours();
+                this.counter.setText("" + numberOfAddedCredit);
             }
+        } else if (!counter.getText().equals("0")) {
+            numberOfAddedCredit -= aCourse.getCreditHours();
+            this.counter.setText("" + numberOfAddedCredit);
+            coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(false);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        //creates the list of courses or reset it
+        initCourseList();
+        //target string
+        String target = jTextField1.getText() + ((Character.isLetter(evt.getKeyChar())
+                || Character.isDigit(evt.getKeyChar())) ? evt.getKeyChar() : "");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String valueAtCol0 = (String) model.getValueAt(i, 0);
+            String valueAtCol1 = (String) model.getValueAt(i, 1);
+            if (!(valueAtCol0.contains(target) || valueAtCol1.contains(target))) {
+                model.removeRow(i);
+                i = -1;
+            }
+        }
+        model.fireTableDataChanged();
+    }//GEN-LAST:event_jTextField1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -260,18 +321,22 @@ public class NewSemester extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel counter;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField semesterNametxt;
     // End of variables declaration//GEN-END:variables
 
     private void initCourseList() {
         List<Course> courses = coursesClass.getCoursesList();
- //      courses.removeAll(profile.getCoursesTaken().creditsTakenList);
+        //      courses.removeAll(profile.getCoursesTaken().creditsTakenList);
         this.jTable1.setModel(new DefaultTableModel(new String[]{"ID", "Name", "Choose"}, 0) {
             @Override
             public java.lang.Class<?> getColumnClass(int index) {
@@ -286,10 +351,11 @@ public class NewSemester extends javax.swing.JFrame {
         //Courses c = new Courses();
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         courses.forEach((classs) -> {
-            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), false});       
+            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), ((Course)classs).isTaken()});
         });
     }
-    public int getNumberOfAddedCourses(){
-        return this.numberOfAddedCourses;
+
+    public int getNumberOfAddedCredit() {
+        return this.numberOfAddedCredit;
     }
 }

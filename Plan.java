@@ -264,7 +264,9 @@ public class Plan {
 				s += "still need to be taken.";
 				System.out.println(s);
 			}
-		}
+		}else{
+                    requirementsMet=true;
+                }
 		return requirementsMet;
 	}
 	
