@@ -287,7 +287,6 @@ public class Plan {
 			isADuplicate = true;
 		}
 		return isADuplicate;
-		
 	}
 
 	/**
@@ -311,47 +310,45 @@ public class Plan {
 		boolean successfulAdd = false; // if course was added successfully
 		
 		// STAGE 1: CHECK FOR REQUIREMENTS:
-		if (!this.checkPrerequisites(courseToBeAdded, targetSemester)) {
-			return false;
-		}
-		
-		// STAGE 2: ADD COURSE
-		int creditTakenID = planCredits.getCreditTakenIDOfCourse(courseToBeAdded);
-		// If the courseToBeAdded is already within list of planCredits
-		// NOTE: 9999 is the creditTakenID when no creditTaken by that ID is found
-		if (creditTakenID != 9999) {
-			// CASE: MOVING A COURSE FROM ONE SEMESTER TO ANOTHER
-			// Let the user know their course to be added will be moved 
-			Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
-			System.out.println("The course: " + courseToBeAdded.getCourseID() + "already exists in semester: " + oldSemester.getSemesterID()
-								+ "\nThe program will now try to move it to target semester: " + targetSemester.getSemesterID());
-			// Update CreditsTaken by updating the current plansCredit
-			if (planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester)) {
-				// The rest of this if block is about UPDATING SEMESTERS
-				if (oldSemester.removeCourse(courseToBeAdded) == true) {
-					successfulAdd = targetSemester.addCourse(courseToBeAdded);
-					if (successfulAdd) {
-						// Let use know they already have the course. It is now moved.
-						System.out.println("The course has been moved successfully!");
-					} else {
-						// Revert change since something went wrong at the final step
-						oldSemester.addCourse(courseToBeAdded);
-					}
-					
-					if (targetSemester.addCourse(courseToBeAdded)) {
-						System.out.println("The course has been moved successfully!");
-					} else {
-						oldSemester.addCourse(courseToBeAdded);
+		if (this.checkPrerequisites(courseToBeAdded, targetSemester)) {
+			// STAGE 2: ADD COURSE
+			int creditTakenID = planCredits.getCreditTakenIDOfCourse(courseToBeAdded);
+			// If the courseToBeAdded is already within list of planCredits
+			// NOTE: 9999 is the creditTakenID when no creditTaken by that ID is found
+			if (creditTakenID != 9999) {
+				// CASE: MOVING A COURSE FROM ONE SEMESTER TO ANOTHER
+				// Let the user know their course to be added will be moved 
+				Semester oldSemester = semesters.getSemesterByID(planCredits.getCreditTakenByID(creditTakenID).getSemesterID());
+				System.out.println("The course: " + courseToBeAdded.getCourseID() + "already exists in semester: " + oldSemester.getSemesterID()
+									+ "\nThe program will now try to move it to target semester: " + targetSemester.getSemesterID());
+				// Update CreditsTaken by updating the current plansCredit
+				if (planCredits.updateCourseInCreditsTaken(creditTakenID, this.profileID, courseToBeAdded, targetSemester)) {
+					// The rest of this if block is about UPDATING SEMESTERS
+					if (oldSemester.removeCourse(courseToBeAdded) == true) {
+						successfulAdd = targetSemester.addCourse(courseToBeAdded);
+						if (successfulAdd) {
+							// Let use know they already have the course. It is now moved.
+							System.out.println("The course has been moved successfully!");
+						} else {
+							// Revert change since something went wrong at the final step
+							oldSemester.addCourse(courseToBeAdded);
+						}
+						
+						if (targetSemester.addCourse(courseToBeAdded)) {
+							System.out.println("The course has been moved successfully!");
+						} else {
+							oldSemester.addCourse(courseToBeAdded);
+						}
 					}
 				}
-			}
-		} else {
-			// CASE: ADDING A NEW COURSE TO A SEMESTER
-			if (planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester)) {
-				// Since it's a new Course, check if it meets requirements
-				requirements.addCourse(courseToBeAdded.getCourseID());
-				// Add the courseToBeTaken to the targetSemester object in Java
-				successfulAdd = targetSemester.addCourse(courseToBeAdded);
+			} else {
+				// CASE: ADDING A NEW COURSE TO A SEMESTER
+				if (planCredits.addCourseToCreditsTaken(this.profileID, courseToBeAdded, targetSemester)) {
+					// Since it's a new Course, check if it meets requirements
+					requirements.addCourse(courseToBeAdded.getCourseID());
+					// Add the courseToBeTaken to the targetSemester object in Java
+					successfulAdd = targetSemester.addCourse(courseToBeAdded);
+				}
 			}
 		}
 		return successfulAdd; 
