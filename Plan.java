@@ -209,10 +209,9 @@ public class Plan {
 	 * would belong in this semester by checking its prerequisites.
 	 * @author Lam Duong
 	 * @param courseToBeAdded
-	 * @param targetSemester
 	 * @return requirementsMet
 	 */
-	public boolean checkPrerequisites(Course courseToBeAdded, Semester targetSemester) {
+	public boolean checkPrerequisites(Course courseToBeAdded) {
 		// Check for if the prerequisite requirements have been met in previous semesters
 		boolean requirementsMet = false; // if the requirements are met
 		List<Prereq> prerequisites = courseToBeAdded.getPrereqList().getPrereqList();
@@ -253,7 +252,6 @@ public class Plan {
 			// not fulfilled by the user.
 			if (!requirementsMet) {
 				String s = "The course:" + courseToBeAdded.getCourseID() + " has not met its prerequisite reuirements"
-						+ " to take the class in Semester:" + targetSemester.getSemesterID()
 						+ "\nThe courses:";
 				// Show a string 
 				for (Prereq aPrerequisite : prerequisites) {
@@ -309,8 +307,8 @@ public class Plan {
 	public boolean addCourseToSemester(Course courseToBeAdded, Semester targetSemester) {
 		boolean successfulAdd = false; // if course was added successfully
 		
-		// STAGE 1: CHECK FOR REQUIREMENTS:
-		if (this.checkPrerequisites(courseToBeAdded, targetSemester)) {
+		// STAGE 1: CHECK FOR REQUIREMENTS
+		if (this.checkPrerequisites(courseToBeAdded)) {
 			// STAGE 2: ADD COURSE
 			int creditTakenID = planCredits.getCreditTakenIDOfCourse(courseToBeAdded);
 			// If the courseToBeAdded is already within list of planCredits
