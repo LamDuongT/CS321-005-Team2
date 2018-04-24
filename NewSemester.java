@@ -1,4 +1,6 @@
 
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /*
@@ -25,6 +29,7 @@ public class NewSemester extends javax.swing.JFrame {
     private Profile profile;
     private Plan plan;
     private final Courses coursesClass = new Courses();
+    private int numberOfAddedCourses;
 
     /**
      * Creates new form NewSemester
@@ -38,6 +43,7 @@ public class NewSemester extends javax.swing.JFrame {
         this.profile = profile;
         this.plan = plan;
         initCourseList();
+        numberOfAddedCourses=0;
     }
 
     /**
@@ -97,6 +103,11 @@ public class NewSemester extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jTable1);
@@ -186,6 +197,7 @@ public class NewSemester extends javax.swing.JFrame {
                 if ((boolean) model.getValueAt(i, 2)) {
                     Course acourse = coursesClass.getCourseByName((String) model.getValueAt(i, 0));
                     plan.addCourseToSemester(acourse, sm);
+                    numberOfAddedCourses++;
                 }
             }
             this.dispose();
@@ -196,6 +208,21 @@ public class NewSemester extends javax.swing.JFrame {
         // closes the window
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // if a class was selected check if it 
+        boolean isSelected = (boolean) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+        if(isSelected){
+            String courseName = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+            Course aCourse = plan.getCoursesList().getCourseByName(courseName);
+            if(profile.getCoursesTaken().contains(aCourse.getCourseID())){
+                JOptionPane.showMessageDialog(this, "You already took this course", "Reminder", JOptionPane.INFORMATION_MESSAGE);
+            }else if(plan.checkPrerequisites(aCourse)){
+                JOptionPane.showMessageDialog(this, "You can't take this class", "Reminder", HEIGHT);
+                jTable1.setValueAt(false, jTable1.getSelectedRow(), 2);
+            }
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -244,6 +271,7 @@ public class NewSemester extends javax.swing.JFrame {
 
     private void initCourseList() {
         List<Course> courses = coursesClass.getCoursesList();
+ //      courses.removeAll(profile.getCoursesTaken().creditsTakenList);
         this.jTable1.setModel(new DefaultTableModel(new String[]{"ID", "Name", "Choose"}, 0) {
             @Override
             public java.lang.Class<?> getColumnClass(int index) {
@@ -258,7 +286,10 @@ public class NewSemester extends javax.swing.JFrame {
         //Courses c = new Courses();
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         courses.forEach((classs) -> {
-            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), false});
+            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), false});       
         });
+    }
+    public int getNumberOfAddedCourses(){
+        return this.numberOfAddedCourses;
     }
 }

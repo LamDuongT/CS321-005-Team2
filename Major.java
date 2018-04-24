@@ -12,7 +12,7 @@ public class Major {
 	 * Initialize default values for all attributes
 	 */
 	public Major() {
-		setValue(9999, "", "", 9999);
+		setValue(-1, "", "", -1);
 	}
 
 	/**

@@ -65,8 +65,10 @@ public class CoursesSet implements Comparable<CoursesSet>{
 				coursesToBeChosen.remove(a);
 			}
 		}
-		coursesChosen.add(Temp);
+		if(Temp!=null){
+                coursesChosen.add(Temp);
 		amountOfChosen++;
+                }
 	}
 	public void unScheduleCourse(int ID) {
 		Course Temp=null;

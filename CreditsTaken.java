@@ -42,11 +42,16 @@ public class CreditsTaken {
 	 */
 	public boolean contains(int courseID) {
 		boolean hasCourse = false;
-		for (int i = 0; i < creditsTakenList.size(); i++) {
-			if (courseID == creditsTakenList.get(i).getCourseID()) {
-				hasCourse = true;
-			}
-		}
+//		for (int i = 0; i < creditsTakenList.size(); i++) {
+//			if (courseID == creditsTakenList.get(i).getCourseID()) {
+//				hasCourse = true;
+//			}
+//		}
+                for (CreditTaken acreditTaken : creditsTakenList){
+                    if (courseID == acreditTaken.getCourseID()){
+                        hasCourse = true;
+                    }
+                }
 		return hasCourse;
 	}
 	
