@@ -217,7 +217,9 @@ public class Profile {
 	public Semesters getAllSemesters() {
 		return listOfSemesters;
 	}
-
+        public Plans getPlans(){
+            return this.plans;
+        }
 	/**
 	 * Override toString method for testing purpose
 	 * 

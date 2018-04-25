@@ -228,24 +228,27 @@ public class NewSemester extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // if a class was selected check if it 
-        /*
-        FIX THE CHECKED ITEMS BY CHENHING THE ISTAKEN VALUE
-        */
+        //checks if the checkbox was selected
         boolean isSelected = (boolean) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+        //get the course name
         String courseName = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
-        Course aCourse = plan.getCoursesList().getCourseByName(courseName);
-        if((numberOfAddedCredit+aCourse.getCreditHours())>18){
+        //get the course object from courseClass
+        Course aCourse = coursesClass.getCourseByName(courseName);
+        //if the student exceeded the credit limt uncheck the box
+        if ((numberOfAddedCredit + aCourse.getCreditHours()) > 18) {
             JOptionPane.showMessageDialog(this, "You have exceeded the max credit allowed", "Max Credit Error", JOptionPane.ERROR_MESSAGE);
             jTable1.setValueAt(false, jTable1.getSelectedRow(), 2);
             return;
         }
         if (isSelected) {
+            //if the box was selected check if the student already took the class and notfiey him
             if (profile.getCoursesTaken().contains(aCourse.getCourseID())) {
                 JOptionPane.showMessageDialog(this, "You already took this course", "Reminder", JOptionPane.INFORMATION_MESSAGE);
-                 numberOfAddedCredit += aCourse.getCreditHours();
+                numberOfAddedCredit += aCourse.getCreditHours();
                 this.counter.setText("" + numberOfAddedCredit);
-                int i = coursesClass.getCoursesList().indexOf(aCourse);
-                coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(true);
+                aCourse.setTaken(true);
+                coursesClass.getCoursesList().set(coursesClass.getCoursesList().indexOf(aCourse), aCourse);
+            //check if the class's preq is fulfilled 
             } else if (!plan.checkPrerequisites(aCourse)) {
                 String listOfPrerq = "";
                 for (Prereq pre : aCourse.getPrereqList().getPrereqList()) {
@@ -254,16 +257,21 @@ public class NewSemester extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "You can't take this class\nYou have to take these courses first:\n"
                         + listOfPrerq, "Reminder", HEIGHT);
                 jTable1.setValueAt(false, jTable1.getSelectedRow(), 2);
-                coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(false);
+                aCourse.setTaken(false);
+                coursesClass.getCoursesList().set(coursesClass.getCoursesList().indexOf(aCourse), aCourse);
+             //if both cases failed then add the class with no messages 
             } else {
-                coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(true);
+                aCourse.setTaken(true);
+                coursesClass.getCoursesList().set(coursesClass.getCoursesList().indexOf(aCourse), aCourse);
                 numberOfAddedCredit += aCourse.getCreditHours();
                 this.counter.setText("" + numberOfAddedCredit);
             }
+            //if the student unchecked the box update the state of the course and the amount of credits 
         } else if (!counter.getText().equals("0")) {
             numberOfAddedCredit -= aCourse.getCreditHours();
             this.counter.setText("" + numberOfAddedCredit);
-            coursesClass.getCoursesList().get(coursesClass.getCoursesList().indexOf(aCourse)).setTaken(false);
+            aCourse.setTaken(false);
+            coursesClass.getCoursesList().set(coursesClass.getCoursesList().indexOf(aCourse), aCourse);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -273,6 +281,7 @@ public class NewSemester extends javax.swing.JFrame {
         //target string
         String target = jTextField1.getText() + ((Character.isLetter(evt.getKeyChar())
                 || Character.isDigit(evt.getKeyChar())) ? evt.getKeyChar() : "");
+        System.out.println(target);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
             String valueAtCol0 = (String) model.getValueAt(i, 0);
@@ -351,7 +360,7 @@ public class NewSemester extends javax.swing.JFrame {
         //Courses c = new Courses();
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         courses.forEach((classs) -> {
-            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), ((Course)classs).isTaken()});
+            model.addRow(new Object[]{((Course) classs).getCourseName(), ((Course) classs).getCourseDesc(), ((Course) classs).isTaken()});
         });
     }
 

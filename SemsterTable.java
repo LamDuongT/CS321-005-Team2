@@ -19,22 +19,16 @@ public class SemsterTable extends javax.swing.JPanel {
      */
     private int totalCredit;
     private Semester semester;
-    public SemsterTable(String name,String[][] classes) {
-        initComponents();
-        totalCredit = 0;
-        this.SemsterName.setText(name);
-        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-        for (String[] classe : classes) {
-            model.addRow(classe);
-            totalCredit+=Integer.parseInt(classe[2]);
-        }
-        this.jTextField1.setText(""+this.totalCredit);
-    }
-    public SemsterTable(Semester sm){
+    private CreditsTaken creditTaken;
+    private Plan thePlan;
+    public SemsterTable(Semester sm, Plan plan){
         semester = sm;
         totalCredit = 0;
-        this.SemsterName.setText(sm.getSemesterName());
-        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+        thePlan = plan;
+        creditTaken = plan.getPlanCreditsTaken();
+        setSemesterTableUp(sm);
+//        this.SemsterName.setText(sm.getSemesterName());
+//        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,4 +127,9 @@ public class SemsterTable extends javax.swing.JPanel {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void setSemesterTableUp(Semester sm) {
+        this.SemsterName.setText(sm.getSemesterName());
+        
+\    }
 }

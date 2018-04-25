@@ -452,7 +452,6 @@ public class NewProfile extends javax.swing.JFrame {
 
     private void searchtxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchtxtKeyPressed
         // search as soon the user write something
-        System.out.println(evt.getKeyChar());
         if (jComboBox1.getSelectedIndex() > 0) {
             //creates the list of courses or reset it
             setCoursesList();

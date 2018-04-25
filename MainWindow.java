@@ -5,6 +5,8 @@
  */
 
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -320,8 +322,39 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // adds a new plan
-        new NewPlans(profile).setVisible(true);
-        this.intiPlanTable();
+        NewPlans planWindow = new NewPlans(profile);
+        planWindow.addWindowListener(new WindowListener(){
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                intiPlanTable();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+            
+        });
+        planWindow.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -349,11 +382,10 @@ public class MainWindow extends javax.swing.JFrame {
         // mouse cliked twice, show semesters
         if(evt.getClickCount()==2){
             DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-            //Plans(int studentID, CreditsTaken profileCreditsTaken, Semesters listOfSemesters)
             Plan plan = (Plan) model.getValueAt(jTable1.getSelectedRow(), 1);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
-            for(Semester sm : plan.getSemestersList()){
+            for(Semester sm : plan.getPlanSemesters()){
                 p.add(new SemsterTable(sm));
                 p.add(new JSeparator());
             }
@@ -449,12 +481,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void intiPlanTable(){
         //gets all plans that are linked with the current profile
-        List<Plan> planList = new Plans(profile.getStudentID(), profile.getCoursesTaken(),profile.getAllSemesters()).getPlans();
-        //List<Plan> planList = new Plans(1,new CreditsTaken(1)).getPlans();
+        List<Plan> planList = profile.getPlans().getPlans();
         //now add all plans to the table
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-        for(int i =0;i<model.getRowCount();i++)
-            model.removeRow(i);
+        model.setRowCount(0);
         planList.forEach((p) -> {
             model.addRow(new Object[]{p.getPlanName(),p});
         });
