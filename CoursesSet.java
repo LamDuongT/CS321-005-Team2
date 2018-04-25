@@ -59,7 +59,7 @@ public class CoursesSet implements Comparable<CoursesSet>{
 	//schedules a course
 	public void scheduleCourse(int ID) {
 		Course Temp=null;
-		for(Course a: coursesToBeChosen) {
+		for(Course a: coursesChosen) {
 			if(a.getCourseID()==ID) {
 				Temp=a;
 				coursesToBeChosen.remove(a);
