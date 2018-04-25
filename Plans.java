@@ -92,8 +92,9 @@ public class Plans {
 				_major2ID = recordSet.getInt("majorID2");
 				_minor2ID = recordSet.getInt("minorID2");
 				_profileID = recordSet.getInt("profileID");
-
-				aPlan = new Plan(_profileID, _planID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID,
+                                //public Plan(int planID, int profileID, int catalogID, String planName, int majorID, int minorID, int major2ID,
+			//int minor2ID, CreditsTaken profileCoursesTaken, Semesters listOfSemesters)
+				aPlan = new Plan(_planID,_profileID, _catalogID, _planName, _major1ID, _minor1ID, _major2ID,
 						_minor2ID, this.profileCreditsTaken, this.listOfSemesters);
 				plansList.add(aPlan);
 			}
