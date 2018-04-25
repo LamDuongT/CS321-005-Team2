@@ -408,7 +408,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void jProgressBar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jProgressBar1MouseClicked
         // show presentage for major minor and all
         //NEED TO IMPLEMENT!!
-        
     }//GEN-LAST:event_jProgressBar1MouseClicked
 
     /**

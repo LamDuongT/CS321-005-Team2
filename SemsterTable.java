@@ -51,7 +51,7 @@ public class SemsterTable extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        credittxt = new javax.swing.JTextField();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -82,10 +82,10 @@ public class SemsterTable extends javax.swing.JPanel {
 
         jLabel1.setText("Credits:");
 
-        jTextField1.setEditable(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        credittxt.setEditable(false);
+        credittxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                credittxtActionPerformed(evt);
             }
         });
 
@@ -101,7 +101,7 @@ public class SemsterTable extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(credittxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -113,25 +113,25 @@ public class SemsterTable extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(credittxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void credittxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_credittxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_credittxtActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SemsterName;
+    private javax.swing.JTextField credittxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
     private void setSemesterTableUp(Semester sm) {
@@ -139,7 +139,12 @@ public class SemsterTable extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         for(CreditTaken ct : creditTaken.creditsTakenList){
             Course acourse = courses.getCourseByID(ct.getCourseID());
-            model.addRow(new Object[]{acourse.getCourseName(),acourse.getCourseDesc(),acourse.getCreditHours()});
+            if(ct.getSemesterID()==sm.getSemesterID()){
+                model.addRow(new Object[]{acourse.getCourseName(),acourse.getCourseDesc(),acourse.getCreditHours()});
+                this.totalCredit+=acourse.getCreditHours();
+            }
+            }
+        this.credittxt.setText(""+totalCredit);
         }
    }
 }
