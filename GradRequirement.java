@@ -153,7 +153,8 @@ public class GradRequirement {
 			}
 			i++;
 		}
-		if(!tempHolder.isEmpty())tempHolder.get(s).scheduleCourse(courseID);
+		if(!tempHolder.isEmpty())
+			tempHolder.get(s).scheduleCourse(courseID);
 		Collections.sort(major1Req);
 		tempHolder.clear();
 		
@@ -173,7 +174,8 @@ public class GradRequirement {
 				}
 				i++;
 			}
-			if(!tempHolder.isEmpty())tempHolder.get(s).scheduleCourse(courseID);
+			if(!tempHolder.isEmpty())
+				tempHolder.get(s).scheduleCourse(courseID);
 
 			Collections.sort(major2Req);
 			tempHolder.clear();
@@ -194,7 +196,8 @@ public class GradRequirement {
 				}
 				i++;
 			}
-			if(!tempHolder.isEmpty())tempHolder.get(s).scheduleCourse(courseID);
+			if(!tempHolder.isEmpty())
+				tempHolder.get(s).scheduleCourse(courseID);
 			Collections.sort(minorReq);
 			tempHolder.clear();
 		}
