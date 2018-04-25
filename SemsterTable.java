@@ -1,3 +1,6 @@
+
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,7 +8,7 @@
  */
 
 
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -21,11 +24,14 @@ public class SemsterTable extends javax.swing.JPanel {
     private Semester semester;
     private CreditsTaken creditTaken;
     private Plan thePlan;
-    public SemsterTable(Semester sm, Plan plan){
+    private Courses courses;
+    public SemsterTable(Semester sm, Plan plan, Courses courses){
+        initComponents();
         semester = sm;
         totalCredit = 0;
         thePlan = plan;
         creditTaken = plan.getPlanCreditsTaken();
+        this.courses=courses;
         setSemesterTableUp(sm);
 //        this.SemsterName.setText(sm.getSemesterName());
 //        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
@@ -130,6 +136,10 @@ public class SemsterTable extends javax.swing.JPanel {
 
     private void setSemesterTableUp(Semester sm) {
         this.SemsterName.setText(sm.getSemesterName());
-        
-\    }
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+        for(CreditTaken ct : creditTaken.creditsTakenList){
+            Course acourse = courses.getCourseByID(ct.getCourseID());
+            model.addRow(new Object[]{acourse.getCourseName(),acourse.getCourseDesc(),acourse.getCreditHours()});
+        }
+   }
 }

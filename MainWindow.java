@@ -385,8 +385,8 @@ public class MainWindow extends javax.swing.JFrame {
             Plan plan = (Plan) model.getValueAt(jTable1.getSelectedRow(), 1);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
-            for(Semester sm : plan.getPlanSemesters()){
-                p.add(new SemsterTable(sm));
+            for(Semester sm : plan.getSemestersList()){
+                p.add(new SemsterTable(sm,plan,plan.getCoursesList()));
                 p.add(new JSeparator());
             }
              this.jScrollPane2.setViewportView(p);
