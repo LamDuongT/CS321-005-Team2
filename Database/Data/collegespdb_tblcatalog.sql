@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1    Database: collegespdb
 -- ------------------------------------------------------
 -- Server version	5.7.21-log
-truncate tblcatalog;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,6 +21,7 @@ truncate tblcatalog;
 --
 
 LOCK TABLES `tblcatalog` WRITE;
+truncate tblcatalog;
 /*!40000 ALTER TABLE `tblcatalog` DISABLE KEYS */;
 INSERT INTO `tblcatalog` VALUES (1,'Catalog 2016','Catalog Year 2015'),(2,'Catalog 2016','Catalog Year 2016'),(3,'Catalog 2017','Catalog Year 2017'),(4,'Catalog 2018','Catalog Year 2018'),(9999,'none','none');
 /*!40000 ALTER TABLE `tblcatalog` ENABLE KEYS */;
