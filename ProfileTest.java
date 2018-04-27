@@ -13,12 +13,14 @@ public class ProfileTest {
 	Profile aStudentProfile, anotherStudentProfile;
 	String username;
 	String password;
+	UpdateData updateData;
 
 	@Before
 	public void setUp() throws Exception {
 		aStudent = new Login("hnguye80", "hnguye80");
 		aStudent.doLogin();
 		aStudentProfile = aStudent.getProfile(aStudent.getStudentID());
+		updateData = new UpdateData();
 	}
 
 	@After
@@ -48,6 +50,16 @@ public class ProfileTest {
 
 	@Test(timeout = 1000)
 	public void testTwoProfilesStudentID() {
+		anotherStudent = new Login("johnny74", "johnny74");
+		anotherStudent.doLogin();
+		anotherStudentProfile = aStudent.getProfile(anotherStudent.getStudentID());
+
+		assertTrue("Two Students have same username and password",
+				aStudentProfile.getStudentID() == aStudentProfile.getStudentID() );
+	}
+	
+	@Test(timeout = 1000)
+	public void testAddPlan() {
 		anotherStudent = new Login("johnny74", "johnny74");
 		anotherStudent.doLogin();
 		anotherStudentProfile = aStudent.getProfile(anotherStudent.getStudentID());
