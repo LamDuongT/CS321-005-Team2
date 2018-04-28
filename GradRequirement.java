@@ -20,6 +20,15 @@ public class GradRequirement {
 	private int minor;
 	private ArrayList<CoursesSet> tempHolder;
 	//for testing
+	public GradRequirement() {
+		this.major1=0;
+		this.major2=0;
+		this.minor=0;
+		tempHolder=new ArrayList<>();
+                major1Req = new ArrayList<>();
+                major2Req = new ArrayList<>();
+                minorReq  = new ArrayList<>();
+	}
 	public GradRequirement(int major1, int major2, int minor, Courses coursesList) {
 		this.major1= major1;
 		this.major2=0;
