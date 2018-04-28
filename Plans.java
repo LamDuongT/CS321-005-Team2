@@ -100,7 +100,7 @@ public class Plans {
 			}
 			statement.close();
 		} catch (SQLException e) {
-			throw new IllegalStateException("[ERROR] there is an error with the sql querry!", e);
+			throw new IllegalStateException("[ERROR] There is an error with SQL query while retrieving plans!", e);
 		} finally {
 			// close the connection
 			// NOTE: the close connection method need to be called in finally block to

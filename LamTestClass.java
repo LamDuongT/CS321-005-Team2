@@ -8,12 +8,12 @@ public class LamTestClass {
 
 	public static void main(String[] args) {
 		
-		// TESTING FOR PROFILE AND COURSESSET
+		Profile p = new Profile();
 		
-		Login login = new Login ("lduong6", "FuckPasswords");
+		Login login = new Login ("lduong6", "passwords");
 		
 		login.doLogin();
-		Profile p = login.getProfile(1);
+		p = login.getProfile(3);
 		
 		
 	}

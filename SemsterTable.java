@@ -143,8 +143,7 @@ public class SemsterTable extends javax.swing.JPanel {
                 model.addRow(new Object[]{acourse.getCourseName(),acourse.getCourseDesc(),acourse.getCreditHours()});
                 this.totalCredit+=acourse.getCreditHours();
             }
-            }
-        this.credittxt.setText(""+totalCredit);
         }
-   }
+        this.credittxt.setText(""+totalCredit);
+    }
 }
