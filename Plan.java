@@ -77,6 +77,9 @@ public class Plan {
     /**
      * ACCESSOR METHODS:
      */
+    public GradRequirement getGrad(){
+        return this.requirements;
+    }
     public int getPlanID() {
         return this.PLAN_ID;
     }
