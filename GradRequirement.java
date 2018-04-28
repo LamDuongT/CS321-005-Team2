@@ -19,7 +19,37 @@ public class GradRequirement {
 	private int major2;
 	private int minor;
 	private ArrayList<CoursesSet> tempHolder;
-	
+	//for testing
+	public GradRequirement(int major1, int major2, int minor, Courses coursesList) {
+		this.major1= major1;
+		this.major2=0;
+		this.minor=0;
+		tempHolder=new ArrayList<>();
+                major1Req = new ArrayList<>();
+                major2Req = new ArrayList<>();
+                minorReq  = new ArrayList<>();
+		if(major2!=9999) 
+			this.major2=major2;
+		if(minor!=9999)
+			this.minor=minor;
+		getGradReqData(coursesList);
+	}
+	public ArrayList<CoursesSet> getCoursesSetList(int setSelect){
+		if(setSelect>3 ||setSelect<=0) {
+			throw new RuntimeException("out of bounds SetContianer selected");
+		}
+		ArrayList<CoursesSet> Set= new ArrayList<>();
+		if(setSelect == 1) {
+			Set=major1Req;
+		}
+		if(setSelect==2) {
+			Set=major2Req;
+		}
+		if(setSelect==3) {
+			Set=minorReq;
+		}
+		return Set;
+	}
 	//The ids of different major/minor, 0 if no major selected
 	public GradRequirement(int major1, int major2, int minor, Courses coursesList, CreditsTaken profileLevel, CreditsTaken planLevel ) {
 		//
