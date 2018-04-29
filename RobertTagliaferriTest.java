@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class RobertTagliaferriTest {
 
@@ -21,10 +20,22 @@ public class RobertTagliaferriTest {
 				System.out.println("AList: "+ i +" failed");
 			}
 		}
-		try {
-			
-		}catch(RuntimeException e){
-			
+		reqTest.SortList(1);
+		reqTest.SortList(2);
+		reqTest.SortList(3);
+		reqTest.SortLists();
+		if(test[0].equals(reqTest.reqByID(1))){
+			System.out.println("reqById1 successfull");
+			if(test[1].equals(reqTest.reqByID(2))) {
+				System.out.println("reqByID2 successfull");
+				if(test[2].equals(reqTest.reqByID(1))) {
+					System.out.println("all reqByID successfull");
+				}
+			}
+		}
+		float ComTest=reqTest.checkTotalCompletion();
+		if(ComTest==0) {
+			System.out.println("working");
 		}
 	}
 }
