@@ -36,6 +36,6 @@ public class RobertTagliaferriTest {
 		float ComTest=reqTest.checkTotalCompletion();
 		if(ComTest==0) {
 			System.out.println("working");
-		}
+		}	
 	}
 }
