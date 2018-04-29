@@ -157,9 +157,11 @@ public class Course {
 	/**
 	 * Override toString method for testing purposes
 	 */
-	public String toString() {	
-		String returnString = "";		
-		returnString = String.format(" %-8d| %-15s| %-12d|  %-10d| %-10s| %-10s| %-25s| %-25s", this.courseID, this.courseName, this.creditHours, this.catalogID, this.majorID, this.minorID, this.prereqList.getPrereqsCourseNames(), this.courseDesc);	
+	public String toString() {
+		String returnString = "";	
+		if (!this.isEmpty) {	
+				returnString = String.format(" %-8d| %-11s| %-12d|  %-10d| %-10s| %-10s| %-25s| %-25s", this.courseID, this.courseName, this.creditHours, this.catalogID, this.majorID, this.minorID, this.prereqList.getPrereqsCourseNames(), this.courseDesc);	
+		}
 		return returnString;
 	}
 }

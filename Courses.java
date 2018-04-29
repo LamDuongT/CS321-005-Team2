@@ -57,20 +57,19 @@ public class Courses {
 	
 	/**
 	 * This method will return a course by ID within list of Courses.
-	 * However, if there is no match, it shall return an empty Course Object
+	 * However, if there is no match, it shall return an empty Course Object.
 	 * @author Lam Duong
 	 * @param courseID
 	 * @return Course Object
 	 */
 	public Course getCourseByID(int courseID) {
-		Course aCourse = new Course();
-		for (int index = 0; index < this.courseList.size(); index++) {
-			aCourse = this.courseList.get(index);
+		Course course = new Course();
+		for (Course aCourse : courseList) {
 			if (aCourse.getCourseID() == courseID) {
-				return aCourse;
+				course = aCourse;
 			}
 		}
-		return new Course();
+		return course;
 	}
 	
 	/**
@@ -81,14 +80,13 @@ public class Courses {
 	 * @return Course Object
 	 */
 	public Course getCourseByName(String courseName) {
-		Course aCourse = new Course();
-		for (int index = 0; index < this.courseList.size(); index++) {
-			aCourse = this.courseList.get(index);
-			if (aCourse.getCourseName().toLowerCase().contains(courseName.toLowerCase())) {
-				return aCourse;
+		Course course = new Course();
+		for (Course aCourse : courseList) {
+			if (aCourse.getCourseName().equals(courseName)) {
+				course = aCourse;
 			}
 		}
-		return new Course();
+		return course;
 	}
 	
 	
@@ -208,7 +206,7 @@ public class Courses {
 	 * Override the toString method for testing purpose
 	 */
 	public String toString() {
-		String returnString = "courseID | courseName     | creditHours | catalogID  | majorID   | minorID   | Prereq List              | courseDesc\n";
+		String returnString = "courseID | courseName | creditHours | catalogID  | majorID   | minorID   | Prereq List              | courseDesc\n";
 		// loop through the list and print out all elements
 		for (int index = 0; index < this.courseList.size(); index++) {
 			aCourse = this.courseList.get(index);

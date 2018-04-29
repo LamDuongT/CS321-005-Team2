@@ -274,6 +274,18 @@ public class CoursesSet implements Comparable<CoursesSet>{
 	
 	public String toString() {
 		String s = new String();
+		String stringForCoursesToBeChosen = "";
+		for (Course courseToBeChosen : coursesToBeChosen) {
+			stringForCoursesToBeChosen += courseToBeChosen.toString() + "\n";
+		}
+		String stringForCoursesChosen = "";
+		for (Course courseChosen : coursesChosen) {
+			stringForCoursesChosen += courseChosen.toString() + "\n";
+		}
+		if (stringForCoursesChosen.equals("")) {
+			stringForCoursesChosen = "No classes chosen";
+		}
+		
 		s += "CoursesSet Object:\n" +
 			"-------------------------------------\n" + 
 			"DATABASE FIELDS: \n" + 
@@ -282,8 +294,8 @@ public class CoursesSet implements Comparable<CoursesSet>{
 			"description: " + this.coursesSetDescription + "\n" +
 			"-------------------------------------\n" + 
 			"PARSED FIELDS: \n" +
-			"coursesToBeChosen: " + this.coursesToBeChosen + "\n" +
-			"coursesChosen: " + this.coursesChosen + "\n" + 
+			"coursesToBeChosen: " + "\n" + stringForCoursesToBeChosen + "\n" +
+			"coursesChosen: " + stringForCoursesChosen + "\n" + 
 			"amountOfChoices: " + this.amountOfChoices + "\n" +
 			"amountOfCourses: " + this.amountOfCourses +"\n" +
 			"amountOfChosen: " + this.amountOfChosen;
