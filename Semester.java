@@ -42,7 +42,11 @@ public class Semester {
 			ArrayList<Course> list) {
 		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, list);
 		this.locked = false;
-		this.isEmpty = false;
+		if (this.courses.isEmpty()) {
+			this.isEmpty = true;
+		} else {
+			this.isEmpty = false;
+		}
 	}
 	
 	/**
@@ -88,15 +92,11 @@ public class Semester {
 		int creditsAfterAdding = course.getCreditHours() + this.currentCredits;
 		
 		// Check if by adding this course, it would surpass semester credit limit
-		if ((creditsAfterAdding) > this.creditMax) {
+		if (creditsAfterAdding < this.creditMax) {
 			if (!this.courses.contains(course)) {
-				try {
-					new UpdateData().updateSemester(this, 'u');
-					courses.add(course);
-					successfulAdd = true;
-				} catch (IllegalStateException e){
-					System.out.println("ERROR: There was an error with the SQL query. Try again.");
-				}
+				courses.add(course);
+				successfulAdd = true;
+				this.currentCredits = creditsAfterAdding;
 			} else {
 				System.out.println("Could not add Course:" + course.getCourseID() + " to Semester:" + this.semesterID
 						+ "\n The Course is already in the semester. Cannot add the same Course twice into the same semester.");
@@ -109,7 +109,6 @@ public class Semester {
 		if (isEmpty) {
 			isEmpty = false;
 		}
-		this.currentCredits = creditsAfterAdding;
 		return successfulAdd;
 	}
 
@@ -122,27 +121,25 @@ public class Semester {
 		boolean successfulRemoval = false;
 		boolean notFound = true;
 		int creditsAfterRemoval = course.getCreditHours() - this.currentCredits;
+		Course courseToBeRemoved = null;
 		for (Course aCourse : courses) {
 			if (aCourse.getCourseID() == course.getCourseID()) {
-				try {
-					new UpdateData().updateSemester(this, 'u');
-					courses.remove(course);
-					successfulRemoval = true;
-					notFound = false;
-				} catch (IllegalStateException e) {
-					successfulRemoval = false;
-					System.out.println("There was a problem regarding updating to the database. Try again.");
-				}
+				courseToBeRemoved = aCourse;
+				notFound = false;
 			}
-		}
-		if (notFound == true) {
+		}		
+		if (notFound) {
 			System.out.println("Could not remove Course:" + course.getCourseID() + " from Semester:" + this.semesterID + "\n"
 					+ "This Course is not in this Semester! NOTE: Check to see if IDs match.");
+		} else {
+			courses.remove(courseToBeRemoved);
+			successfulRemoval = true;
+			this.currentCredits = creditsAfterRemoval;
 		}
-		if (courses.size() == 0) {
+		if (this.courses.size() == 0) {
 			isEmpty = true;
 		}
-		this.currentCredits = creditsAfterRemoval;
+		
 		return successfulRemoval;
 	}
 
@@ -244,6 +241,10 @@ public class Semester {
 	
 	public boolean isEmpty() {
 		return this.isEmpty;
+	}
+	
+	public ArrayList<Course> getCourses(){
+		return this.courses;
 	}
 
 	public boolean contains(int courseID) {

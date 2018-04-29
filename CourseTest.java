@@ -34,6 +34,7 @@ public class CourseTest
 		assertEquals(c4.toString(), " 17      | CS310      | 3           |  3         | 1|2       | 9999      |                          | Data Structure           ");
 		assertEquals(c5.toString(), "");
 		assertEquals(c6.toString(), " 213123  | asdkjasdlkj| 3123123     |  23123123  | sadkjaskdlj| skadjlkasdj|                          | aksldjlksadj             ");
+		assertTrue(c5.isEmpty());
 	}
 	
 	@Test public void checkDatabaseRetrieval() {
