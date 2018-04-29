@@ -6,5 +6,3 @@
 28 Apr 2018 20:26:03 GMT: findResource(String.class) called; _path is [C:\Users\lamth\OneDrive\Documents\GitHub\CS321-Team2, C:\Users\lamth\Desktop\drjava-gmu.jar]
 28 Apr 2018 20:26:09 GMT: PathClassLoader.findClass(String) called
 28 Apr 2018 20:26:09 GMT: findResource(String.class) called; _path is [C:\Users\lamth\OneDrive\Documents\GitHub\CS321-Team2, C:\Users\lamth\Desktop\drjava-gmu.jar]
-28 Apr 2018 20:49:47 GMT: Log 'PathClassLoader.txt' opened: 28 Apr 2018 20:49:47 GMT with name C:\Users\lamth\OneDrive\Documents\GitHub\CS321-Team2\PathClassLoader.txt
-28 Apr 2018 20:49:47 GMT: Constructing PathClassLoader with parent jdk.internal.loader.ClassLoaders$AppClassLoader@69222c14 and path '[C:\Users\lamth\Desktop\drjava-gmu.jar]'

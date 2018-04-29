@@ -29,9 +29,10 @@ public class Semester {
 	 * Initialize default values for all attributes
 	 */
 	public Semester() {
-		setValue(-1, "", "", 0, 18, new ArrayList<>());
+		setValue(9999, "", "", 0, 18, new ArrayList<>());
 		this.locked = false;
 		this.currentCredits = 0;
+		this.isEmpty = true;
 	}
 
 	/**
@@ -41,6 +42,7 @@ public class Semester {
 			ArrayList<Course> list) {
 		setValue(semesterID, semesterName, semesterDesc, creditMin, creditMax, list);
 		this.locked = false;
+		this.isEmpty = false;
 	}
 	
 	/**

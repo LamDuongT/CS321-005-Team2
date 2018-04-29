@@ -289,7 +289,6 @@ public class CoursesSet implements Comparable<CoursesSet>{
 		s += "CoursesSet Object:\n" +
 			"-------------------------------------\n" + 
 			"DATABASE FIELDS: \n" + 
-			"coursesSetID: " + this.coursesSetDescription + "\n" +
 			"name:" + this.coursesSetName + "\n" +
 			"description: " + this.coursesSetDescription + "\n" +
 			"-------------------------------------\n" + 

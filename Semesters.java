@@ -94,8 +94,8 @@ public class Semesters {
 
         try {
             int semesterID;
-            String catalogName;
-            String catalogDesc;
+            String semesterName;
+            String semesterDesc;
             int creditMin;
             int creditMax;
 
@@ -116,12 +116,17 @@ public class Semesters {
 
                 while (recordSet.next()) {
                     semesterID = recordSet.getInt("semesterID");
-                    catalogName = recordSet.getString("semesterName");
-                    catalogDesc = recordSet.getString("semesterDesc");
+                    semesterName = recordSet.getString("semesterName");
+                    semesterDesc = recordSet.getString("semesterDesc");
                     creditMin = recordSet.getInt("creditMin");
                     creditMax = recordSet.getInt("creditMax");
-
-                    aSemester = new Semester(semesterID, catalogName, catalogDesc, creditMin, creditMax, new ArrayList<>());
+                    
+                    if (semesterID != 9999) {
+                        aSemester = new Semester(semesterID, semesterName, semesterDesc, creditMin, creditMax, new ArrayList<>());
+                      
+                    } else {
+                    	aSemester = new Semester();
+                    }
                     this.semesterList.add(aSemester);
                 }
             }
@@ -131,6 +136,10 @@ public class Semesters {
         } finally {
             connectdb.disconectDB();
         }
+    }
+    
+    public boolean isEmpty() {
+    	return this.semesterList.isEmpty();
     }
   
 
