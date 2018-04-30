@@ -12,6 +12,6 @@ public class LamTestClass
 {
 	public static void main(String args[])
 	{
-	  org.junit.runner.JUnitCore.main("LamTestClass", "CourseTest", "CoursesTest", "SemestersTest");
+	  org.junit.runner.JUnitCore.main("CourseTest", "CoursesTest", "SemestersTest", "CreditsTakenTests");
 	}
 }

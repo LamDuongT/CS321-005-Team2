@@ -127,6 +127,7 @@ public class UpdateData {
                     queryString += "studentID =" + theCreditTaken.getStudentID() + ",";
                     queryString += "courseID =" + theCreditTaken.getCourseID() + ",";
                     queryString += "semesterID =" + theCreditTaken.getSemesterID() + ", ";
+                    queryString += "isChangable = 0 ";
                     queryString += "WHERE creditstakenID = " + theCreditTaken.getCreditTakenID();
                     break;
 

@@ -8,6 +8,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Huan Nguyen
+ *
+ */
+
 public class PlanTest {
 	Login aStudent, anotherStudent;
 	Profile aStudentProfile, anotherStudentProfile;

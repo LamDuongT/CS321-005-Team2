@@ -2,9 +2,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * 
  * @author Lam Duong
- *
  */
 public class CourseTest
 {
@@ -37,7 +35,8 @@ public class CourseTest
 		assertTrue(c5.isEmpty());
 	}
 	
-	@Test public void checkDatabaseRetrieval() {
+	@Test public void checkDatabaseRetrieval() 
+	{
 		Course course = new Course(6, "CS310", "Data Structures", 3, 3, "1|2", "1");
 		Course courseFromDatabase = coursesList.getCourseByID(6);
 		
@@ -50,7 +49,8 @@ public class CourseTest
 		assertEquals(course.toString(), courseFromDatabase.toString());
 	}
 	
-	@Test public void isEmptyTest() {
+	@Test public void isEmptyTest() 
+	{
 		Course course = new Course(6, "CS310", "Data Structures", 3, 3, "1|2", "1");
 		Course courseFromDatabase = coursesList.getCourseByID(6);
 		Course emptyCourse = new Course();
@@ -60,10 +60,9 @@ public class CourseTest
 		assertTrue(emptyCourse.isEmpty());
 	}
 	
-	@Test public void hasTakenTest() {
+	@Test public void hasTakenTest() 
+	{
 		Course c = coursesList.getCourseByID(145);
 		assertFalse(c.isTaken());
 	}
-	
-	
 }

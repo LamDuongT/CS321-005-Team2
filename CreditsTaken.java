@@ -45,11 +45,6 @@ public class CreditsTaken {
      */
     public boolean contains(int courseID) {
         boolean hasCourse = false;
-//		for (int i = 0; i < creditsTakenList.size(); i++) {
-//			if (courseID == creditsTakenList.get(i).getCourseID()) {
-//				hasCourse = true;
-//			}
-//		}
         for (CreditTaken acreditTaken : creditsTakenList) {
             if (courseID == acreditTaken.getCourseID()) {
                 hasCourse = true;
@@ -235,7 +230,7 @@ public class CreditsTaken {
 
         CreditTaken courseToBeRemoved = new CreditTaken(creditTakenID, profileID, course.getCourseID(), semester.getSemesterID());
         for (CreditTaken aCourse : creditsTakenList) {
-            if (aCourse.getCourseID() == creditTakenID) {
+            if (aCourse.getCreditTakenID() == creditTakenID) {
                 try {
                     new UpdateData().updateCreditstaken(courseToBeRemoved, 'd');
                     if (creditsTakenList.remove(aCourse)) {
@@ -307,7 +302,7 @@ public class CreditsTaken {
      * Override toString method for testing purpose
      */
     public String toString() {
-        String returnString = "creditstakenID  | studentID | courseID	| courseName | semesterID | isChangable\n";
+        String returnString = "creditstakenID  | studentID | courseID | semesterID\n";
         for (int index = 0; index < this.creditsTakenList.size(); index++) {
             aCreditTaken = this.creditsTakenList.get(index);
             returnString += aCreditTaken.toString() + "\n";

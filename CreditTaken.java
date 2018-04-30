@@ -87,7 +87,7 @@ public class CreditTaken {
 	 */
 	public String toString() {
 		String returnString = "";
-		returnString = String.format("\t%-8d|\t%-4d|\t%-8d| %-11s|\t%-10d| %-8b", this.creditTakenID, this.studentID, this.courseID, this.semesterID);
+		returnString = String.format("\t%-8d|\t%-4d|\t%-7d|\t%-2d", this.creditTakenID, this.studentID, this.courseID, this.semesterID);
 
 		return returnString;
 	}
